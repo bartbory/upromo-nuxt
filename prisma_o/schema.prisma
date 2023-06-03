@@ -1,0 +1,129 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String   @id @unique @default(uuid())
+  name        String
+  email       String
+  password    String
+  avatar      String?
+  files       File[]
+  media       Media[]
+  albums      Album[]
+  plan        Plans    @default(LITE)
+  createdDate DateTime @default(now())
+}
+
+model File {
+  id         String   @id @unique @default(uuid())
+  name       String
+  path       String
+  size       String
+  usedIn     Album[]
+  uploadById String
+  uploadBy   User     @relation(fields: [uploadById], references: [id])
+  uploadDate DateTime @default(now())
+
+  @@index([uploadById])
+}
+
+model Media {
+  id           String   @id @unique @default(uuid())
+  name         String
+  path         String   @unique
+  author       String?
+  description  String?
+  isHero       Album[]  @relation("hero-image")
+  isCover      Album[]  @relation("cover-image")
+  isPromo      Album[]  @relation("promo-image")
+  isBackground Album[]  @relation("background-image")
+  uploadBy     User     @relation(fields: [uploadById], references: [id])
+  uploadById   String
+  uploadDate   DateTime @default(now())
+
+  @@index([uploadById])
+}
+
+model Album {
+  id                  String      @id @unique @default(uuid())
+  secret              String
+  artistName          String
+  artistSlug          String
+  albumName           String
+  albumSlug           String
+  releaseDate         String
+  label               String
+  genre               String
+  description         String
+  player              Player
+  playerSoundcloud    String?
+  playerSpotify       String?
+  youtubeVideos       String?
+  contact             Contact[]
+  imageHero           Media       @relation(fields: [imageHeroPath], references: [path], name: "hero-image")
+  imageHeroPath       String
+  imageCover          Media       @relation(fields: [imageCoverPath], references: [path], name: "cover-image")
+  imageCoverPath      String
+  imagesPromo         Media[]     @relation("promo-image")
+  imageBackgroud      Media?      @relation(fields: [imageBackgroundPath], references: [path], name: "background-image")
+  imageBackgroundPath String?
+  files               File[]
+  tourName            String?
+  tourDescription     String?
+  tourLink            String?
+  tourImage           String?
+  linkSpotify         String?
+  linkSoundcloud      String?
+  linkYoutube         String?
+  linkFacebook        String?
+  linkInstagram       String?
+  linkTiktok          String?
+  linkTwitter         String?
+  status              Status
+  displayMode         DisplayMode
+  createdBy           User        @relation(fields: [createdById], references: [id])
+  createdById         String
+  createdDate         DateTime    @default(now())
+
+  @@index([imageHeroPath])
+  @@index([imageCoverPath])
+  @@index([createdById])
+}
+
+model Contact {
+  id          String  @id @unique @default(uuid())
+  name        String
+  role        String
+  phone       String?
+  email       String
+  connectWith Album[]
+}
+
+enum Player {
+  SPOTIFY
+  SOUNDCLOUD
+}
+
+enum Status {
+  PUBLISHED
+  DRAFT
+  UNPUBLISHED
+}
+
+enum DisplayMode {
+  LIGHT
+  DARK
+}
+
+enum Plans {
+  LITE
+  BASIC
+  PRO
+}

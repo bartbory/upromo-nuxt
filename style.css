@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Krona+One&family=Lato:wght@400;900&family=Mukta:wght@400;700&display=swap");
+
+:root {
+  font-family: Mukta, system-ui, Lato, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+
+  --blue-900: #4478ff;
+  --blue-100: #c6d6ff;
+  --purple-900: #ba2dff;
+  --purple-400: #daa2e3;
+  --purple-100: #f3e3f6;
+  --gray-900: #353535;
+  --gray-400: #b9b9b9;
+  --gray-300: #d9d9d9;
+  --gray-100: #ededed;
+  --green-900: #41ae26;
+  --green-400: #76f058;
+  --green-100: #d6facc;
+  --white-900: #ffffff;
+  --white-150: rgba(255, 255, 255, 0.15);
+  --red-900: #c11414;
+  --red-400: #f05858;
+  --red-100: #facccc;
+  --yellow-900: #f0e158;
+  --yellow-400: #af9f0c;
+  --yellow-100: #faf5cc;
+  --gradient-purple: linear-gradient(90.09deg, #c625ff 0%, #4478ff 100%);
+  --gradient-blackout: linear-gradient(
+    90deg,
+    #353535 4.09%,
+    rgba(53, 53, 53, 0) 100%
+  );
+  --shadow-sc: 0px 8px 16px rgba(33, 70, 165, 0.5),
+    0px 16px 32px rgba(181, 201, 255, 0.25);
+  --shadow-file: 0px 4px 4px rgba(0, 0, 0, 0.25),
+    0px 4px 8px rgba(186, 45, 255, 0.5);
+
+  --br-2: 2px;
+  --br-4: 4px;
+  --br-8: 8px;
+  --br-16: 16px;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  font-weight: 500;
+  color: var(--purple-900);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--blue-900);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+
+.logo {
+  font-family: "Krona One";
+  color: var(--white-900);
+}
+
+h1 {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+h3 {
+  font-size: 14px;
+}
+
+h4 {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 24px;
+  padding: 16px 4px;
+}
+
+hr {
+  border: 1px solid var(--gray-300);
+  margin: 16px 0;
+}
+
+label {
+  font-size: 12px;
+  color: var(--gray-900);
+  opacity: 0.6;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.head > div {
+  display: flex;
+  gap: 8px;
+}
+
+#app {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 740px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+  h4 {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 40px;
+    padding: 32px 24px;
+  }
+}
