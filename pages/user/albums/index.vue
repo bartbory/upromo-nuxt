@@ -4,8 +4,13 @@ import AlbumCard from "~/components/backoffice/card/AlbumCard.vue";
 import { useRouter } from "nuxt/app";
 definePageMeta({
   layout: "backoffice-layout",
+  middleware: ["auth"],
 });
 const router = useRouter();
+
+const user = useSupabaseUser();
+
+const { data } = await useFetch(`/api/albums/${user.value!.id}`);
 </script>
 
 <template>

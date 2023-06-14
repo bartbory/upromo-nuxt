@@ -29,7 +29,7 @@ onMounted(() => {
 <template>
   <NuxtLink :to="to">
     <font-awesome-icon :icon="iconDisplay" size="sm" v-if="iconDisplay" />
-    {{ props.name }}
+    <p>{{ props.name }}</p>
   </NuxtLink>
 </template>
 

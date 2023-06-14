@@ -4,6 +4,7 @@ import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import FileCard from "~/components/backoffice/card/FileCard.vue";
 definePageMeta({
   layout: "backoffice-layout",
+  middleware: ["auth"],
 });
 
 

@@ -1,22 +1,29 @@
 <script setup lang="ts">
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import BaseInput from "~/components/backoffice/form/BaseInput.vue";
+import LoadingScreen from "~/components/loading/LoadingScreen.vue";
 
-const supabase = useSupabaseClient();
-
+definePageMeta({
+  middleware: ["auth"],
+});
+const supabase = useSupabaseAuthClient();
+const router = useRouter();
 const loading = ref(false);
 const email = ref("");
+const password = ref("");
+const msg = ref("");
 
 const handleLogin = async () => {
-  try {
-    loading.value = true;
-    const { error } = await supabase.auth.signInWithOtp({ email: email.value });
-    if (error) throw error;
-    alert("Check your email for the login link!");
-  } catch (error: any) {
-    alert(error.error_description || error.message);
-  } finally {
+  loading.value = true;
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  });
+  if (error) {
     loading.value = false;
+  }
+  if (data) {
+    navigateTo("/user");
   }
 };
 </script>
@@ -24,11 +31,25 @@ const handleLogin = async () => {
 <template>
   <section>
     <h1 class="logo">UPROMO</h1>
-    <form @submit="handleLogin">
-      <BaseInput label="Login" inputType="email" v-model="email" />
-      <BaseInput label="Password" inputType="password" />
-      <BaseButton type="submit" styleType="primary" msg="Login" size="normal" />
+    <form @submit="handleLogin" v-if="!loading">
+      <BaseInput label="Login" inputType="email" v-model="email" v-if="!msg" />
+      <BaseInput
+        label="Password"
+        inputType="password"
+        v-model="password"
+        v-if="!msg"
+      />
+      <BaseButton
+        type="submit"
+        styleType="primary"
+        msg="Login"
+        size="normal"
+        v-if="!msg"
+      />
+      <p>{{ msg }}</p>
     </form>
+
+    <LoadingScreen v-else />
   </section>
 </template>
 

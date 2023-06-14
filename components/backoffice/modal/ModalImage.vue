@@ -5,23 +5,23 @@ import { IImage } from "../../../types";
 import ImageCard from "../card/ImageCard.vue";
 
 const imagesData: IImage[] = [
-  { path: "/img5.png", createdBy: "Jacob Nielse", alt: "" },
-  { path: "/img6.png", createdBy: "Mark Twain", alt: "" },
-  { path: "/img7.png", createdBy: "Tony Hawk", alt: "" },
-  { path: "/img8.png", createdBy: "Rob Bob", alt: "" },
-  { path: "/img9.png", createdBy: "Salma Hayek", alt: "" },
-  { path: "/img1.png", createdBy: "Ed Sheeran", alt: "" },
-  { path: "/img2.png", createdBy: "Mario Bros", alt: "" },
-  { path: "/img3.png", createdBy: "Mario Bros", alt: "" },
-  { path: "/img4.png", createdBy: "Mario Bros", alt: "" },
-  { path: "/bg.jpeg", createdBy: "Mario Bros", alt: "" },
+  { path: "/img5.png", author: "Jacob Nielse", description: "" },
+  { path: "/img6.png", author: "Mark Twain", description: "" },
+  { path: "/img7.png", author: "Tony Hawk", description: "" },
+  { path: "/img8.png", author: "Rob Bob", description: "" },
+  { path: "/img9.png", author: "Salma Hayek", description: "" },
+  { path: "/img1.png", author: "Ed Sheeran", description: "" },
+  { path: "/img2.png", author: "Mario Bros", description: "" },
+  { path: "/img3.png", author: "Mario Bros", description: "" },
+  { path: "/img4.png", author: "Mario Bros", description: "" },
+  { path: "/bg.jpeg", author: "Mario Bros", description: "" },
 ];
 
 const props = defineProps({
   show: { type: Boolean, required: true },
   title: { type: String, required: true },
   selected: {
-    type: Object as PropType<IImage | null>,
+    type: Object as PropType<string | null>,
     required: false,
     default: null,
   },
@@ -30,7 +30,7 @@ const props = defineProps({
 const emits = defineEmits(["selectionHandler"]);
 
 function isActive(path: string) {
-  if (props.selected && props.selected.path === path) {
+  if (props.selected && props.selected === path) {
     return true;
   }
 }

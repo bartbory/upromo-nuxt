@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import getPlaylistId from "../../helpers/getPlaylistId";
-import getPlaylistSecretToken from "../../helpers/getPlaylistSecretToken";
+import getPlaylistId from "../../composables/getPlaylistId";
+import getPlaylistSecretToken from "../../composables/getPlaylistSecretToken";
 
 const props = defineProps({
   src: { type: String, required: true },

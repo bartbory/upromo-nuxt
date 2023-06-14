@@ -3,6 +3,7 @@ export interface IUser {
   name: string;
   email: string;
   avatar: string;
+  plan: PlanTypes;
 }
 
 export interface IButton {
@@ -39,7 +40,6 @@ export interface IAlbum {
 export interface IFiles {
   name: string;
   path: string;
-  type: string;
 }
 
 export interface IPerson {
@@ -51,11 +51,11 @@ export interface IPerson {
 }
 
 export interface IImages {
-  hero: IImage | null;
-  cover: IImage | null;
+  hero: string | null;
+  cover: string | null;
   promo: IImage[];
   logo: string | null;
-  background: IImage | null;
+  background: string | null;
 }
 
 export interface ILinks {
@@ -68,10 +68,10 @@ export interface ILinks {
   twitter: string | null;
 }
 export interface ITour {
-  name: string;
+  name: string | null;
   description: string | null;
   concerts: IConcert[] | null;
-  image: IImage | null;
+  image: string | null;
   link: string | null;
 }
 export interface IConcert {
@@ -83,11 +83,11 @@ export interface IConcert {
 
 export interface IImage {
   path: string;
-  createdBy: string | null;
-  alt: string | null;
+  author: string | null;
+  description: string | null;
 }
 
-export type StatusTypes = "unpublished" | "draft" | "published";
+export type StatusTypes = "UNPUBLISHED" | "DRAFT" | "PUBLISHED";
 export type StyleTypes =
   | "primary"
   | "secondary"
@@ -106,5 +106,6 @@ export type SocialTypes =
   | "soundcloud"
   | "twitter"
   | "file";
-export type PlayerTypes = "spotify" | "soundcloud";
-export type DisplayTypes = "light" | "dark";
+export type PlayerTypes = "SPOTIFY" | "SOUNDCLOUD";
+export type DisplayTypes = "LIGHT" | "DARK";
+export type PlanTypes = "LITE" | "BASIC" | "PRO";

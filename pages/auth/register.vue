@@ -3,20 +3,39 @@ import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import BaseInput from "~/components/backoffice/form/BaseInput.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-// import createUser from "~/api/createUser";
 import { reactive } from "vue";
-// import getUserData from "~/api/getUserData";
+
+definePageMeta({
+  middleware: ["auth"],
+});
+
+const supabase = useSupabaseAuthClient();
 
 const router = useRouter();
+
 const formData = reactive({
   email: "",
   password: "",
   name: "",
 });
-
+const isLoading = ref(false);
 const formIsValid = ref(true);
 
-function submitForm() {
+async function handleRegister() {
+  let { data, error } = await supabase.auth.signUp({
+    email: formData.email,
+    password: formData.password,
+    options: {
+      data: {
+        name: formData.name,
+      },
+    },
+  });
+  console.log(data);
+  console.log(error);
+}
+
+async function submitForm() {
   formIsValid.value = true;
   if (
     formData.email === "" ||
@@ -25,6 +44,10 @@ function submitForm() {
   ) {
     formIsValid.value = false;
     return;
+  } else {
+    isLoading.value = true;
+    await handleRegister();
+    isLoading.value = false;
   }
 }
 </script>
@@ -32,8 +55,12 @@ function submitForm() {
   <section>
     <h1 class="logo">UPROMO</h1>
     <form @submit.prevent="submitForm">
-      <BaseInput label="E-mail" inputType="e-mail" v-model="formData.email" />
-      <BaseInput label="Name" inputType="text" v-model="formData.name" />
+      <BaseInput
+        label="E-mail"
+        inputType="e-mail"
+        v-model.trim="formData.email"
+      />
+      <BaseInput label="Name" inputType="text" v-model.trim="formData.name" />
       <BaseInput
         label="Password"
         inputType="password"

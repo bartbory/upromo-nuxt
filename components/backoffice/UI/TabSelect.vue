@@ -15,10 +15,10 @@ const emits = defineEmits(["clickItem"]);
     <div class="tab__container">
       <div
         class="tab"
-        :class="item.toLowerCase() === props.active ? 'active' : ''"
+        :class="item.toLowerCase() === props.active.toLowerCase() ? 'active' : ''"
         v-for="item in list"
         :key="item"
-        @click="emits('clickItem', item.toLowerCase())"
+        @click="emits('clickItem', item.toUpperCase())"
       >
         {{ item }}
       </div>

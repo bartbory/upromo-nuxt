@@ -1,9 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const emits = defineEmits(["signOut"]);
+</script>
 
 <template>
   <header>
     <h1 class="logo">UPROMO</h1>
-    <div class="user">
+    <div class="user" @click="emits('signOut')">
       USER
       <div class="avatar"></div>
     </div>

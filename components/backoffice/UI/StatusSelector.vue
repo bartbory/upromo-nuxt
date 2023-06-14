@@ -6,7 +6,7 @@ const props = defineProps({
   active: {
     type: String as PropType<StatusTypes>,
     required: true,
-    default: "unpublished",
+    default: "UNPUBLISHED",
   },
 });
 
@@ -18,7 +18,7 @@ const emit = defineEmits(["setStatus"]);
     <label>Status</label>
     <button
       class="normal"
-      :class="props.active === 'published' ? 'active' : 'inactive'"
+      :class="props.active === 'PUBLISHED' ? 'active' : 'inactive'"
       @click="emit('setStatus', 'published')"
     >
       <span class="dot published"></span>
@@ -26,7 +26,7 @@ const emit = defineEmits(["setStatus"]);
     </button>
     <button
       class="normal"
-      :class="props.active === 'draft' ? 'active' : 'inactive'"
+      :class="props.active === 'DRAFT' ? 'active' : 'inactive'"
       @click="emit('setStatus', 'draft')"
     >
       <span class="dot draft"></span>
@@ -34,7 +34,7 @@ const emit = defineEmits(["setStatus"]);
     </button>
     <button
       class="normal"
-      :class="props.active === 'unpublished' ? 'active' : 'inactive'"
+      :class="props.active === 'UNPUBLISHED' ? 'active' : 'inactive'"
       @click="emit('setStatus', 'unpublished')"
     >
       <span class="dot unpublished"></span>

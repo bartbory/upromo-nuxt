@@ -7,7 +7,7 @@ import ModalImage from "../modal/ModalImage.vue";
 const props = defineProps({
   label: { type: String, required: true },
   text: { type: String, required: true },
-  image: { type: Object as PropType<IImage | null>, required: true },
+  image: { type: Object as PropType<string | null>, required: true },
   isReq: { type: Boolean, required: false, default: false },
 });
 
@@ -36,7 +36,7 @@ const showModal = ref(false);
       @click="showModal = true"
     />
     <div class="image__container" v-else>
-      <img :src="props.image.path" />
+      <img :src="props.image" />
       <div class="on__hover">
         <BaseButton
           msg="Change"

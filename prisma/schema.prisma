@@ -1,7 +1,7 @@
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  // relationMode = "prisma"
 }
 
 generator client {
@@ -9,16 +9,16 @@ generator client {
 }
 
 model User {
-  id          String   @id @unique @default(uuid())
+  id          String   @id
   name        String
-  email       String
-  password    String
+  email       String  
   avatar      String?
   files       File[]
   media       Media[]
   albums      Album[]
   plan        Plans    @default(LITE)
   createdDate DateTime @default(now())
+  updatedDate DateTime @default(now())
 }
 
 model File {

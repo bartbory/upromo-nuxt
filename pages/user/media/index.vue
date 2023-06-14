@@ -8,6 +8,7 @@ import { IImage } from "~/types";
 
 definePageMeta({
   layout: "backoffice-layout",
+  middleware: ["auth"],
 });
 
 const data: IImage[] = [

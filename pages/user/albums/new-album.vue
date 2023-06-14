@@ -15,11 +15,12 @@ import BaseImageUpload from "~/components/backoffice/form/BaseImageUpload.vue";
 import BaseImagesUpload from "~/components/backoffice/form/BaseImagesUpload.vue";
 import BaseFilesUpload from "~/components/backoffice/form/BaseFilesUpload.vue";
 import TabSelect from "~/components/backoffice/UI/TabSelect.vue";
-import createSecret from "~/helpers/createSecret";
+import createSecret from "~/composables/createSecret";
 // import createAlbum from "~/api/createAlbum";
 
 definePageMeta({
   layout: "backoffice-layout",
+  middleware: ["auth"],
 });
 
 const formData: IAlbum = reactive({
@@ -104,13 +105,10 @@ async function submitFormHandler() {
     !formData.images.hero
   ) {
     isError.value = true;
-    console.log("brak wypelnionych pól");
     return;
   }
   const uid = localStorage.getItem("uid");
   if (uid) {
-    console.log("wysyłam: ", uid, formData);
-    // await createAlbum(formData, uid!);
   }
 }
 const isError = ref(false);

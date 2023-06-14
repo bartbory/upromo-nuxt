@@ -1,25 +1,25 @@
 import { DisplayMode, PrismaClient, Status } from "@prisma/client";
 import { IAlbum } from "../types";
-import slugGenerator from "../helpers/slugGenerator";
-import createSecret from "../helpers/createSecret";
+import slugGenerator from "../composables/slugGenerator";
+import createSecret from "../composables/createSecret";
 import { Player } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export default async function createAlbum(data: IAlbum, userId: string) {
   const player = () =>
-    data.player === "spotify" ? Player.SPOTIFY : Player.SOUNDCLOUD;
+    data.player === "SPOTIFY" ? Player.SPOTIFY : Player.SOUNDCLOUD;
   const displayMode = () =>
-    data.displayMode === "light" ? DisplayMode.LIGHT : DisplayMode.DARK;
+    data.displayMode === "LIGHT" ? DisplayMode.LIGHT : DisplayMode.DARK;
   const status = () => {
     switch (data.status) {
-      case "published":
+      case "PUBLISHED":
         return Status.PUBLISHED;
         break;
-      case "draft":
+      case "DRAFT":
         return Status.DRAFT;
         break;
-      case "unpublished":
+      case "UNPUBLISHED":
         return Status.UNPUBLISHED;
         break;
       default:
@@ -27,7 +27,6 @@ export default async function createAlbum(data: IAlbum, userId: string) {
         break;
     }
   };
-  console.log("lapie dane: ", data, userId);
   await prisma.album.create({
     data: {
       secret: createSecret(),
@@ -58,7 +57,7 @@ export default async function createAlbum(data: IAlbum, userId: string) {
       },
       imageHero: {
         connect: {
-          path: data.images.hero?.path,
+          path: data.images.hero,
         },
       },
       imageCover: { connect: { path: data.images.cover?.path } },
@@ -87,13 +86,3 @@ export default async function createAlbum(data: IAlbum, userId: string) {
     },
   });
 }
-
-// createAlbum(a, b)
-//   .then(async () => {
-//     await prisma.$disconnect();
-//   })
-//   .catch(async (e) => {
-//     console.error(e);
-//     await prisma.$disconnect();
-//     process.exit(1);
-//   });
