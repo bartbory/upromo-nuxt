@@ -26,7 +26,7 @@ if (!user.value) {
       isLoading.value = pending.value;
     }
   } catch (error) {
-    console.log(error);
+    throw new Error();
   }
 }
 const albumMaxCount = maxAlbumCount(user.value?.user_metadata.plan);

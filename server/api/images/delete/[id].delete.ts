@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
     const sentPrompt = body.prompt;
     const userId = event.context.params?.userId;
-    console.log("body:", body);
     const result = await prisma.media.delete({
       where: { id: body.id },
     });

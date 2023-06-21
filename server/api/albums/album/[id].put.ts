@@ -11,13 +11,10 @@ interface IBodyAlbumCreate extends IAlbum {
 
 export default defineEventHandler(async (event) => {
   const body: IBodyAlbumCreate = await readBody(event);
-  console.log(event);
   const player = () =>
     body.player === "SPOTIFY" ? Player.SPOTIFY : Player.SOUNDCLOUD;
   const displayMode = () =>
     body.displayMode === "LIGHT" ? DisplayMode.LIGHT : DisplayMode.DARK;
-
-  console.log(body);
   try {
     //@ts-ignore
     const sentPrompt = body.prompt;
@@ -55,19 +52,8 @@ export default defineEventHandler(async (event) => {
           }),
         },
         contact: {
-          connectOrCreate: body.contact.flatMap((c) => {
-            return {
-              where: {
-                id: c.id,
-              },
-              create: {
-                email: c.email,
-                name: c.name,
-                role: c.role,
-                phone: c.phone,
-                createdBy: { connect: { id: body.uid } },
-              },
-            };
+          set: body.contact.flatMap((c) => {
+            return { id: c.id };
           }),
         },
         createdBy: { connect: { id: body.uid } },
@@ -89,7 +75,6 @@ export default defineEventHandler(async (event) => {
         },
       },
     });
-    console.log(result);
     return { data: sentPrompt };
   } catch (error) {
     console.log(error);

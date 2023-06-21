@@ -53,8 +53,6 @@ async function deleteContact(id: string) {
   showForm.value = false;
   selectedContact.value = null;
 }
-
-console.log(mode.value);
 </script>
 
 <template>

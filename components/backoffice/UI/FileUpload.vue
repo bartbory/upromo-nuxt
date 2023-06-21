@@ -82,7 +82,6 @@ async function handleFileChange(e: any) {
       };
 
       if (data) {
-        // emits("sendToDb", fileData);
         await sendToDb(fileData, props.type);
       }
       isLoading.value = false;

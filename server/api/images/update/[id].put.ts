@@ -5,7 +5,6 @@ export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
     const sentPrompt = body.prompt;
-    console.log("body:", body);
     const result = await prisma.media.update({
       where: { id: body.id },
       data: {

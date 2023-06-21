@@ -7,7 +7,6 @@ import Soundcloud from "~/components/iframes/Soundcloud.vue";
 import SpotifyPlayer from "~/components/iframes/SpotifyPlayer.vue";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { DisplayMode } from "@prisma/client";
 import FileButton from "~/components/backoffice/UI/FileButton.vue";
 
 const route = useRoute();
@@ -61,7 +60,7 @@ const background = computed(() => {
   <main
     v-else-if="!isLoading && !isError.status"
     :style="{ backgroundImage: background }"
-    :class="{ dark: isDark === DisplayMode.LIGHT ? false : true }"
+    :class="{ dark: isDark === 'LIGHT' ? false : true }"
   >
     <header
       :style="{
@@ -115,7 +114,7 @@ const background = computed(() => {
         </div>
         <div class="information" v-if="album.images.cover">
           <label>Cover</label>
-          <img :src="album.images.cover" />
+          <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
         </div>
       </div>
       <div class="information">
@@ -148,7 +147,11 @@ const background = computed(() => {
           @click="navigateTo(`${image.path}`)"
           :key="image.id"
         >
-          <img :src="image.path" />
+          <img
+            :src="image.path"
+            :alt="image.description + ' / Created by: ' + image.author"
+            @click="navigateTo(image.path, { external: true })"
+          />
         </div>
       </div>
       <div class="purple"></div>
@@ -160,6 +163,7 @@ const background = computed(() => {
             :name="file.name"
             :key="file.id"
             :link="file.path"
+            @click="navigateTo(file.path, { external: true })"
           />
         </div>
       </div>

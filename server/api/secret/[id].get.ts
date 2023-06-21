@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   try {
     const id = event.context.params?.id;
-    console.log("album:", id);
     const result = await prisma.album.findUnique({
       where: { id: id },
       include: {
@@ -16,6 +15,8 @@ export default defineEventHandler(async (event) => {
             path: true,
             author: true,
             description: true,
+            name: true,
+            size: true,
           },
         },
         contact: true,
@@ -60,7 +61,7 @@ export default defineEventHandler(async (event) => {
         label: result.label,
         genre: result.genre,
         description: result.description,
-        player: player(),
+        player: result.player,
         playerSoundcloud: result.playerSoundcloud,
         playerSpotify: result.playerSpotify,
         youtubeVideos: result.youtubeVideos,

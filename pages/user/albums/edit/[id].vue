@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { IAlbum, IImage, DisplayTypes, PlayerTypes, IFiles } from "~/types";
+import {
+  IAlbum,
+  IImage,
+  DisplayTypes,
+  PlayerTypes,
+  IFiles,
+  IPerson,
+} from "~/types";
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import BaseInput from "~/components/backoffice/form/BaseInput.vue";
 import BaseTextarea from "~/components/backoffice/form/BaseTextarea.vue";
@@ -9,19 +16,21 @@ import BaseImagesUpload from "~/components/backoffice/form/BaseImagesUpload.vue"
 import BaseFilesUpload from "~/components/backoffice/form/BaseFilesUpload.vue";
 import createSecret from "~/composables/createSecret";
 import TabSelect from "~/components/backoffice/UI/TabSelect.vue";
-import { DisplayMode, Player } from "@prisma/client";
 import Notification from "~/components/backoffice/UI/Notification.vue";
+import ContactCardSelection from "~/components/backoffice/card/ContactCardSelection.vue";
+import ModalContact from "~/components/backoffice/modal/ModalContact.vue";
 definePageMeta({
   layout: "backoffice-layout",
   middleware: ["auth"],
 });
 
-const numberOfContacts = ref(0);
 const userMedia = ref<IImage[]>([]);
 const userFiles = ref<IFiles[]>([]);
 const isLoading = ref(true);
 const isError = ref(false);
 const isSuccess = ref(false);
+const userContacts = ref<IPerson[]>([]);
+const showContactAddModal = ref(false);
 
 const supabase = useSupabaseUser();
 const user = supabase.value?.id;
@@ -53,7 +62,7 @@ let formData = reactive<IAlbum>({
   label: "",
   genre: "",
   description: ``,
-  player: Player.SPOTIFY,
+  player: "SPOTIFY",
   playerSoundcloud: null,
   playerSpotify: null,
   youtubeVideos: null,
@@ -76,26 +85,26 @@ let formData = reactive<IAlbum>({
   },
   files: [],
   tour: null,
-  displayMode: DisplayMode.LIGHT,
+  displayMode: "LIGHT",
 });
 
 if (fetchData.data.value && fetchData.data.value.data) {
   formData = fetchData.data.value.data;
-  numberOfContacts.value = fetchData.data.value.data.contact.length;
   isLoading.value = false;
 }
 
 const linkToPage = `/${formData.artistSlug}/${formData.albumSlug}/${formData.id}?secret=${formData.secret}`;
 
-const addContactHandler = () => {
-  formData.contact.push({ id: "", name: "", role: "", phone: "", email: "" });
-  numberOfContacts.value++;
-};
-
-const removeContactHandler = (i: number) => {
-  formData.contact.splice(i, 1);
-  numberOfContacts.value--;
-};
+async function fetchContactData() {
+  isLoading.value = true;
+  const contactsData = await $fetch<{ data: IPerson[] }>(
+    `/api/contacts/${user}`
+  );
+  if (contactsData) {
+    userContacts.value = contactsData.data;
+    isLoading.value = false;
+  }
+}
 
 const addTourHandler = () => {
   formData.tour = {
@@ -116,6 +125,21 @@ function deleteSelectedFileHandler(file: IFiles) {
   formData.files.splice(+idx!, 1);
 }
 
+function contactClickHandler(contact: IPerson) {
+  if (formData.contact.indexOf(contact) >= 0) {
+    const contactArray = formData.contact.filter((c) => c.id !== contact.id);
+    formData.contact = contactArray;
+  } else {
+    formData.contact.push(contact);
+  }
+}
+
+function isActive(id: string) {
+  if (userContacts.value && formData.contact.find((i) => i.id === id)) {
+    return true;
+  }
+}
+
 async function submitFormHandler() {
   isError.value = false;
   isLoading.value = true;
@@ -132,7 +156,6 @@ async function submitFormHandler() {
   ) {
     isError.value = true;
     isLoading.value = false;
-    console.log("brak wypelnionych pol");
     return;
   }
 
@@ -148,14 +171,21 @@ async function submitFormHandler() {
   }
   isLoading.value = pending.value;
 }
-
-console.log(formData);
 </script>
 
 <template>
   <Notification v-if="isSuccess && !isLoading && !isError" type="success"
     >Data updated</Notification
   >
+  <Teleport to="body">
+    <ModalContact
+      :show="showContactAddModal"
+      @close="showContactAddModal = false"
+      title="Add new contact"
+      @refetch="fetchContactData"
+    >
+    </ModalContact>
+  </Teleport>
   <LoadingScreen v-if="isLoading" />
   <div class="edit__container" v-else>
     <div class="head">
@@ -292,42 +322,21 @@ console.log(formData);
           </div>
           <hr />
           <h1>Booking contact</h1>
-          <div v-for="i in numberOfContacts" :key="i" class="form--section">
-            <BaseInput
-              label="Manager name"
-              inputType="text"
-              v-model.trim="formData.contact[i - 1].name"
-            ></BaseInput>
-            <BaseInput
-              label="Role"
-              inputType="text"
-              v-model.trim="formData.contact[i - 1].role"
-            ></BaseInput>
-            <BaseInput
-              label="Phone number"
-              inputType="tel"
-              v-model.trim="formData.contact[i - 1].phone"
-            ></BaseInput>
-            <BaseInput
-              label="E-mail"
-              inputType="email"
-              v-model.trim="formData.contact[i - 1].email"
+          <div v-if="userContacts && !isLoading" class="contacts__list">
+            <ContactCardSelection
+              v-for="contact in userContacts"
+              :key="contact.id"
+              :contact="contact"
+              :isActive="isActive(contact.id)"
+              @click="contactClickHandler(contact)"
             />
-            <BaseButton
-              styleType="danger"
-              msg="Delete contact"
-              size="small"
-              type="button"
-              @click="removeContactHandler(i - 1)"
-            />
-            <hr />
           </div>
           <BaseButton
             size="normal"
             styleType="secondary"
             msg="Add contact"
             type="button"
-            @click="addContactHandler"
+            @click="showContactAddModal = true"
           />
           <hr />
           <h1>Artist links</h1>

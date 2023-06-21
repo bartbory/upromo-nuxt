@@ -15,8 +15,6 @@ import BaseImageUpload from "~/components/backoffice/form/BaseImageUpload.vue";
 import BaseImagesUpload from "~/components/backoffice/form/BaseImagesUpload.vue";
 import BaseFilesUpload from "~/components/backoffice/form/BaseFilesUpload.vue";
 import TabSelect from "~/components/backoffice/UI/TabSelect.vue";
-
-import { DisplayMode, Player } from "@prisma/client";
 import ContactCardSelection from "~/components/backoffice/card/ContactCardSelection.vue";
 import ModalContact from "~/components/backoffice/modal/ModalContact.vue";
 
@@ -25,12 +23,11 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const numberOfContacts = ref(0);
 const userMedia = ref<IImage[]>([]);
 const userFiles = ref<IFiles[]>([]);
-const userContacts = ref<IPerson[]>([]);
 const isLoading = ref(true);
 const isError = ref(false);
+const userContacts = ref<IPerson[]>([]);
 const showContactAddModal = ref(false);
 
 const supabase = useSupabaseUser();
@@ -61,7 +58,7 @@ const formData: IAlbum = reactive({
   label: "",
   genre: "",
   description: "",
-  player: Player.SPOTIFY,
+  player: "SPOTIFY",
   playerSoundcloud: "",
   playerSpotify: "",
   youtubeVideos: "",
@@ -84,11 +81,10 @@ const formData: IAlbum = reactive({
   },
   files: [],
   tour: null,
-  displayMode: DisplayMode.LIGHT,
+  displayMode: "LIGHT",
 });
 
 async function fetchContactData() {
-  console.log("refetch");
   isLoading.value = true;
   const contactsData = await $fetch<{ data: IPerson[] }>(
     `/api/contacts/${user}`
@@ -111,7 +107,6 @@ const addTourHandler = () => {
 
 function deleteSelectedImageHandler(image: IImage) {
   const idx = formData.images.promo.indexOf(image);
-  console.log(idx);
   formData.images.promo?.splice(+idx!, 1);
 }
 
@@ -135,7 +130,6 @@ async function submitFormHandler() {
   ) {
     isError.value = true;
     isLoading.value = false;
-    console.log("brak wypelnionych pol");
     return;
   }
 
@@ -154,15 +148,12 @@ async function submitFormHandler() {
 
 function contactClickHandler(contact: IPerson) {
   if (formData.contact.indexOf(contact) >= 0) {
-    console.log("usuwam");
     const contactArray = formData.contact.filter((c) => c.id !== contact.id);
     formData.contact = contactArray;
   } else {
     formData.contact.push(contact);
   }
 }
-
-watch(formData, () => console.log(formData.contact));
 
 function isActive(id: string) {
   if (userContacts.value && formData.contact.find((i) => i.id === id)) {

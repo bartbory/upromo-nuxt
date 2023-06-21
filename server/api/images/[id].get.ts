@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   try {
     const id = event.context.params?.id;
-    console.log("user:", id);
     const result = await prisma.media.findMany({
       where: { uploadById: id },
       select: {

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { Plans } from "@prisma/client";
 import BaseInput from "~/components/backoffice/form/BaseInput.vue";
-import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import { IUser } from "~/types";
 definePageMeta({
   layout: "backoffice-layout",
@@ -16,7 +14,7 @@ let userData = reactive<IUser>({
   id: "",
   name: "",
   email: "",
-  plan: Plans.LITE,
+  plan: "LITE",
 });
 if (user) {
   const { data } = await useFetch<{ data: IUser }>(`/api/users/${user?.id}`);

@@ -1,4 +1,5 @@
-import { DisplayMode, Player, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import type { DisplayTypes, PlayerTypes } from "~/types";
 import { IAlbum } from "~/types";
 import slugGenerator from "~/composables/slugGenerator";
 import createSecret from "~/composables/createSecret";
@@ -12,14 +13,8 @@ interface IBodyAlbumCreate extends IAlbum {
 
 export default defineEventHandler(async (event) => {
   const body: IBodyAlbumCreate = await readBody(event);
-  console.log(event);
-  const player = () =>
-    body.player === "SPOTIFY" ? Player.SPOTIFY : Player.SOUNDCLOUD;
-  const displayMode = () =>
-    body.displayMode === "LIGHT" ? DisplayMode.LIGHT : DisplayMode.DARK;
-  
-
-  console.log(body);
+  const player = () => (body.player === "SPOTIFY" ? "SPOTIFY" : "SOUNDCLOUD");
+  const displayMode = () => (body.displayMode === "LIGHT" ? "LIGHT" : "DARK");
   try {
     //@ts-ignore
     const sentPrompt = body.prompt;
@@ -56,12 +51,9 @@ export default defineEventHandler(async (event) => {
           }),
         },
         contact: {
-          create: body.contact.flatMap((c) => {
+          connect: body.contact.flatMap((c) => {
             return {
-              email: c.email,
-              name: c.name,
-              role: c.role,
-              phone: c.phone,
+              id: c.id,
             };
           }),
         },
@@ -84,7 +76,6 @@ export default defineEventHandler(async (event) => {
         },
       },
     });
-    console.log(result);
     return { data: sentPrompt };
   } catch (error) {
     console.log(error);

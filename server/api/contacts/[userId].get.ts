@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   try {
     const id = event.context.params?.userId;
-    console.log("user:", id);
     const result = await prisma.contact.findMany({
       where: { createdById: id },
       select: {

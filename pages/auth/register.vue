@@ -5,7 +5,7 @@ import TabSelect from "~/components/backoffice/UI/TabSelect.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { reactive } from "vue";
-import { Plans } from "@prisma/client";
+import { PlanTypes } from "~/types";
 import { IRegister, IUser } from "~/types";
 import Notification from "~/components/backoffice/UI/Notification.vue";
 
@@ -23,7 +23,7 @@ let formData: IRegister = reactive({
   email: "",
   password: "",
   avatar: "",
-  plan: Plans.LITE,
+  plan: "LITE",
 });
 const isLoading = ref(false);
 const isSuccess = ref(false);
@@ -52,14 +52,12 @@ async function handleRegister() {
       },
     },
   });
-  console.log("after register data: ", data);
   if (data.user) {
     formData.id = data.user?.id;
     await registerUser();
     isLoading.value = false;
     isSuccess.value = true;
   } else {
-    console.log(error);
   }
 }
 
@@ -100,7 +98,7 @@ async function submitForm() {
         :list="['LITE', 'BASIC', 'PRO']"
         label="Select your plan"
         :active="formData.plan"
-        @click-item="(item: Plans) => (formData.plan = item)"
+        @click-item="(item: PlanTypes) => (formData.plan = item)"
       />
       <BaseButton
         type="submit"
