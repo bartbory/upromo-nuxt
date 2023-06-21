@@ -67,7 +67,7 @@ const props = defineProps({
   color: var(--white-900);
 }
 
-.active > .label {
+.active::deep(.label) {
   color: var(--white-900);
 }
 @media screen and (min-width: 860px) {

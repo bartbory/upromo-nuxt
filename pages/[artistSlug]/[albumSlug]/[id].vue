@@ -388,7 +388,7 @@ label {
 }
 
 .video > iframe {
-  flex: 0 0 100%;
+  flex: 1 0 100%;
 }
 
 .tour__parallax {
@@ -550,10 +550,10 @@ footer span {
     margin: 0 auto;
   }
   .gallery__item {
-    flex: 0 1 23%;
+    flex: 1 1 23%;
   }
   .video > iframe {
-    flex: 0 0 45%;
+    flex: 1 0 45%;
   }
   .materials,
   .booking {
@@ -614,7 +614,7 @@ footer span {
   }
 
   .video > iframe {
-    flex: 0 0 30%;
+    flex: 1 0 30%;
   }
   .information__container__1 {
     display: flex;
@@ -640,7 +640,7 @@ footer span {
     margin: 0 auto;
   }
   .gallery__item {
-    flex: 0 1 23%;
+    flex: 1 1 23%;
   }
   .materials,
   .booking {
