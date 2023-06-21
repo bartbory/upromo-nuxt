@@ -7,7 +7,9 @@ import ModalImage from "../modal/ModalImage.vue";
 const props = defineProps({
   label: { type: String, required: true },
   text: { type: String, required: true },
-  image: { type: Object as PropType<string | null>, required: true },
+  type: { type: String as PropType<"button" | "submit">, default: "button" },
+  imageSelected: { type: String, required: true },
+  images: { type: Array as PropType<IImage[]>, required: true },
   isReq: { type: Boolean, required: false, default: false },
 });
 
@@ -21,22 +23,25 @@ const showModal = ref(false);
       :show="showModal"
       @close="showModal = false"
       title="Select image"
-      :selected="props.image"
+      :imageSelected="props.imageSelected ? props.imageSelected : null"
+      :images="props.images"
       @selectionHandler="(image: IImage) => emits('selectionHandler', image)"
     >
     </modal-image>
   </Teleport>
+
   <div class="form__row">
     <label>{{ props.label }} {{ isReq ? "*" : "" }}</label>
     <BaseButton
       size="big"
       styleType="primary"
+      type="button"
       :msg="props.text"
-      v-if="!props.image"
+      v-if="!props.imageSelected"
       @click="showModal = true"
     />
     <div class="image__container" v-else>
-      <img :src="props.image" />
+      <img :src="props.imageSelected" />
       <div class="on__hover">
         <BaseButton
           msg="Change"

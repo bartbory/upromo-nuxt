@@ -2,7 +2,14 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
-  avatar: string;
+  password?: string;
+  plan: PlanTypes;
+}
+export interface IRegister {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
   plan: PlanTypes;
 }
 
@@ -11,6 +18,7 @@ export interface IButton {
   styleType: StyleTypes;
   msg?: string;
   icon?: string;
+  type: "button" | "submit";
 }
 
 export interface IAlbum {
@@ -33,13 +41,26 @@ export interface IAlbum {
   images: IImages;
   files: IFiles[];
   tour: ITour | null;
-  status: StatusTypes;
   displayMode: DisplayTypes;
 }
 
+export interface IAlbumList {
+  id: string;
+  artistName: string;
+  albumName: string;
+  artistSlug: string;
+  albumSlug: string;
+  releaseDate: string;
+  imageCoverPath: string;
+  secret: string;
+}
+
 export interface IFiles {
+  id: string;
   name: string;
   path: string;
+  size: number;
+  extention: string;
 }
 
 export interface IPerson {
@@ -51,8 +72,8 @@ export interface IPerson {
 }
 
 export interface IImages {
-  hero: string | null;
-  cover: string | null;
+  hero: string;
+  cover: string;
   promo: IImage[];
   logo: string | null;
   background: string | null;
@@ -82,12 +103,14 @@ export interface IConcert {
 }
 
 export interface IImage {
+  id: string;
+  name: string;
   path: string;
+  size: number;
   author: string | null;
   description: string | null;
 }
 
-export type StatusTypes = "UNPUBLISHED" | "DRAFT" | "PUBLISHED";
 export type StyleTypes =
   | "primary"
   | "secondary"

@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import { Status } from "@prisma/client";
 import { computed } from "vue";
 
 const props = defineProps({
-  statusType: { type: String, required: true },
+  statusType: { type: String as PropType<Status>, required: true },
   isSmall: { type: Boolean, default: false },
 });
 
 const status = computed(() => {
-  if (props.statusType === "Published") {
+  if (props.statusType === "PUBLISHED") {
     return "published";
-  } else if (props.statusType === "Draft") {
+  } else if (props.statusType === "DRAFT") {
     return "draft";
   } else {
     return "unpublished";
@@ -20,7 +21,11 @@ const status = computed(() => {
 <template>
   <div :class="[isSmall ? 'status__container' : 'status__container__big']">
     <div class="status__indicator" :class="status"></div>
-    <p :class="{ small: isSmall }">{{ props.statusType }}</p>
+    <p :class="{ small: isSmall }">
+      {{
+        props.statusType.slice(0, 1) + props.statusType.slice(1).toLowerCase()
+      }}
+    </p>
   </div>
 </template>
 

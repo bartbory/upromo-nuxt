@@ -1,20 +1,22 @@
-import { DisplayMode, Player, PrismaClient, Status } from "@prisma/client";
-import { IAlbum, ITour } from "~/types";
+import { DisplayMode, Player, PrismaClient } from "@prisma/client";
+import { IAlbum } from "~/types";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   try {
     const id = event.context.params?.id;
-    console.log("album:", id);
     const result = await prisma.album.findUnique({
       where: { id: id },
       include: {
         files: true,
         imagesPromo: {
           select: {
+            id: true,
             path: true,
             author: true,
             description: true,
+            name: true,
+            size: true,
           },
         },
         contact: true,
@@ -28,22 +30,6 @@ export default defineEventHandler(async (event) => {
         result.player === Player.SPOTIFY ? "SPOTIFY" : "SOUNDCLOUD";
       const displayMode = () =>
         result.displayMode === DisplayMode.LIGHT ? "LIGHT" : "DARK";
-      const status = () => {
-        switch (result.status) {
-          case Status.PUBLISHED:
-            return "PUBLISHED";
-            break;
-          case Status.DRAFT:
-            return "DRAFT";
-            break;
-          case Status.UNPUBLISHED:
-            return "UNPUBLISHED";
-            break;
-          default:
-            return "UNPUBLISHED";
-            break;
-        }
-      };
 
       let tourData;
 
@@ -75,7 +61,7 @@ export default defineEventHandler(async (event) => {
         label: result.label,
         genre: result.genre,
         description: result.description,
-        player: result.player,
+        player: player(),
         playerSoundcloud: result.playerSoundcloud,
         playerSpotify: result.playerSpotify,
         youtubeVideos: result.youtubeVideos,
@@ -98,13 +84,11 @@ export default defineEventHandler(async (event) => {
         },
         files: result.files,
         tour: tourData,
-        status: status(),
         displayMode: displayMode(),
       };
       return { data: albumData };
     }
   } catch (error: any) {
-    //handle error here
     console.log("error");
   }
 });

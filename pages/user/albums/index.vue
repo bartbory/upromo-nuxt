@@ -2,45 +2,52 @@
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import AlbumCard from "~/components/backoffice/card/AlbumCard.vue";
 import { useRouter } from "nuxt/app";
+import { IAlbumList } from "~/types";
+import Notification from "~/components/backoffice/UI/Notification.vue";
 definePageMeta({
   layout: "backoffice-layout",
   middleware: ["auth"],
 });
 const router = useRouter();
 
+let albums: IAlbumList[];
+const isLoading = ref(true);
 const user = useSupabaseUser();
 
-const { data } = await useFetch(`/api/albums/${user.value!.id}`);
+if (!user.value) {
+  navigateTo("/auth/login");
+} else {
+  try {
+    const { data, pending } = await useFetch<{ data: IAlbumList[] }>(
+      `/api/albums/${user.value.id}`
+    );
+    if (data.value) {
+      albums = data.value.data;
+      isLoading.value = pending.value;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+const albumMaxCount = maxAlbumCount(user.value?.user_metadata.plan);
 </script>
 
 <template>
   <div class="head">
     <h1>My Albums</h1>
     <BaseButton
+      v-if="albums.length < albumMaxCount"
       size="big"
       styleType="primary"
       msg="Add new album"
       @click="router.push({ path: 'albums/new-album' })"
     />
   </div>
-  <article>
-    <AlbumCard
-      id="jhb1rbjheqw"
-      album="Lucy Perk got new tattoo"
-      band="The Eagles of Shadow"
-      date="20/09/2023"
-      status="Published"
-      cover="../cover1.png"
-    />
-    <AlbumCard
-      id="13rqwsd23"
-      album="Millennials vibe"
-      band="Mysterious"
-      date="25/09/2023"
-      status="Unpublished"
-      cover="../cover2.png"
-    />
+  <LoadingScreen v-if="isLoading" />
+  <article v-else-if="albums.length > 0">
+    <AlbumCard v-for="album in albums" :key="album.id" :album="album" />
   </article>
+  <p v-else>No data</p>
 </template>
 
 <style scoped>

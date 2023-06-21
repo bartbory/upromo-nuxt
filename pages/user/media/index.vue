@@ -3,94 +3,165 @@ import { ref, computed } from "vue";
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import ImageCard from "~/components/backoffice/card/ImageCard.vue";
 import BaseInput from "~/components/backoffice/form/BaseInput.vue";
-import S3FileUpload from "~/components/backoffice/UI/S3FileUpload.vue";
+import FileUpload from "~/components/backoffice/UI/FileUpload.vue";
 import { IImage } from "~/types";
+import StorageCapacity from "~/components/backoffice/UI/StorageCapacity.vue";
 
 definePageMeta({
   layout: "backoffice-layout",
   middleware: ["auth"],
 });
 
-const data: IImage[] = [
-  { path: "img1.png", createdBy: "Ed Sheeran", alt: "" },
-  { path: "img2.png", createdBy: "Mario Bros", alt: "" },
-  { path: "img3.png", createdBy: "Mario Bros", alt: "" },
-  { path: "img4.png", createdBy: "Mario Bros", alt: "" },
-  { path: "img5.png", createdBy: "Jacob Nielse", alt: "Test message" },
-  { path: "img6.png", createdBy: "Mark Twain", alt: "" },
-  { path: "img7.png", createdBy: "Tony Hawk", alt: "" },
-  { path: "img8.png", createdBy: "Rob Bob", alt: "" },
-  { path: "img9.png", createdBy: "Salma Hayek", alt: "" },
-];
+const selectedImage = ref<IImage | null>(null);
 
-const selectedImage = ref("img1.png");
+const supabase = useSupabaseUser();
+const bucket = useSupabaseClient();
+const user = supabase.value;
 
+const userMedia = ref<IImage[]>([]);
+const isLoading = ref(true);
+const isError = ref(false);
+const storageCapacity = ref(0);
+
+// Max storage capacity declaration
+const maxStorageCapacity = maxImagesStorageCapacity(user?.user_metadata.plan);
+
+// Fetch data from bucket on mount
+const { data, pending, error } = await useFetch<{ data: IImage[] }>(
+  `/api/images/${user?.id}`
+);
+if (data.value) {
+  isLoading.value = pending.value;
+  userMedia.value = data.value ? data.value.data : [];
+  updateStorageCapacity();
+}
+
+// Fetch data after send new file
+async function fetchData() {
+  isError.value = false;
+  isLoading.value = true;
+  const { data, pending } = await useFetch<{ data: IImage[] }>(
+    `/api/images/${user?.id}`
+  );
+  isLoading.value = pending.value;
+  userMedia.value = data.value ? data.value.data : [];
+}
+
+// Update image data
+async function updateImageData() {
+  isLoading.value = true;
+  const { error } = await useFetch(
+    `/api/images/update/${imageDetails.value?.id}`,
+    {
+      body: imageDetails.value,
+      method: "put",
+    }
+  );
+  if (!error.value) {
+    await fetchData();
+    isLoading.value = false;
+  }
+}
+
+// Remove file from database and bucket
+async function removeFile(file: IImage) {
+  if (user) {
+    const { data, error } = await bucket.storage
+      .from(`public`)
+      .remove([`${user.id}/images/${file.name}`]);
+  }
+  if (data.value) {
+    const { error } = await useFetch(`/api/images/delete/${user?.id}`, {
+      body: file,
+      method: "delete",
+    });
+    if (!error.value) {
+      await fetchData();
+      isLoading.value = false;
+    }
+  }
+}
+
+// Update storage capacity
+function updateStorageCapacity() {
+  let totalSize = 0;
+  for (let i = 0; i < userMedia.value.length; i++) {
+    totalSize += userMedia.value[i].size;
+  }
+  storageCapacity.value = (getMbFromFile(totalSize) * 100) / maxStorageCapacity;
+}
+
+// Update storage after upload
+watchEffect(() => updateStorageCapacity());
 const imageDetails = computed(() => {
-  if (data.find((image) => image.path === selectedImage.value))
-    return data.find((image) => image.path === selectedImage.value);
+  if (userMedia.value.find((image) => image.path === selectedImage.value?.path))
+    return userMedia.value.find(
+      (image) => image.path === selectedImage.value?.path
+    );
   else {
     return null;
   }
 });
-
-function colourOfSpace(v: number) {
-  if (v >= 90) {
-    return "warning";
-  }
-}
 </script>
 
 <template>
   <div class="head">
     <h1>My Media</h1>
-    <!-- <BaseButton
-      :size="width === 'xs' ? 'normal' : 'big'"
-      styleType="primary"
-      msg="Upload"
-      /> -->
   </div>
-  <div class="limit__container">
-    <label
-      >You are using
-      <span style="font-weight: 700" :class="colourOfSpace(90)">90%</span> of
-      your disk space</label
-    >
-    <div class="range"><div class="range__used"></div></div>
-    <S3FileUpload :maxSize="5" accept="png" />
-  </div>
+  <StorageCapacity :storage-capacity="storageCapacity" />
+  <FileUpload
+    v-if="user && storageCapacity <= 100"
+    :maxSize="10"
+    accept="png,jpg,jpeg"
+    :uid="user.id"
+    type="images"
+    @fetchData="fetchData"
+  />
   <section>
     <article>
       <ImageCard
-        v-for="image in data"
+        v-for="image in userMedia"
         :imagePath="image.path"
         :key="image.path"
-        :isActive="selectedImage === image.path"
-        @click="selectedImage = image.path"
+        :isActive="selectedImage === image"
+        @click="selectedImage = image"
       />
     </article>
-    <form v-if="imageDetails" @submit.prevent="">
+    <form
+      v-if="imageDetails && selectedImage && !isLoading"
+      @submit.prevent="updateImageData"
+    >
+      <BaseButton
+        class="close"
+        size="small"
+        styleType="neutral"
+        msg="Close"
+        type="button"
+        @click="selectedImage = null"
+      />
       <img :src="imageDetails.path" />
       <BaseInput
         label="Artist / photographer"
         type="text"
-        v-model="imageDetails.createdBy"
+        v-model="imageDetails.author"
       />
       <BaseInput
         label="Alternative text"
         type="text"
-        v-model="imageDetails.alt"
+        v-model="imageDetails.description"
       />
       <div class="actions">
         <BaseButton
-          msg="Save changes"
+          msg="Save"
           size="normal"
           styleType="success"
           type="submit"
         /><BaseButton
-          msg="Delete image"
+          msg="Delete"
           size="normal"
           styleType="danger"
           type="button"
+          @click="removeFile(selectedImage)"
         />
       </div>
     </form>
@@ -102,8 +173,10 @@ section {
   flex-direction: row;
 }
 article {
-  flex: 1 1 55%;
+  flex: 1 1 50%;
   display: flex;
+  justify-content: flex-start;
+  align-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
@@ -111,12 +184,20 @@ article {
 
 form {
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 16px;
-  flex: 1 1 45%;
+  flex: 1 1 50%;
   padding: 24px;
   background-color: var(--gray-100);
   border-radius: var(--br-8);
+}
+
+.close {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  cursor: pointer;
 }
 
 form img {

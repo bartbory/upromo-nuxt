@@ -7,12 +7,13 @@ import { IImage } from "../../../types";
 const props = defineProps({
   label: { type: String, required: true },
   text: { type: String, required: true },
+  imagesSelected: { type: Array as PropType<IImage[]>, required: true },
   images: { type: Array as PropType<IImage[]>, required: true },
 });
 
 const emits = defineEmits(["selectionHandler", "deleteSelectedImage"]);
 
-const imagesArray = ref(props.images);
+const imagesArray = ref(props.imagesSelected);
 
 function selectionHandler(image: IImage) {
   if (imagesArray.value.find((i) => i.path === image.path)) {
@@ -32,7 +33,8 @@ const showModal = ref(false);
       :show="showModal"
       @close="showModal = false"
       title="Select images"
-      :selected="props.images"
+      :imagesSelected="props.imagesSelected"
+      :images="props.images"
       @selectionHandler="(image: IImage) => selectionHandler(image)"
       @save="emits('selectionHandler', imagesArray)"
     >
@@ -40,8 +42,12 @@ const showModal = ref(false);
   </Teleport>
   <div class="form__row">
     <label>{{ label }}</label>
-    <div class="images__container" v-if="props.images.length > 0">
-      <div class="images" v-for="image in props.images" :key="image.path">
+    <div class="images__container" v-if="props.imagesSelected.length > 0">
+      <div
+        class="images"
+        v-for="image in props.imagesSelected"
+        :key="image.path"
+      >
         <img :src="image.path" />
         <div class="on__hover">
           <BaseButton

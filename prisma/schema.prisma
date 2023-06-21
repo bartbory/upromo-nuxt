@@ -1,6 +1,6 @@
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
   // relationMode = "prisma"
 }
 
@@ -9,23 +9,25 @@ generator client {
 }
 
 model User {
-  id          String   @id
+  id          String    @id
   name        String
-  email       String  
+  email       String
   avatar      String?
   files       File[]
   media       Media[]
   albums      Album[]
-  plan        Plans    @default(LITE)
-  createdDate DateTime @default(now())
-  updatedDate DateTime @default(now())
+  plan        Plans     @default(LITE)
+  contacts    Contact[]
+  createdDate DateTime  @default(now())
+  updatedDate DateTime  @default(now())
 }
 
 model File {
   id         String   @id @unique @default(uuid())
   name       String
   path       String
-  size       String
+  size       Int
+  extention  String
   usedIn     Album[]
   uploadById String
   uploadBy   User     @relation(fields: [uploadById], references: [id])
@@ -40,11 +42,12 @@ model Media {
   path         String   @unique
   author       String?
   description  String?
+  size         Int
   isHero       Album[]  @relation("hero-image")
   isCover      Album[]  @relation("cover-image")
   isPromo      Album[]  @relation("promo-image")
   isBackground Album[]  @relation("background-image")
-  uploadBy     User     @relation(fields: [uploadById], references: [id])
+  uploadBy     User     @relation(fields: [uploadById], references: [id], onDelete: Cascade)
   uploadById   String
   uploadDate   DateTime @default(now())
 
@@ -67,12 +70,12 @@ model Album {
   playerSpotify       String?
   youtubeVideos       String?
   contact             Contact[]
-  imageHero           Media       @relation(fields: [imageHeroPath], references: [path], name: "hero-image")
-  imageHeroPath       String
-  imageCover          Media       @relation(fields: [imageCoverPath], references: [path], name: "cover-image")
-  imageCoverPath      String
+  imageHero           Media       @relation(fields: [imageHeroPath], references: [path], name: "hero-image", onDelete: SetDefault)
+  imageHeroPath       String      @default("https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/band_default.png")
+  imageCover          Media       @relation(fields: [imageCoverPath], references: [path], name: "cover-image", onDelete: SetDefault)
+  imageCoverPath      String      @default("https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/cover_default.png")
   imagesPromo         Media[]     @relation("promo-image")
-  imageBackgroud      Media?      @relation(fields: [imageBackgroundPath], references: [path], name: "background-image")
+  imageBackground     Media?      @relation(fields: [imageBackgroundPath], references: [path], name: "background-image", onDelete: SetNull)
   imageBackgroundPath String?
   files               File[]
   tourName            String?
@@ -86,7 +89,6 @@ model Album {
   linkInstagram       String?
   linkTiktok          String?
   linkTwitter         String?
-  status              Status
   displayMode         DisplayMode
   createdBy           User        @relation(fields: [createdById], references: [id])
   createdById         String
@@ -103,18 +105,15 @@ model Contact {
   role        String
   phone       String?
   email       String
-  connectWith Album[]
+  connectWith Album?  @relation(onDelete: Cascade, fields: [albumId], references: [id])
+  albumId     String?
+  createdBy   User    @relation(fields: [createdById], references: [id])
+  createdById String
 }
 
 enum Player {
   SPOTIFY
   SOUNDCLOUD
-}
-
-enum Status {
-  PUBLISHED
-  DRAFT
-  UNPUBLISHED
 }
 
 enum DisplayMode {

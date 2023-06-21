@@ -1,32 +1,46 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import {
-  IAlbum,
-  StatusTypes,
-  IImage,
-  DisplayTypes,
-  PlayerTypes,
-} from "~/types";
+import { IAlbum, IImage, DisplayTypes, PlayerTypes, IFiles } from "~/types";
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import BaseInput from "~/components/backoffice/form/BaseInput.vue";
 import BaseTextarea from "~/components/backoffice/form/BaseTextarea.vue";
-import StatusSelector from "~/components/backoffice/UI/StatusSelector.vue";
 import BaseImageUpload from "~/components/backoffice/form/BaseImageUpload.vue";
 import BaseImagesUpload from "~/components/backoffice/form/BaseImagesUpload.vue";
 import BaseFilesUpload from "~/components/backoffice/form/BaseFilesUpload.vue";
 import createSecret from "~/composables/createSecret";
 import TabSelect from "~/components/backoffice/UI/TabSelect.vue";
+import { DisplayMode, Player } from "@prisma/client";
+import Notification from "~/components/backoffice/UI/Notification.vue";
 definePageMeta({
   layout: "backoffice-layout",
   middleware: ["auth"],
 });
 
+const numberOfContacts = ref(0);
+const userMedia = ref<IImage[]>([]);
+const userFiles = ref<IFiles[]>([]);
+const isLoading = ref(true);
+const isError = ref(false);
+const isSuccess = ref(false);
+
+const supabase = useSupabaseUser();
+const user = supabase.value?.id;
+
+if (user) {
+  isError.value = false;
+  isLoading.value = true;
+  const imagesData = await $fetch<{ data: IImage[] }>(`/api/images/${user}`);
+  const filesData = await $fetch<{ data: IFiles[] }>(`/api/files/${user}`);
+  userMedia.value = imagesData ? imagesData.data : [];
+  userFiles.value = filesData ? filesData.data : [];
+  isLoading.value = false;
+}
+
 const route = useRoute();
 const albumId = route.params.id;
-const fetchData = await useFetch(`/api/albums/album/${albumId}`);
-console.log(fetchData.data.value!.data);
-
-const isLoading = ref(true);
+const fetchData = await useFetch<{ data: IAlbum }>(
+  `/api/albums/album/${albumId}`
+);
 
 let formData = reactive<IAlbum>({
   id: "",
@@ -39,7 +53,7 @@ let formData = reactive<IAlbum>({
   label: "",
   genre: "",
   description: ``,
-  player: "SPOTIFY",
+  player: Player.SPOTIFY,
   playerSoundcloud: null,
   playerSpotify: null,
   youtubeVideos: null,
@@ -54,24 +68,24 @@ let formData = reactive<IAlbum>({
     twitter: null,
   },
   images: {
-    hero: null,
+    hero: "",
     logo: null,
-    cover: null,
+    cover: "",
     promo: [],
     background: null,
   },
   files: [],
   tour: null,
-  status: "UNPUBLISHED",
-  displayMode: "LIGHT",
+  displayMode: DisplayMode.LIGHT,
 });
 
 if (fetchData.data.value && fetchData.data.value.data) {
   formData = fetchData.data.value.data;
+  numberOfContacts.value = fetchData.data.value.data.contact.length;
   isLoading.value = false;
 }
 
-const linkToPage = `/${formData.artistSlug}/album/${formData.albumSlug}/${formData.secret}`;
+const linkToPage = `/${formData.artistSlug}/${formData.albumSlug}/${formData.id}?secret=${formData.secret}`;
 
 const addContactHandler = () => {
   formData.contact.push({ id: "", name: "", role: "", phone: "", email: "" });
@@ -97,17 +111,63 @@ function deleteSelectedImageHandler(image: IImage) {
   const idx = formData.images.promo!.indexOf(image);
   formData.images.promo?.splice(+idx!, 1);
 }
+function deleteSelectedFileHandler(file: IFiles) {
+  const idx = formData.files.indexOf(file);
+  formData.files.splice(+idx!, 1);
+}
 
-const numberOfContacts = ref(formData.contact.length);
+async function submitFormHandler() {
+  isError.value = false;
+  isLoading.value = true;
+
+  if (
+    !formData.albumName ||
+    !formData.artistName ||
+    !formData.description ||
+    !formData.genre ||
+    !formData.label ||
+    !formData.releaseDate ||
+    !formData.images.cover ||
+    !formData.images.hero
+  ) {
+    isError.value = true;
+    isLoading.value = false;
+    console.log("brak wypelnionych pol");
+    return;
+  }
+
+  const dataToSend = { ...formData, uid: user };
+  const { data, pending } = await useFetch(`/api/albums/album/${formData.id}`, {
+    method: "PUT",
+    body: { ...dataToSend },
+  });
+  if (data.value) {
+    isSuccess.value = true;
+  } else {
+    isError.value = true;
+  }
+  isLoading.value = pending.value;
+}
+
+console.log(formData);
 </script>
 
 <template>
+  <Notification v-if="isSuccess && !isLoading && !isError" type="success"
+    >Data updated</Notification
+  >
   <LoadingScreen v-if="isLoading" />
   <div class="edit__container" v-else>
     <div class="head">
       <h1>{{ formData.albumName }}</h1>
       <div>
-        <BaseButton size="big" styleType="success" msg="Save" type="submit" />
+        <BaseButton
+          size="big"
+          styleType="success"
+          msg="Save"
+          type="submit"
+          @click="submitFormHandler"
+        />
         <BaseButton
           size="big"
           styleType="primary"
@@ -131,7 +191,7 @@ const numberOfContacts = ref(formData.contact.length);
       />
     </div>
     <article>
-      <form @submit.prevent="">
+      <form @submit.prevent>
         <div class="form--left">
           <BaseInput
             label="Artist / band"
@@ -217,7 +277,8 @@ const numberOfContacts = ref(formData.contact.length);
             <BaseImageUpload
               label="Tour image"
               text="Choose media"
-              :image="formData.tour.image"
+              :imageSelected="formData.tour.image ? formData.tour.image : ''"
+              :images="userMedia"
               @deleteItem="formData.tour.image = null"
               @selectionHandler="(image: IImage) => (formData.tour!.image = image.path)"
             />
@@ -225,6 +286,7 @@ const numberOfContacts = ref(formData.contact.length);
               styleType="danger"
               msg="Delete tour"
               size="small"
+              type="button"
               @click="formData.tour = null"
             />
           </div>
@@ -255,6 +317,7 @@ const numberOfContacts = ref(formData.contact.length);
               styleType="danger"
               msg="Delete contact"
               size="small"
+              type="button"
               @click="removeContactHandler(i - 1)"
             />
             <hr />
@@ -263,6 +326,7 @@ const numberOfContacts = ref(formData.contact.length);
             size="normal"
             styleType="secondary"
             msg="Add contact"
+            type="button"
             @click="addContactHandler"
           />
           <hr />
@@ -312,23 +376,26 @@ const numberOfContacts = ref(formData.contact.length);
           <BaseImageUpload
             label="Hero image"
             text="Choose media"
-            :image="formData.images.hero"
-            @deleteItem="formData.images.hero = null"
+            :imageSelected="formData.images.hero"
+            :images="userMedia"
+            @deleteItem="formData.images.hero = ''"
             @selectionHandler="(image: IImage) => (formData.images.hero = image.path)"
           />
           <hr />
           <BaseImageUpload
             label="Album cover"
             text="Choose media"
-            :image="formData.images.cover"
-            @deleteItem="formData.images.cover = null"
+            :imageSelected="formData.images.cover"
+            :images="userMedia"
+            @deleteItem="formData.images.cover = ''"
             @selectionHandler="(image: IImage) => (formData.images.cover = image.path)"
           />
           <hr />
           <BaseImagesUpload
             label="Promo images"
             text="Choose media"
-            :images="formData.images.promo"
+            :imagesSelected="formData.images.promo"
+            :images="userMedia"
             @selectionHandler="(images: IImage[]) => (formData.images.promo = images)"
             @deleteSelectedImage="(image: IImage) => (deleteSelectedImageHandler(image))"
           />
@@ -336,14 +403,20 @@ const numberOfContacts = ref(formData.contact.length);
           <BaseFilesUpload
             label="Promo files"
             text="Choose files"
-            :files="formData.files"
+            :files="userFiles"
+            :filesSelected="formData.files"
+            @selectionHandler="(files: IFiles[]) => (formData.files = files)"
+            @deleteSelectedFile="(file: IFiles) => (deleteSelectedFileHandler(file))"
           />
 
           <hr />
           <BaseImageUpload
             label="Custom background image"
             text="Choose media"
-            :image="formData.images.background"
+            :imageSelected="
+              formData.images.background ? formData.images.background : ''
+            "
+            :images="userMedia"
             @deleteItem="formData.images.background = null"
             @selectionHandler="(image: IImage) => (formData.images.background = image.path)"
           />
@@ -353,11 +426,6 @@ const numberOfContacts = ref(formData.contact.length);
             :list="['Light', 'Dark']"
             :active="formData.displayMode"
             @clickItem="(item: DisplayTypes) => (formData.displayMode = item)"
-          />
-          <hr />
-          <StatusSelector
-            :active="formData.status"
-            @setStatus="(status: StatusTypes) => formData.status = status"
           />
           <hr />
           <BaseButton size="big" styleType="success" msg="Save" type="submit" />

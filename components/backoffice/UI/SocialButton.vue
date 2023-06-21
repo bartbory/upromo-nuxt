@@ -3,7 +3,9 @@ import { PropType, computed } from "vue";
 import { SocialTypes } from "../../../types";
 
 const props = defineProps({
-  text: { type: String, required: true },
+  link: { type: String, required: true },
+  baselink: { type: String, required: true },
+  name: { type: String, required: true },
   icon: { type: String as PropType<SocialTypes>, required: true },
 });
 
@@ -31,14 +33,14 @@ onMounted(() => {
 });
 </script>
 <template>
-  <button>
+  <a :href="`${props.baselink}${props.link}`">
     <font-awesome-icon :icon="iconDisplay" size="xl" v-if="iconDisplay" />
-    <p>{{ props.text }}</p>
-  </button>
+    <p>{{ props.name }}</p>
+  </a>
 </template>
 
 <style scoped>
-button {
+a {
   display: flex;
   flex-direction: row;
   align-items: center;

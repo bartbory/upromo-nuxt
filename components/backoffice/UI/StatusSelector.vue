@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 import { StatusTypes } from "../../../types";
+import { Status } from "@prisma/client";
 
 const props = defineProps({
   active: {
@@ -18,24 +19,24 @@ const emit = defineEmits(["setStatus"]);
     <label>Status</label>
     <button
       class="normal"
-      :class="props.active === 'PUBLISHED' ? 'active' : 'inactive'"
-      @click="emit('setStatus', 'published')"
+      :class="props.active === Status.PUBLISHED ? 'active' : 'inactive'"
+      @click="emit('setStatus', Status.PUBLISHED)"
     >
       <span class="dot published"></span>
       <p>Published</p>
     </button>
     <button
       class="normal"
-      :class="props.active === 'DRAFT' ? 'active' : 'inactive'"
-      @click="emit('setStatus', 'draft')"
+      :class="props.active === Status.DRAFT ? 'active' : 'inactive'"
+      @click="emit('setStatus', Status.DRAFT)"
     >
       <span class="dot draft"></span>
       <p>Draft</p>
     </button>
     <button
       class="normal"
-      :class="props.active === 'UNPUBLISHED' ? 'active' : 'inactive'"
-      @click="emit('setStatus', 'unpublished')"
+      :class="props.active === Status.UNPUBLISHED ? 'active' : 'inactive'"
+      @click="emit('setStatus', Status.UNPUBLISHED)"
     >
       <span class="dot unpublished"></span>
       <p>Unpublished</p>

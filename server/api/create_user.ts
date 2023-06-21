@@ -5,12 +5,14 @@ export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
     const sentPrompt = body.prompt;
+    console.log(body);
     const result = await prisma.user.create({
       data: {
         id: body.id,
         email: body.email,
         name: body.name,
-        avatar: body.avatr,
+        avatar: body.avatar,
+        plan: body.plan,
       },
     });
 

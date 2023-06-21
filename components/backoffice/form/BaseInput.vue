@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { InputHTMLAttributes } from "nuxt/dist/app/compat/capi";
+
 defineProps(["modelValue", "label", "inputType", "date", "isReq"]);
 defineEmits(["update:modelValue"]);
 </script>
@@ -9,8 +11,9 @@ defineEmits(["update:modelValue"]);
     <input
       :value="modelValue"
       :type="inputType"
+      :required="isReq"
       @input="
-        $emit('update:modelValue', ($event.target as HTMLInputElement).value)
+        $emit('update:modelValue', ($event.target as InputHTMLAttributes).value)
       "
     />
   </div>

@@ -7,13 +7,13 @@ const isLoading = ref(true);
 
 const router = useRouter();
 const user = useSupabaseUser();
+const userName = user.value?.user_metadata.name;
 
 if (!user.value) {
   router.push("/auth/login");
 } else {
   isLoading.value = false;
 }
-
 const signOutHandle = () => {
   const supabase = useSupabaseClient();
   supabase.auth.signOut();
@@ -24,7 +24,7 @@ const signOutHandle = () => {
 <template>
   <LoadingScreen v-if="isLoading" />
   <div v-else>
-    <TopBar @sign-out="signOutHandle" />
+    <TopBar @sign-out="signOutHandle" :userName="userName" />
     <main>
       <SideNav />
       <section>

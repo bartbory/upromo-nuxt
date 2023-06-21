@@ -1,41 +1,40 @@
 <script setup lang="ts">
 import { useRouter } from "nuxt/app";
-import Status from "../UI/Status.vue";
 import BaseButton from "../UI/BaseButton.vue";
+import { PropType } from "nuxt/dist/app/compat/capi";
+import { IAlbumList } from "~/types";
 
 const props = defineProps({
-  id: { type: String, required: true },
-  album: { type: String, required: true },
-  band: { type: String, required: true },
-  date: { type: String, required: true },
-  status: { type: String, required: true },
-  cover: { type: String, required: true },
+  album: { type: Object as PropType<IAlbumList>, required: true },
 });
 
+const linkToPage = `/${props.album.artistSlug}/${props.album.albumSlug}/${props.album.id}?secret=${props.album.secret}`;
 const router = useRouter();
 </script>
 
 <template>
   <div class="album__container">
-    <div class="album__cover"><img :src="props.cover" /></div>
+    <div class="album__cover"><img :src="album.imageCoverPath" /></div>
     <div class="album__name">
-      <h4 class="label">{{ props.band }}</h4>
-      <h4>{{ props.album }}</h4>
+      <h4 class="label">{{ album.artistName }}</h4>
+      <h4>{{ album.albumName }}</h4>
     </div>
     <div class="album__release">
       <h4 class="label">Release date</h4>
-      <h4>{{ props.date }}</h4>
-    </div>
-    <div class="album__status">
-      <h4 class="label">Status</h4>
-      <Status :statusType="status" :isSmall="true" />
+      <h4>{{ album.releaseDate }}</h4>
     </div>
     <div class="album__options">
       <BaseButton
         size="small"
         styleType="primary"
+        msg="Visit"
+        @click="router.push(linkToPage)"
+      />
+      <BaseButton
+        size="small"
+        styleType="secondary"
         msg="Edit"
-        @click="router.push(`albums/edit/${props.id}`)"
+        @click="router.push(`albums/edit/${album.id}`)"
       />
       <BaseButton size="small" styleType="danger" msg="Delete" />
     </div>
@@ -52,6 +51,13 @@ const router = useRouter();
   padding: 8px;
   background-color: var(--gray-100);
   border-radius: var(--br-2);
+  border: 1px solid transparent;
+  transition: all 0.3s;
+}
+
+.album__container:hover {
+  border: 1px solid var(--purple-900);
+  box-shadow: var(--shadow-sc);
 }
 .album__cover {
   display: none;
@@ -74,10 +80,6 @@ const router = useRouter();
   display: none;
   flex: 0 0 15%;
 }
-.album__status {
-  flex: 0 1 15%;
-}
-
 .album__options {
   flex: 1 0 10%;
   display: flex;
@@ -115,10 +117,6 @@ const router = useRouter();
   }
   .album__name {
     flex: 1 1 40%;
-  }
-
-  .album__status {
-    flex: 0 0 15%;
   }
 
   .album__options {

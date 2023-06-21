@@ -5,9 +5,10 @@ import MenuButton from "./UI/MenuButton.vue";
 <template>
   <nav>
     <MenuButton name="Dashboard" to="/user" />
-    <MenuButton name="Albums" to="/user/albums" />
-    <MenuButton name="Files" to="/user/files" />
     <MenuButton name="Media" to="/user/media" />
+    <MenuButton name="Files" to="/user/files" />
+    <MenuButton name="Albums" to="/user/albums" />
+    <MenuButton name="Contacts" to="/user/contacts" />
     <MenuButton name="Profile" to="/user/profile" />
   </nav>
 </template>

@@ -3,34 +3,71 @@ import { PropType } from "vue";
 import BaseButton from "../UI/BaseButton.vue";
 import { IImage } from "../../../types";
 import ImageCard from "../card/ImageCard.vue";
-
-const imagesData: IImage[] = [
-  { path: "/img5.png", author: "Jacob Nielse", description: "" },
-  { path: "/img6.png", author: "Mark Twain", description: "" },
-  { path: "/img7.png", author: "Tony Hawk", description: "" },
-  { path: "/img8.png", author: "Rob Bob", description: "" },
-  { path: "/img9.png", author: "Salma Hayek", description: "" },
-  { path: "/img1.png", author: "Ed Sheeran", description: "" },
-  { path: "/img2.png", author: "Mario Bros", description: "" },
-  { path: "/img3.png", author: "Mario Bros", description: "" },
-  { path: "/img4.png", author: "Mario Bros", description: "" },
-  { path: "/bg.jpeg", author: "Mario Bros", description: "" },
-];
+import FileUpload from "../UI/FileUpload.vue";
+import StorageCapacity from "../UI/StorageCapacity.vue";
 
 const props = defineProps({
   show: { type: Boolean, required: true },
   title: { type: String, required: true },
-  selected: {
-    type: Object as PropType<string | null>,
+  imageSelected: {
+    type: String as PropType<string | null>,
     required: false,
     default: null,
   },
+  images: {
+    type: Array as PropType<IImage[]>,
+    required: true,
+  },
 });
 
-const emits = defineEmits(["selectionHandler"]);
+const emits = defineEmits(["selectionHandler", "close"]);
+
+const supabase = useSupabaseUser();
+const user = supabase.value;
+
+const userMedia = ref<IImage[]>([]);
+const isLoading = ref(true);
+const isError = ref(false);
+const storageCapacity = ref(0);
+
+// Max storage capacity declaration
+const maxStorageCapacity = maxImagesStorageCapacity(user?.user_metadata.plan);
+
+// Fetch data from bucket on mount
+const { data, pending, error } = await useFetch<{ data: IImage[] }>(
+  `/api/images/${user?.id}`
+);
+if (data.value) {
+  isLoading.value = pending.value;
+  userMedia.value = data.value ? data.value.data : [];
+  updateStorageCapacity();
+}
+
+// Fetch data after send new file
+async function fetchData() {
+  isError.value = false;
+  isLoading.value = true;
+  const { data, pending } = await useFetch<{ data: IImage[] }>(
+    `/api/images/${user?.id}`
+  );
+  isLoading.value = pending.value;
+  userMedia.value = data.value ? data.value.data : [];
+}
+
+// Update storage capacity
+function updateStorageCapacity() {
+  let totalSize = 0;
+  for (let i = 0; i < userMedia.value.length; i++) {
+    totalSize += userMedia.value[i].size;
+  }
+  storageCapacity.value = (getMbFromFile(totalSize) * 100) / maxStorageCapacity;
+}
+
+// Update storage after upload
+watchEffect(() => updateStorageCapacity());
 
 function isActive(path: string) {
-  if (props.selected && props.selected === path) {
+  if (props.imageSelected && props.imageSelected === path) {
     return true;
   }
 }
@@ -43,11 +80,19 @@ function isActive(path: string) {
         <div class="modal-header">
           <h1>{{ props.title }}</h1>
         </div>
-
+        <StorageCapacity :storage-capacity="storageCapacity" />
+        <FileUpload
+          v-if="user && storageCapacity <= 100"
+          :maxSize="10"
+          accept="png,jpg,jpeg"
+          :uid="user.id"
+          type="images"
+          @fetchData="fetchData"
+        />
         <div class="modal-body">
           <ImageCard
-            v-for="image in imagesData"
-            :key="image.path"
+            v-for="image in userMedia"
+            :key="image.id"
             :imagePath="image.path"
             :isActive="isActive(image.path)"
             @click="emits('selectionHandler', image)"

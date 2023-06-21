@@ -1,13 +1,23 @@
 <script setup lang="ts">
+import BaseButton from "./UI/BaseButton.vue";
+const props = defineProps({
+  userName: { type: String, required: true },
+});
 const emits = defineEmits(["signOut"]);
 </script>
 
 <template>
   <header>
     <h1 class="logo">UPROMO</h1>
-    <div class="user" @click="emits('signOut')">
-      USER
-      <div class="avatar"></div>
+    <div class="user">
+      {{ userName }}
+      <BaseButton
+        msg="Logout"
+        styleType="secondary"
+        type="button"
+        size="small"
+        @click="emits('signOut')"
+      />
     </div>
   </header>
 </template>

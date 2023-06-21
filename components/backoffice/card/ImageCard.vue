@@ -17,8 +17,10 @@ const props = defineProps({
   justify-content: flex-start;
   align-items: center;
   column-gap: 8px;
+  position: relative;
   flex: 1 1 30%;
   max-width: 200px;
+  max-height: 200px;
   padding: 16px;
   background-color: var(--gray-100);
   border-radius: var(--br-4);
@@ -30,12 +32,14 @@ const props = defineProps({
   background: var(--purple-400);
 }
 .media {
-  width: 100%;
-  height: auto;
+  object-fit: contain;
+  max-width: 100%;
   max-height: 100%;
+  margin: auto auto;
 }
 .media img {
-  width: 100%;
+  max-height: 168px;
+  max-width: 168px;
 }
 .active {
   background-color: var(--purple-900);
