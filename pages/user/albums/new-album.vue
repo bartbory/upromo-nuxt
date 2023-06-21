@@ -224,6 +224,7 @@ function isActive(id: string) {
         <BaseInput
           label="Youtube videos"
           inputType="text"
+          description="Coma separated youtube videos ID (ex. https://www.youtube.com/watch?v={videoID})"
           v-model.trim="formData.youtubeVideos"
         />
         <hr />
@@ -238,12 +239,14 @@ function isActive(id: string) {
           label="Soundcloud playlist"
           inputType="text"
           v-model.trim="formData.playerSoundcloud"
+          description="Select playlist/album from soundcloud then click 'share', select 'Embed' tab and paste code here"
           v-if="formData.player === 'SOUNDCLOUD'"
         ></BaseInput>
         <BaseInput
           label="Spotify playlist"
           inputType="text"
           v-model.trim="formData.playerSpotify"
+          description="Paste spotify link to album/artist/playlist"
           v-if="formData.player === 'SPOTIFY'"
         ></BaseInput>
         <hr />
@@ -313,36 +316,43 @@ function isActive(id: string) {
             label="Spotify"
             inputType="text"
             v-model.trim="formData.links.spotify"
+            description="Just give us your spotify ID"
           ></BaseInput>
           <BaseInput
             label="Soundcloud"
             inputType="text"
             v-model.trim="formData.links.soundcloud"
+            description="Just give us your soundcloud ID"
           ></BaseInput>
           <BaseInput
             label="Youtube"
             inputType="text"
             v-model.trim="formData.links.youtube"
+            description="Just give us your youtube ID"
           ></BaseInput>
           <BaseInput
             label="Facebook"
             inputType="text"
             v-model.trim="formData.links.facebook"
+            description="Just give us your facebook fanpage name"
           ></BaseInput>
           <BaseInput
             label="Instagram"
             inputType="text"
             v-model.trim="formData.links.instagram"
+            description="Just give us your instagram name"
           ></BaseInput>
           <BaseInput
             label="Tiktok"
             inputType="text"
             v-model.trim="formData.links.tiktok"
+            description="Just give us your tiktok name"
           ></BaseInput>
           <BaseInput
             label="Twitter"
             inputType="text"
             v-model.trim="formData.links.twitter"
+            description="Just give us your twitter name"
           ></BaseInput>
         </div>
       </div>

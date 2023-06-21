@@ -15,7 +15,6 @@ const emits = defineEmits(["close", "refetch"]);
 const supabase = useSupabaseUser();
 const user = supabase.value?.id;
 
-
 let contact = reactive<IPerson>({
   id: "",
   name: "",
@@ -92,8 +91,8 @@ async function deleteContact(id: string) {
       v-model.trim="contact.role"
       :isReq="true"
     />
-    <BaseInput label="Phone" type="text" v-model.trim="contact.phone" />
-    <BaseInput label="E-mail" type="text" v-model.trim="contact.email" />
+    <BaseInput label="Phone" type="number" v-model.trim="contact.phone" />
+    <BaseInput label="E-mail" type="email" v-model.trim="contact.email" />
     <div class="actions">
       <BaseButton
         msg="Save"

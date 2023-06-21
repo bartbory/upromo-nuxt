@@ -66,6 +66,10 @@ const props = defineProps({
   background-color: var(--purple-900);
   color: var(--white-900);
 }
+
+.active > .label {
+  color: var(--white-900);
+}
 @media screen and (min-width: 860px) {
   .contact__detail {
     display: flex;
