@@ -42,11 +42,14 @@ const errors: Ref<string[]> = ref([]);
 // };
 const supabase = useSupabaseClient();
 
-async function sendToDb(file: {
-  name: string;
-  extention: string;
-  size: number;
-}, type: string) {
+async function sendToDb(
+  file: {
+    name: string;
+    extention: string;
+    size: number;
+  },
+  type: string
+) {
   const { data, pending } = await useFetch(`/api/${type}/upload/${props.uid}`, {
     body: file,
     method: "post",
@@ -117,6 +120,14 @@ function isFileValid(file: IFile) {
   <div class="file-upload">
     <LoadingScreen v-if="isLoading" />
     <div class="file-upload__area" v-if="!isLoading">
+      <p v-if="type === 'images'">
+        You can upload images with extension: .png, .jpg, .jpeg. Max image size
+        3mb
+      </p>
+      <p v-if="type === 'files'">
+        You can upload files with extension: .ai, .psd, .pdf, .doc, .docx, .zip,
+        .rar, .7z. Max file size: 50mb
+      </p>
       <input type="file" name="" id="" @change="handleFileChange($event)" />
       <div v-if="errors.length > 0">
         <div
@@ -137,6 +148,8 @@ function isFileValid(file: IFile) {
   max-width: 100%;
   display: flex;
   align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-top: 24px;
 }
@@ -144,6 +157,8 @@ function isFileValid(file: IFile) {
   width: 100%;
   min-height: 100px;
   display: flex;
+  flex-direction: column;
+  gap: 16px;
   align-items: center;
   justify-content: center;
   border: 2px dashed var(--gray-100);

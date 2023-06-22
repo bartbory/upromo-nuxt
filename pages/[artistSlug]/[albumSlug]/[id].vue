@@ -445,10 +445,12 @@ label {
   row-gap: 16px;
   width: 100%;
 }
+.booking {
+  margin-bottom: 40px;
+}
 .booking__contact {
   padding: 24px 16px;
   background-color: var(--gray-100);
-  margin-bottom: 40px;
 }
 
 .dark:deep(.booking__contact) {

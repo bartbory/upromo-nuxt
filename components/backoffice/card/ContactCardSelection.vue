@@ -40,6 +40,7 @@ const props = defineProps({
   border-radius: var(--br-2);
   border: 1px solid transparent;
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .contact__container:hover {
@@ -57,19 +58,23 @@ const props = defineProps({
   font-size: 12px;
 }
 .label {
-  color: var(--blue-900);
-  opacity: 0.6;
+  opacity: 0.3;
   font-size: 12px;
 }
 
 .active {
-  background-color: var(--purple-900);
+  background-color: var(--blue-900);
   color: var(--white-900);
 }
 
-.active::deep(.label) {
+.contact__container:has(.active)
+  > .contact__detail
+  > .contact__detail
+  > div
+  > .label {
   color: var(--white-900);
 }
+
 @media screen and (min-width: 860px) {
   .contact__detail {
     display: flex;

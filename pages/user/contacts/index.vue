@@ -69,6 +69,13 @@ async function deleteContact(id: string) {
   <LoadingScreen v-if="isLoading" />
   <div v-else>
     <article v-if="contacts.length > 0">
+      <FormContact
+      v-if="showForm"
+      :mode="mode"
+      :selectedContact="selectedContact ? selectedContact : null"
+      @close="showForm = false"
+      @refetch="fetchData"
+    />
       <ContactCard
         v-for="contact in contacts"
         :key="contact.id"
@@ -79,13 +86,6 @@ async function deleteContact(id: string) {
       />
     </article>
     <p v-else>No data</p>
-    <FormContact
-      v-if="showForm"
-      :mode="mode"
-      :selectedContact="selectedContact ? selectedContact : null"
-      @close="showForm = false"
-      @refetch="fetchData"
-    />
   </div>
 </template>
 
@@ -95,5 +95,6 @@ article {
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+  margin-bottom: 40px;
 }
 </style>

@@ -3,16 +3,16 @@ import { PlanTypes } from "~/types";
 export default function maxFileStorageCapacity(plan: PlanTypes) {
   switch (plan) {
     case "LITE":
-      return 10;
+      return 5;
       break;
     case "BASIC":
-      return 25;
+      return 15;
       break;
     case "PRO":
-      return 100;
+      return 30;
       break;
     default:
-      return 20;
+      return 30;
       break;
   }
 }

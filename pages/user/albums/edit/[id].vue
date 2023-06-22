@@ -40,8 +40,12 @@ if (user) {
   isLoading.value = true;
   const imagesData = await $fetch<{ data: IImage[] }>(`/api/images/${user}`);
   const filesData = await $fetch<{ data: IFiles[] }>(`/api/files/${user}`);
+  const contactsData = await $fetch<{ data: IPerson[] }>(
+    `/api/contacts/${user}`
+  );
   userMedia.value = imagesData ? imagesData.data : [];
   userFiles.value = filesData ? filesData.data : [];
+  userContacts.value = contactsData ? contactsData.data : [];
   isLoading.value = false;
 }
 
@@ -221,7 +225,7 @@ async function submitFormHandler() {
       />
     </div>
     <article>
-      <form @submit.prevent>
+      <form @submit.prevent="submitFormHandler">
         <div class="form--left">
           <BaseInput
             label="Artist / band"
@@ -527,6 +531,13 @@ form {
   display: flex;
   flex-direction: column;
   row-gap: 24px;
+}
+.contacts__list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  max-height: 300px;
+  overflow-y: scroll;
 }
 
 @media screen and (min-width: 740px) {

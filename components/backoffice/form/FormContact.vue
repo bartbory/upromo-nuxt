@@ -65,16 +65,6 @@ async function submitFormHandler() {
     isLoading.value = pending.value;
   }
 }
-
-async function deleteContact(id: string) {
-  const { data, pending } = await useFetch(`/api/contacts/contact/${id}`, {
-    method: "DELETE",
-  });
-  isLoading.value = pending.value;
-  if (data.value) {
-    emits("refetch");
-  }
-}
 </script>
 
 <template>
@@ -94,22 +84,10 @@ async function deleteContact(id: string) {
     <BaseInput label="Phone" type="number" v-model.trim="contact.phone" />
     <BaseInput label="E-mail" type="email" v-model.trim="contact.email" />
     <div class="actions">
-      <BaseButton
-        msg="Save"
-        size="normal"
-        styleType="success"
-        type="submit"
-      /><BaseButton
-        v-if="mode === 'edit' && selectedContact"
-        msg="Delete"
-        size="normal"
-        styleType="danger"
-        type="button"
-        @click="deleteContact(selectedContact.id)"
-      />
+      <BaseButton msg="Save" size="small" styleType="success" type="submit" />
       <BaseButton
         msg="Cancel"
-        size="normal"
+        size="small"
         styleType="neutral"
         type="button"
         @click="emits('close')"

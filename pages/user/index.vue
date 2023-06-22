@@ -69,7 +69,7 @@ await getImagesStorageCapacity();
 
 <template>
   <div class="head">
-    <h1>My dashboard</h1>
+    <h1>Dashboard</h1>
   </div>
   <section class="capacity__container">
     <BaseCard

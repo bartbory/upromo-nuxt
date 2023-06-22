@@ -78,7 +78,7 @@ watchEffect(() => updateStorageCapacity());
 
 <template>
   <div class="head">
-    <h1>My Files</h1>
+    <h1>Files</h1>
   </div>
   <LoadingScreen v-if="isLoading" />
   <StorageCapacity :storage-capacity="storageCapacity" />

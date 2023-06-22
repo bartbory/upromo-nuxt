@@ -106,12 +106,12 @@ const imageDetails = computed(() => {
 
 <template>
   <div class="head">
-    <h1>My Media</h1>
+    <h1>Media</h1>
   </div>
   <StorageCapacity :storage-capacity="storageCapacity" />
   <FileUpload
     v-if="user && storageCapacity <= 100"
-    :maxSize="10"
+    :maxSize="3"
     accept="png,jpg,jpeg"
     :uid="user.id"
     type="images"

@@ -44,6 +44,11 @@ a {
   gap: 16px;
   background-color: var(--gray-900);
   color: var(--white-900);
+  transition: 0.3s;
+}
+
+a:hover:not(.router-link-active) {
+  background-color: var(--white-150);
 }
 
 a > p {

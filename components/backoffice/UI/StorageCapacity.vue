@@ -22,7 +22,11 @@ function colourOfSpace(v: number) {
       <span
         style="font-weight: 700"
         :style="{ color: colourOfSpace(props.storageCapacity) }"
-        >{{ props.storageCapacity.toFixed(0) }}%</span
+        >{{
+          props.storageCapacity > 100
+            ? "100"
+            : props.storageCapacity.toFixed(0)
+        }}%</span
       >
       of your disk space</label
     >

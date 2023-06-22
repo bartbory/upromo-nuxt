@@ -34,14 +34,16 @@ const storageCapacity = ref(0);
 const maxStorageCapacity = maxImagesStorageCapacity(user?.user_metadata.plan);
 
 // Fetch data from bucket on mount
-const { data, pending, error } = await useFetch<{ data: IFiles[] }>(
-  `/api/files/${user?.id}`
-);
-if (data.value) {
-  isLoading.value = pending.value;
-  userFiles.value = data.value ? data.value.data : [];
-  updateStorageCapacity();
-}
+onMounted(async () => {
+  const { data, pending, error } = await useFetch<{ data: IFiles[] }>(
+    `/api/files/${user?.id}`
+  );
+  if (data.value) {
+    isLoading.value = pending.value;
+    userFiles.value = data.value ? data.value.data : [];
+    updateStorageCapacity();
+  }
+});
 
 // Fetch data after send new file
 async function fetchData() {
@@ -83,7 +85,7 @@ function isActive(id: string) {
         <StorageCapacity :storage-capacity="storageCapacity" />
         <FileUpload
           v-if="user && storageCapacity <= 100"
-          :maxSize="10"
+          :maxSize="50"
           accept="ai,psd,pdf,doc,docx,zip,rar,7z"
           :uid="user.id"
           type="files"

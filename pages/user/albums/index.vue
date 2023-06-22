@@ -34,7 +34,7 @@ const albumMaxCount = maxAlbumCount(user.value?.user_metadata.plan);
 
 <template>
   <div class="head">
-    <h1>My Albums</h1>
+    <h1>Albums</h1>
     <BaseButton
       v-if="albums.length < albumMaxCount"
       size="big"
