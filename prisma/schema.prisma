@@ -105,9 +105,9 @@ model Contact {
   role        String
   phone       String?
   email       String
-  connectWith Album?  @relation(onDelete: Cascade, fields: [albumId], references: [id])
+  connectWith Album?  @relation(fields: [albumId], references: [id])
   albumId     String?
-  createdBy   User    @relation(fields: [createdById], references: [id])
+  createdBy   User    @relation(onDelete: Cascade, fields: [createdById], references: [id])
   createdById String
 }
 

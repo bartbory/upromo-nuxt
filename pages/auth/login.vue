@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
+import Notification from "~/components/backoffice/UI/Notification.vue";
 import BaseInput from "~/components/backoffice/form/BaseInput.vue";
 import LoadingScreen from "~/components/loading/LoadingScreen.vue";
 
@@ -7,22 +8,27 @@ definePageMeta({
   middleware: ["auth"],
 });
 const supabase = useSupabaseAuthClient();
-const router = useRouter();
+const errorMessage = ref("");
 const loading = ref(false);
 const email = ref("");
 const password = ref("");
-const msg = ref("");
+const isError = ref(false);
 
 const handleLogin = async () => {
+  isError.value = false;
   loading.value = true;
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value,
   });
+
   if (error) {
+    console.log(error);
     loading.value = false;
+    isError.value = true;
+    errorMessage.value = "Incorrect login credentials";
   }
-  if (data) {
+  if (data.user) {
     navigateTo("/user");
   }
 };
@@ -31,22 +37,13 @@ const handleLogin = async () => {
 <template>
   <section>
     <h1 class="logo">UPROMO</h1>
-    <form @submit="handleLogin" v-if="!loading">
-      <BaseInput label="Login" inputType="email" v-model="email" v-if="!msg" />
-      <BaseInput
-        label="Password"
-        inputType="password"
-        v-model="password"
-        v-if="!msg"
-      />
-      <BaseButton
-        type="submit"
-        styleType="primary"
-        msg="Login"
-        size="normal"
-        v-if="!msg"
-      />
-      <p>{{ msg }}</p>
+    <form @submit.prevent="handleLogin" v-if="!loading">
+      <BaseInput label="Login" inputType="email" v-model="email" />
+      <BaseInput label="Password" inputType="password" v-model="password" />
+      <BaseButton type="submit" styleType="primary" msg="Login" size="normal" />
+      <Notification v-if="isError" type="danger">{{
+        errorMessage
+      }}</Notification>
     </form>
     <LoadingScreen v-else />
     <div class="bottom">
