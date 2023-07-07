@@ -35,14 +35,15 @@ const maxStorageCapacity = maxImagesStorageCapacity(user?.user_metadata.plan);
 
 // Fetch data from bucket on mount
 onMounted(async () => {
-  const { data, pending, error } = await useFetch<{ data: IImage[] }>(
-    `/api/images/${user?.id}`
-  );
-  if (data.value) {
-    isLoading.value = pending.value;
-    userMedia.value = data.value ? data.value.data : [];
-    updateStorageCapacity();
-  }
+  // const { data, pending, error } = await useFetch<{ data: IImage[] }>(
+  //   `/api/images/${user?.id}`
+  // );
+  // if (data.value) {
+  //   isLoading.value = pending.value;
+  //   userMedia.value = data.value ? data.value.data : [];
+  //   updateStorageCapacity();
+  // }
+  await fetchData();
 });
 
 // Fetch data after send new file
@@ -54,6 +55,7 @@ async function fetchData() {
   );
   isLoading.value = pending.value;
   userMedia.value = data.value ? data.value.data : [];
+  updateStorageCapacity();
 }
 
 // Update storage capacity
@@ -93,6 +95,7 @@ function isActive(path: string) {
         />
         <div class="modal-body">
           <ImageCard
+            v-if="!isLoading"
             v-for="image in userMedia"
             :key="image.id"
             :imagePath="image.path"
@@ -115,58 +118,3 @@ function isActive(path: string) {
     </div>
   </Transition>
 </template>
-
-<style>
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  transition: opacity 0.3s ease;
-}
-
-.modal-container {
-  width: 700px;
-  max-width: 80%;
-  margin: auto;
-  padding: 24px;
-  background-color: var(--white-900);
-  border-radius: var(--br-8);
-  box-shadow: var(--shadow-sc);
-  transition: all 0.3s ease;
-}
-
-.modal-header h3 {
-  color: var(--gray-900);
-}
-
-.modal-body {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  max-height: 500px;
-  overflow-y: scroll;
-  margin: 24px 0;
-}
-button {
-  float: right;
-}
-
-.modal-enter-from {
-  opacity: 0;
-}
-
-.modal-leave-to {
-  opacity: 0;
-}
-
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-</style>

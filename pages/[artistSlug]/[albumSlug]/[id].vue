@@ -209,7 +209,7 @@ const background = computed(() => {
       <SocialButton
         icon="spotify"
         :link="album.links.spotify"
-        baselink="https://www.spotify.com/artist/"
+        baselink="https://open.spotify.com/artist/"
         name="Spotify"
         v-if="album.links.spotify"
       />

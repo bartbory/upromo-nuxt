@@ -68,14 +68,14 @@ async function deleteContact(id: string) {
   </div>
   <LoadingScreen v-if="isLoading" />
   <div v-else>
-    <article v-if="contacts.length > 0">
-      <FormContact
+    <FormContact
       v-if="showForm"
       :mode="mode"
       :selectedContact="selectedContact ? selectedContact : null"
       @close="showForm = false"
       @refetch="fetchData"
     />
+    <article v-if="contacts.length > 0">
       <ContactCard
         v-for="contact in contacts"
         :key="contact.id"
