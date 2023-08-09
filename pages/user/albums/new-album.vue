@@ -217,9 +217,10 @@ function isActive(id: string) {
         ></BaseInput>
         <BaseTextarea
           label="Description"
-          inputType="text"
+          inputType="html"
           v-model.trim="formData.description"
           :isReq="true"
+          description="You can use html tags in description like <b> <h1> <h2> <i>"
         ></BaseTextarea>
         <BaseInput
           label="Youtube videos"
@@ -268,8 +269,9 @@ function isActive(id: string) {
           ></BaseInput>
           <BaseTextarea
             label="Tour description"
-            inputType="text"
+            inputType="html"
             v-model.trim="formData.tour.description"
+            description="You can use html tags in description like <b> <h1> <h2> <i>"
           ></BaseTextarea>
           <BaseInput
             label="External link"

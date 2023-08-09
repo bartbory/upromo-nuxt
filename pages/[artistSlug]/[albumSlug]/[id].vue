@@ -119,7 +119,7 @@ const background = computed(() => {
       </div>
       <div class="information">
         <label>Description</label>
-        <p>{{ album.description }}</p>
+        <div class="description__block" v-html="album.description"></div>
       </div>
     </section>
     <section class="video" v-if="youtubeVideos.length > 0">
@@ -132,7 +132,7 @@ const background = computed(() => {
     ></div>
     <section class="tour container" v-if="album.tour">
       <h1>Tour "{{ album.tour.name }}"</h1>
-      <p>{{ album.tour.description }}</p>
+      <div class="description__block" v-html="album.tour.description"></div>
       <a v-if="album.tour.link" :href="album.tour.link">External link</a>
       <ConcertsList
         v-if="album.tour.concerts"
@@ -149,7 +149,10 @@ const background = computed(() => {
         >
           <img
             :src="image.path"
-            :alt="image.description + ' / Created by: ' + image.author"
+            :alt="
+              (image.description ? image.description : '') +
+              (image.author ? ' / Created by: ' + image.author : '')
+            "
             @click="navigateTo(image.path, { external: true })"
           />
         </div>
@@ -160,10 +163,9 @@ const background = computed(() => {
         <div class="materials__list">
           <FileButton
             v-for="file in album.files"
-            :name="file.name"
             :key="file.id"
+            :name="file.name"
             :link="file.path"
-            @click="navigateTo(file.path, { external: true })"
           />
         </div>
       </div>
@@ -304,10 +306,12 @@ label {
   position: absolute;
   bottom: 0;
   left: 0;
+  padding: 0px;
 }
 
 .header__album__image {
   display: none;
+  padding: 8px;
 }
 
 .header__album__details {
@@ -329,6 +333,11 @@ label {
   position: relative;
 }
 
+.description__block {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+}
 .blue {
   position: absolute;
   top: 0;
@@ -420,12 +429,24 @@ label {
 }
 
 .gallery__item {
-  max-width: 100%;
   flex: 1 1 30%;
+  max-width: 30%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: var(--shadow-file);
 }
-
 .gallery__item img {
   width: 100%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease-in-out;
+}
+.gallery__item:hover img {
+  width: 105%;
 }
 .purple {
   position: absolute;
@@ -436,7 +457,7 @@ label {
 }
 
 .dark:deep(.purple) {
-  filter: brightness(0.3);
+  filter: brightness(1);
 }
 
 .materials__list {
@@ -511,8 +532,8 @@ footer span {
 
   .header__album__image {
     display: block;
-    width: 146px;
-    height: 146px;
+    max-width: 164px;
+    max-height: 164px;
     overflow: hidden;
   }
   .header__album__image img {
@@ -608,8 +629,6 @@ footer span {
 
   .header__album__image {
     display: block;
-    width: 146px;
-    height: 146px;
   }
   .header__album__image img {
     width: 100%;

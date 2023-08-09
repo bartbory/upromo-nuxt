@@ -1,15 +1,14 @@
 <script setup lang="ts">
-
 const props = defineProps({
   link: { type: String, required: true },
   name: { type: String, required: true },
 });
 </script>
+
 <template>
-  <a :href="props.link">
-    <font-awesome-icon icon="fa-regular fa-file" size="xl" />
-    <p>{{ props.name }}</p>
-  </a>
+  <NuxtLink :to="props.link">
+    <p>{{ props.name }}</p></NuxtLink
+  >
 </template>
 
 <style scoped>
