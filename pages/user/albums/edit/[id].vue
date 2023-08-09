@@ -162,7 +162,7 @@ async function submitFormHandler() {
     isLoading.value = false;
     return;
   }
-  console.log(formData.description);
+  console.log(formData.images.promo);
   const dataToSend = { ...formData, uid: user };
   const { data, pending } = await useFetch(`/api/albums/album/${formData.id}`, {
     method: "PUT",

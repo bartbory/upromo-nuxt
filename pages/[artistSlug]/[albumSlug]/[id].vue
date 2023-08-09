@@ -429,7 +429,7 @@ label {
 }
 
 .gallery__item {
-  flex: 1 1 30%;
+  flex: 1 1 29%;
   max-width: 30%;
   aspect-ratio: 1;
   overflow: hidden;
@@ -440,9 +440,6 @@ label {
 .gallery__item img {
   width: 100%;
   position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   transition: width 0.5s ease-in-out;
 }
 .gallery__item:hover img {
@@ -538,7 +535,8 @@ footer span {
   }
   .header__album__image img {
     object-fit: cover;
-    height: 100%;
+    max-height: 100%;
+    width: 100%;
   }
   .player {
     padding: 44px;
@@ -631,6 +629,8 @@ footer span {
     display: block;
   }
   .header__album__image img {
+    object-fit: cover;
+    max-height: 100%;
     width: 100%;
   }
 

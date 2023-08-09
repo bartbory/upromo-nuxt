@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
           ? { connect: { path: body.images.background } }
           : undefined,
         imagesPromo: {
-          connect: body.images.promo.flatMap((i) => {
+          set: body.images.promo.flatMap((i) => {
             return {
               id: i.id,
             };
@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
         linkTwitter: body.links.twitter ? body.links.twitter : undefined,
         linkYoutube: body.links.youtube ? body.links.youtube : undefined,
         files: {
-          connect: body.files.flatMap((f) => {
+          set: body.files.flatMap((f) => {
             return {
               id: f.id,
             };

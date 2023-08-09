@@ -100,6 +100,7 @@ async function submitForm() {
         :active="formData.plan"
         @click-item="(item: PlanTypes) => (formData.plan = item)"
       />
+      
       <BaseButton
         type="submit"
         styleType="primary"
