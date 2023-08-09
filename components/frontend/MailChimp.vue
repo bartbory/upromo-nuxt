@@ -3,6 +3,38 @@ import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import BaseInput from "../backoffice/form/BaseInput.vue";
 
 const email = ref("");
+
+const submitForm = async (event) => {
+  event.preventDefault();
+
+  try {
+    const response = await fetch(
+      `https://us21.api.mailchimp.com/3.0/lists/1522d0a095/members`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "apikey 1cd2ec248530387ec8b2719099ef2bd6-us21",
+        },
+        body: JSON.stringify({
+          email_address: email.value,
+        }),
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      // Handle success
+      console.log(responseData);
+    } else {
+      // Handle error
+      console.error("Error subscribing:", responseData);
+    }
+  } catch (error) {
+    console.error("Error subscribing:", error);
+  }
+};
 </script>
 <template>
   <form
@@ -12,6 +44,7 @@ const email = ref("");
     name="mc-embedded-subscribe-form"
     target="_self"
     novalidate="true"
+    @submit.prevent="submitForm"
   >
     <BaseInput
       label="Email address"
@@ -45,15 +78,15 @@ const email = ref("");
 
 <style scoped>
 form {
-  max-width: 50%;
-  width: 50%;
+  max-width: 100%;
+  width: 100%;
   display: flex;
   gap: 24px;
-  align-items:flex-end ;
+  align-items: flex-end;
   justify-content: center;
 }
 
-form:deep(label){
-  color: white
+form:deep(label) {
+  color: white;
 }
 </style>

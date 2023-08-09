@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import MailChimp from "~/components/frontend/MailChimp.vue";
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
-
+import { useRouter } from "nuxt/app";
 definePageMeta({
   layout: "default",
 });
-const supabase = useSupabaseUser();
-const user = supabase.value;
+const router = useRouter();
 const steps = reactive({
   step: 1,
   stepText:
@@ -39,9 +39,6 @@ function stepHandler(step: number) {
       break;
   }
 }
-if (user) {
-  isLoggedIn.value = true;
-}
 </script>
 
 <template>
@@ -49,50 +46,47 @@ if (user) {
     <nav>
       <div class="nav__container">
         <div class="logo">UPROMO</div>
-        <div v-if="!isLoggedIn" class="nav--actions">
-          <BaseButton
-            msg="Login"
-            style-type="secondary"
-            type="button"
-            size="normal"
-            @click="$router.push('/auth/login')"
-          />
-          <BaseButton
-            msg="Create account"
-            style-type="secondary"
-            type="button"
-            size="normal"
-            @click="$router.push('/auth/register')"
-          />
-        </div>
-        <div v-else>
-          <BaseButton
-            msg="Go to panel"
-            style-type="secondary"
-            type="button"
-            size="normal"
-            @click="$router.push('/user')"
-          />
-        </div>
       </div>
     </nav>
     <header>
-      <h1>
-        The best and simplest way to promote your upcoming release... Just try!
-      </h1>
+      <div>
+        <h1>Promote Your Album</h1>
+        <h1>Reach Your Audience</h1>
+        <h1>Boost Your Book Sales</h1>
+      </div>
+      <div>
+        <h2>Subscribe to get early access</h2>
+        <MailChimp />
+      </div>
+      <div>
+        <a
+          href="https://upromo.vercel.app/artist-name/new-album-name/6618223a-871d-4069-a06d-a8a8ba0dbce0?secret=HnvmSp5u4ZDDuHfL"
+          >Demo page</a
+        >
+      </div>
     </header>
     <section class="benefits">
       <h1>What you get?</h1>
       <div class="benefits__container">
-        <div class="benefits__block"><img />Responsive design</div>
         <div class="benefits__block">
-          <img />Soundcloud & Spotify integrated
+          <img src="responsive.png" />
+          <p>Responsive design</p>
         </div>
-        <div class="benefits__block"><img />Protected page link</div>
-        <div class="benefits__block"><img />Intuitive page creator</div>
+        <div class="benefits__block">
+          <img src="integration.png" />
+          <p>Soundcloud/Spotify integration</p>
+        </div>
+        <div class="benefits__block">
+          <img src="protected.png" />
+          <p>Protected page link</p>
+        </div>
+        <div class="benefits__block">
+          <img src="creator.png" />
+          <p>Intuitive page creator</p>
+        </div>
       </div>
     </section>
-    <div class="purple"></div>
+    <div class="blue"></div>
     <section class="how__it__works">
       <h1>How it works?</h1>
       <div>
@@ -136,58 +130,6 @@ if (user) {
         </div>
       </div>
     </section>
-    <section class="plans">
-      <h1>Available plans</h1>
-      <div class="plans__container">
-        <div class="plan">
-          <h2>Lite</h2>
-          <div class="plan--row">
-            <p>Albums:</p>
-            <p>{{ maxAlbumCount("LITE") }}</p>
-          </div>
-          <div class="plan--row">
-            <p>Images storage:</p>
-            <p>{{ maxImagesStorageCapacity("LITE") }} mb</p>
-          </div>
-          <div class="plan--row">
-            <p>Files storage:</p>
-            <p>{{ maxFilesStorageCapacity("LITE") }} mb</p>
-          </div>
-        </div>
-        <div class="plan">
-          <h2>Basic</h2>
-          <div class="plan--row">
-            <p>Albums:</p>
-            <p>{{ maxAlbumCount("BASIC") }}</p>
-          </div>
-          <div class="plan--row">
-            <p>Images storage:</p>
-            <p>{{ maxImagesStorageCapacity("BASIC") }} mb</p>
-          </div>
-          <div class="plan--row">
-            <p>Files storage:</p>
-            <p>{{ maxFilesStorageCapacity("BASIC") }} mb</p>
-          </div>
-        </div>
-        <div class="plan">
-          <h2>Pro</h2>
-          <div class="plan--row">
-            <p>Albums:</p>
-            <p>{{ maxAlbumCount("PRO") }}</p>
-          </div>
-          <div class="plan--row">
-            <p>Images storage:</p>
-            <p>{{ maxImagesStorageCapacity("PRO") }} mb</p>
-          </div>
-          <div class="plan--row">
-            <p>Files storage:</p>
-            <p>{{ maxFilesStorageCapacity("PRO") }} mb</p>
-          </div>
-        </div>
-      </div>
-      <h3>Didn/t find play that fit to yours needs?</h3>
-      <p>Contact with us, and we will try yo customize plan special for you!</p>
-    </section>
     <footer>
       <h1 class="logo">UPROMO</h1>
     </footer>
@@ -196,6 +138,15 @@ if (user) {
 
 <style scoped>
 a {
+  background-color: var(--green-900);
+  color: var(--white-900);
+  border: 1px solid var(--green-900);
+  font-size: 16px;
+  padding: 16px;
+  border-radius: var(--br-8);
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
   cursor: pointer;
 }
 
@@ -207,15 +158,15 @@ section {
 
 h1 {
   color: var(--gray-900);
-  font-size: 48px;
-}
-
-h2 {
   font-size: 24px;
 }
 
-h3 {
+h2 {
   font-size: 20px;
+}
+
+h3 {
+  font-size: 16px;
 }
 
 nav {
@@ -242,24 +193,43 @@ nav {
 
 header {
   width: 100%;
-  height: 80vh;
+  min-height: 60vh;
   /* background: var(--gradient-purple); */
   background: conic-gradient(
     from -38deg at 27.19% 32.4%,
     #c624ff 154.514723deg,
     #4378ff 430deg
   );
-
-  padding: 40px;
+  background-image: url("top.png");
+  background-size: cover;
+  background-position: center;
+  padding: 24px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-header h1 {
-  position: absolute;
-  width: 75%;
-  bottom: 40px;
-  left: 40px;
+header div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+header h1,
+header h2 {
+  width: 100%;
   color: var(--white-900);
+  text-align: left;
+}
+
+header:deep(form) {
+  width: 100%;
 }
 
 .benefits__container {
@@ -271,21 +241,37 @@ header h1 {
 }
 
 .benefits__block {
-  flex: 1 0 22%;
+  position: relative;
+  flex: 1 0 50%;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: var(--gray-100);
+  color: var(--white-900);
   border-radius: var(--br-16);
+  overflow: hidden;
+}
+.benefits__block img {
+  position: absolute;
+  width: 100%;
+  z-index: 0;
 }
 
-.purple {
+.benefits__block p {
+  z-index: 10;
+}
+
+.step {
+  cursor: pointer;
+}
+
+.blue {
   position: absolute;
   width: 100%;
   height: 400px;
-  background-color: var(--purple-900);
+  background-color: var(--blue-900);
 }
 
 .how__it__works {
@@ -302,29 +288,6 @@ header h1 {
 .active h2 {
   font-size: 24px;
 }
-
-.plans__container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 24px;
-}
-
-.plan {
-  flex: 1 0 30%;
-  background-color: var(--gray-100);
-  border-radius: var(--br-16);
-  padding: 16px;
-}
-.plan h2 {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.plan--row {
-  display: flex;
-  justify-content: space-between;
-}
 footer {
   display: flex;
   justify-content: center;
@@ -339,5 +302,109 @@ footer {
 }
 footer .logo {
   color: var(--white-900);
+}
+
+@media screen and (min-width: 744px) {
+  .benefits__block {
+  position: relative;
+  flex: 1 0 45%;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray-100);
+  color: var(--white-900);
+  border-radius: var(--br-16);
+  overflow: hidden;
+}
+}
+
+@media screen and (min-width: 1440px) {
+  a {
+    background-color: var(--green-900);
+    color: var(--white-900);
+    border: 1px solid var(--green-900);
+    font-size: 16px;
+    padding: 16px;
+    border-radius: var(--br-8);
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+  section {
+    max-width: 1136px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  h1 {
+    color: var(--gray-900);
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  nav {
+    background: var(--gradient-purple);
+  }
+
+  .nav__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    max-width: 1136;
+    height: 60px;
+  }
+
+  .nav__container a {
+    color: var(--white-900);
+  }
+
+  .nav--actions {
+    display: flex;
+    gap: 24px;
+  }
+
+  header {
+    width: 100%;
+    min-height: 60vh;
+    /* background: var(--gradient-purple); */
+    padding: 40px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+  header div {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .benefits__block {
+    position: relative;
+    flex: 1 0 22%;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--gray-100);
+    color: var(--white-900);
+    border-radius: var(--br-16);
+    overflow: hidden;
+  }
 }
 </style>

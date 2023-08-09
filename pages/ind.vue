@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MailChimp from "~/components/frontend/MailChimp.vue";
+import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 
 definePageMeta({
   layout: "default",
@@ -39,6 +39,9 @@ function stepHandler(step: number) {
       break;
   }
 }
+if (user) {
+  isLoggedIn.value = true;
+}
 </script>
 
 <template>
@@ -46,14 +49,37 @@ function stepHandler(step: number) {
     <nav>
       <div class="nav__container">
         <div class="logo">UPROMO</div>
+        <div v-if="!isLoggedIn" class="nav--actions">
+          <BaseButton
+            msg="Login"
+            style-type="secondary"
+            type="button"
+            size="normal"
+            @click="$router.push('/auth/login')"
+          />
+          <BaseButton
+            msg="Create account"
+            style-type="secondary"
+            type="button"
+            size="normal"
+            @click="$router.push('/auth/register')"
+          />
+        </div>
+        <div v-else>
+          <BaseButton
+            msg="Go to panel"
+            style-type="secondary"
+            type="button"
+            size="normal"
+            @click="$router.push('/user')"
+          />
+        </div>
       </div>
     </nav>
     <header>
-      <h1>| Promote Your Album</h1>
-      <h1>| Reach Your Audience</h1>
-      <h1>| Boost Your Book Sales</h1>
-      <h2>Subscribe to get early access</h2>
-      <MailChimp />
+      <h1>
+        The best and simplest way to promote your upcoming release... Just try!
+      </h1>
     </header>
     <section class="benefits">
       <h1>What you get?</h1>
@@ -110,6 +136,61 @@ function stepHandler(step: number) {
         </div>
       </div>
     </section>
+    <section class="plans">
+      <h1>Available plans</h1>
+      <div class="plans__container">
+        <div class="plan">
+          <h2>Lite</h2>
+          <div class="plan--row">
+            <p>Albums:</p>
+            <p>{{ maxAlbumCount("LITE") }}</p>
+          </div>
+          <div class="plan--row">
+            <p>Images storage:</p>
+            <p>{{ maxImagesStorageCapacity("LITE") }} mb</p>
+          </div>
+          <div class="plan--row">
+            <p>Files storage:</p>
+            <p>{{ maxFilesStorageCapacity("LITE") }} mb</p>
+          </div>
+        </div>
+        <div class="plan">
+          <h2>Basic</h2>
+          <div class="plan--row">
+            <p>Albums:</p>
+            <p>{{ maxAlbumCount("BASIC") }}</p>
+          </div>
+          <div class="plan--row">
+            <p>Images storage:</p>
+            <p>{{ maxImagesStorageCapacity("BASIC") }} mb</p>
+          </div>
+          <div class="plan--row">
+            <p>Files storage:</p>
+            <p>{{ maxFilesStorageCapacity("BASIC") }} mb</p>
+          </div>
+        </div>
+        <div class="plan">
+          <h2>Pro</h2>
+          <div class="plan--row">
+            <p>Albums:</p>
+            <p>{{ maxAlbumCount("PRO") }}</p>
+          </div>
+          <div class="plan--row">
+            <p>Images storage:</p>
+            <p>{{ maxImagesStorageCapacity("PRO") }} mb</p>
+          </div>
+          <div class="plan--row">
+            <p>Files storage:</p>
+            <p>{{ maxFilesStorageCapacity("PRO") }} mb</p>
+          </div>
+        </div>
+      </div>
+      <h3>Didn/t find play that fit to yours needs?</h3>
+      <p>Contact with us, and we will try yo customize plan special for you!</p>
+    </section>
+    <footer>
+      <h1 class="logo">UPROMO</h1>
+    </footer>
   </NuxtLayout>
 </template>
 
@@ -171,15 +252,11 @@ header {
 
   padding: 40px;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  justify-content: center;
-  align-items: flex-start;
 }
 
-header h1, header h2 {
-  max-width: 50%;
+header h1 {
+  position: absolute;
+  width: 75%;
   bottom: 40px;
   left: 40px;
   color: var(--white-900);
@@ -202,10 +279,6 @@ header h1, header h2 {
   align-items: center;
   background-color: var(--gray-100);
   border-radius: var(--br-16);
-}
-
-.step{
-  cursor: pointer;
 }
 
 .purple {
