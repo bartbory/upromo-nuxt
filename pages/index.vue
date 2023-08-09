@@ -69,19 +69,27 @@ function stepHandler(step: number) {
       <h1>What you get?</h1>
       <div class="benefits__container">
         <div class="benefits__block">
-          <img src="responsive.png" />
+          <img
+            src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
+          />
           <p>Responsive design</p>
         </div>
         <div class="benefits__block">
-          <img src="integration.png" />
+          <img
+            src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/integration.png"
+          />
           <p>Soundcloud/Spotify integration</p>
         </div>
         <div class="benefits__block">
-          <img src="protected.png" />
+          <img
+            src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/protected.png"
+          />
           <p>Protected page link</p>
         </div>
         <div class="benefits__block">
-          <img src="creator.png" />
+          <img
+            src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/creator.png"
+          />
           <p>Intuitive page creator</p>
         </div>
       </div>
@@ -200,7 +208,7 @@ header {
     #c624ff 154.514723deg,
     #4378ff 430deg
   );
-  background-image: url("top.png");
+  background-image: url("https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/top.png");
   background-size: cover;
   background-position: center;
   padding: 24px;
@@ -306,18 +314,18 @@ footer .logo {
 
 @media screen and (min-width: 744px) {
   .benefits__block {
-  position: relative;
-  flex: 1 0 45%;
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--gray-100);
-  color: var(--white-900);
-  border-radius: var(--br-16);
-  overflow: hidden;
-}
+    position: relative;
+    flex: 1 0 45%;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--gray-100);
+    color: var(--white-900);
+    border-radius: var(--br-16);
+    overflow: hidden;
+  }
 }
 
 @media screen and (min-width: 1440px) {
