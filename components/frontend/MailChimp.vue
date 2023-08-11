@@ -16,7 +16,7 @@ async function submitForm() {
     return;
   }
 
-  const { data, pending } = await useFetch("/api/mailchimp", {
+  const { data, pending } = await useFetch("/api/mailchimp/subscribe", {
     method: "POST",
     body: { email },
   });
