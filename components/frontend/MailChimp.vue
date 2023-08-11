@@ -3,47 +3,37 @@ import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import BaseInput from "../backoffice/form/BaseInput.vue";
 
 const email = ref("");
+const isLoading = ref(false);
+const isError = ref(false);
 
-const submitForm = async (event) => {
-  event.preventDefault();
+async function submitForm() {
+  isLoading.value = true;
+  isError.value = false;
 
-  try {
-    const response = await fetch(
-      `https://us21.api.mailchimp.com/3.0/lists/1522d0a095/members`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "apikey 1cd2ec248530387ec8b2719099ef2bd6-us21",
-        },
-        body: JSON.stringify({
-          email_address: email.value,
-        }),
-      }
-    );
-
-    const responseData = await response.json();
-
-    if (response.ok) {
-      // Handle success
-      console.log(responseData);
-    } else {
-      // Handle error
-      console.error("Error subscribing:", responseData);
-    }
-  } catch (error) {
-    console.error("Error subscribing:", error);
+  if (!email.value) {
+    isError.value = true;
+    isLoading.value = false;
+    return;
   }
-};
+
+  const { data, pending } = await useFetch("/api/mailchimp", {
+    method: "POST",
+    body: { email },
+  });
+  if (data.value) {
+    console.log("ok");
+    console.log(data.value);
+  } else {
+    console.log("error");
+    console.log(data.value);
+  }
+  isLoading.value = pending.value;
+}
 </script>
 <template>
+  <LoadingScreen v-if="isLoading" />
   <form
-    action="https://gmail.us21.list-manage.com/subscribe/post?u=c483fd3417ef380993eb727ad&amp;id=1522d0a095&amp;f_id=0046d8e6f0"
-    method="post"
-    id="mc-embedded-subscribe-form"
-    name="mc-embedded-subscribe-form"
-    target="_self"
-    novalidate="true"
+    v-else
     @submit.prevent="submitForm"
   >
     <BaseInput
@@ -74,6 +64,7 @@ const submitForm = async (event) => {
       </div>
     </div>
   </form>
+  <p v-if="isError">This input shouldn't be empty</p>
 </template>
 
 <style scoped>

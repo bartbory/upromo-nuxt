@@ -25,7 +25,7 @@ defineEmits(["update:modelValue"]);
       :value="modelValue"
       :type="inputType"
       :required="isReq"
-      @input="
+      @change="
         $emit('update:modelValue', ($event.target as InputHTMLAttributes).value)
       "
     />

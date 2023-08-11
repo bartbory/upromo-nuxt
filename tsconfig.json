@@ -2,6 +2,6 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "lib": ["ES2021.String"]
+    "lib": ["ES2021.String", "DOM"]
   }
 }
