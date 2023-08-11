@@ -20,7 +20,7 @@ async function submitForm() {
     method: "POST",
     body: { email },
   });
-  if (data.value) {
+  if (data.value.status === 200) {
     console.log("ok");
     console.log(data.value);
   } else {
@@ -32,10 +32,7 @@ async function submitForm() {
 </script>
 <template>
   <LoadingScreen v-if="isLoading" />
-  <form
-    v-else
-    @submit.prevent="submitForm"
-  >
+  <form v-else @submit.prevent="submitForm">
     <BaseInput
       label="Email address"
       input-type="email"

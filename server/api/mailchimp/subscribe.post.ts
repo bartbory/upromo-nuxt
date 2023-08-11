@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
         },
         body: JSON.stringify({
           email_address: body.email,
-          status: "pending",
+          status: "subscribed",
         }),
       }
     );
@@ -28,11 +28,14 @@ export default defineEventHandler(async (event) => {
     if (response.ok) {
       // Handle success
       console.log("Success:", responseData);
+      return { responseData };
     } else {
       // Handle error
       console.error("Error subscribing:", responseData);
+      return { responseData };
     }
   } catch (error) {
     console.error("Error subscribing:", error);
+    return { error };
   }
 });
