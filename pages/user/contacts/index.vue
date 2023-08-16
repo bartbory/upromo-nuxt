@@ -53,6 +53,16 @@ async function deleteContact(id: string) {
   showForm.value = false;
   selectedContact.value = null;
 }
+
+const title = ref(`Contact list`);
+
+useHead({
+  title,
+  meta: [
+    { name: "author", content: "Bartosz Borycki" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+  ],
+});
 </script>
 
 <template>

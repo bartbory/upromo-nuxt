@@ -33,6 +33,16 @@ const showContactAddModal = ref(false);
 const supabase = useSupabaseUser();
 const user = supabase.value?.id;
 
+const title = ref(`Upromo - Create new album`);
+
+useHead({
+  title,
+  meta: [
+    { name: "author", content: "Bartosz Borycki" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+  ],
+});
+
 if (user) {
   isError.value = false;
   isLoading.value = true;

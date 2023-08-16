@@ -24,9 +24,10 @@ const isDark = ref("LIGHT");
 const { data, error, pending } = await useFetch<{ data: IAlbum }>(
   `/api/secret/${albumId.toString()}`
 );
-
+const title = ref(``);
 if (!error.value && data.value && !pending.value) {
   album = data.value.data;
+  title.value = `${album.artistName} / ${album.albumName}`;
   if (
     route.params.artistSlug !== data.value.data.artistSlug ||
     route.params.albumSlug !== data.value.data.albumSlug ||
@@ -52,6 +53,14 @@ const background = computed(() => {
   } else {
     return "";
   }
+});
+
+useHead({
+  title,
+  meta: [
+    { name: "author", content: "Bartosz Borycki" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+  ],
 });
 </script>
 

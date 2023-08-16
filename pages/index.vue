@@ -1,10 +1,24 @@
 <script setup lang="ts">
 import MailChimp from "~/components/frontend/MailChimp.vue";
-import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
+
 import { useRouter } from "nuxt/app";
 definePageMeta({
   layout: "default",
 });
+const title = ref("Upromo");
+const description = ref(
+  "Promote Your Album, Reach Your Audience, Boost Your Book Sales"
+);
+
+useHead({
+  title,
+  meta: [
+    { name: "description", content: description },
+    { name: "author", content: "Bartosz Borycki" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+  ],
+});
+
 const router = useRouter();
 const steps = reactive({
   step: 1,

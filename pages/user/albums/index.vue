@@ -8,11 +8,24 @@ definePageMeta({
   layout: "backoffice-layout",
   middleware: ["auth"],
 });
+
+const isLoading = ref(true);
+const user = useSupabaseUser();
+
+const title = ref(`Upromo - Album list (${user.value?.email})`);
+const description = ref("Album list");
+useHead({
+  title,
+  meta: [
+    { name: "description", content: description },
+    { name: "author", content: "Bartosz Borycki" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+  ],
+});
+
 const router = useRouter();
 
 let albums: IAlbumList[];
-const isLoading = ref(true);
-const user = useSupabaseUser();
 
 if (!user.value) {
   navigateTo("/auth/login");

@@ -23,6 +23,16 @@ if (user) {
     isLoading.value = false;
   }
 }
+
+const title = ref(`Profile page - ${userData.name}`);
+
+useHead({
+  title,
+  meta: [
+    { name: "author", content: "Bartosz Borycki" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+  ],
+});
 </script>
 
 <template>
@@ -32,7 +42,7 @@ if (user) {
   <LoadingScreen v-if="isLoading" />
   <article v-else>
     <h2>
-        You have active <span>{{ userData.plan }}</span> plan
+      You have active <span>{{ userData.plan }}</span> plan
     </h2>
     <form @submit.prevent="">
       <BaseInput
