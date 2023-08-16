@@ -19,13 +19,11 @@ useHead({
   ],
 });
 
-const router = useRouter();
 const steps = reactive({
   step: 1,
   stepText:
     "Less is more... Create your account using your e-mail, select your plan and C R E A T E",
 });
-const isLoggedIn = ref(false);
 
 function stepHandler(step: number) {
   steps.step = step;
@@ -69,16 +67,26 @@ function stepHandler(step: number) {
         <h1>Boost Your Book Sales</h1>
       </div>
       <div>
-        <h2>Subscribe to get early access</h2>
-        <MailChimp />
-      </div>
-      <div>
         <a
           href="https://upromo.vercel.app/artist-name/new-album-name/6618223a-871d-4069-a06d-a8a8ba0dbce0?secret=HnvmSp5u4ZDDuHfL"
           >Demo page</a
         >
       </div>
     </header>
+    <iframe
+      width="100%"
+      height="560px"
+      src="https://59b5b9a5.sibforms.com/serve/MUIFAKs_Atu0OwCcfbqk1cLk0S8iLbcYDGfoqknXHr9S5MQnzZ-JHNUMXfD4wMx2pijxL6APpOkpTC9saKN9_dEFA7_dNYKL_U0FzkWddFOoUWLixKGlnOnZzIvTqmSupfQgv54jVXUi6Mhnv3n7mFB_sH-mOZv64zHG9zdpa0VuvrID-yaK6Dm7jl3hP6ZO6JYJsw4t1JFFeRvf"
+      frameborder="0"
+      scrolling="no"
+      allowfullscreen
+      style="
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+      "
+    ></iframe>
     <section class="benefits">
       <h1>What you get?</h1>
       <div class="benefits__container">
@@ -161,15 +169,21 @@ function stepHandler(step: number) {
 <style scoped>
 a {
   background-color: var(--green-900);
+  border: 2px solid var(--green-900);
   color: var(--white-900);
-  border: 1px solid var(--green-900);
   font-size: 16px;
   padding: 16px;
   border-radius: var(--br-8);
-  border: none;
   cursor: pointer;
   transition: 0.3s;
   cursor: pointer;
+}
+
+a:hover {
+  background-color: var(--green-100);
+  border: 2px solid var(--green-900);
+  border-radius: var(--br-16);
+  color: var(--green-900);
 }
 
 section {

@@ -52,17 +52,23 @@ button {
   background-color: var(--blue-900);
   color: var(--white-900);
   border: 1px solid var(--blue-900);
+  transition: 0.3s;
 }
+
 .secondary {
   background-color: var(--purple-900);
   color: var(--white-900);
   border: 1px solid var(--purple-900);
+  transition: 0.3s;
 }
+
 .neutral {
   background-color: var(--gray-300);
   color: var(--gray-900);
   border: 1px solid var(--gray-300);
+  transition: 0.3s;
 }
+
 .disable {
   background-color: var(--gray-100);
   color: var(--gray-400);
@@ -77,5 +83,26 @@ button {
   background-color: var(--green-900);
   color: var(--white-900);
   border: 1px solid var(--green-900);
+  transition: 0.5s;
+}
+
+.primary:hover {
+  background-color: var(--blue-100);
+  color: var(--gray-900);
+}
+.secondary:hover {
+  background-color: var(--purple-400);
+}
+.neutral:hover {
+  background-color: var(--gray-100);
+}
+
+.success:hover {
+  background-color: var(--green-400);
+  color: var(--white-900);
+}
+.danger:hover {
+  background-color: var(--red-400);
+  color: var(--white-900);
 }
 </style>
