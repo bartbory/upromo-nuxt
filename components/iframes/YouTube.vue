@@ -6,7 +6,7 @@ const props = defineProps({
 <template>
   <iframe
     height="300px"
-    :src="'https://www.youtube.com/embed/' + props.src"
+    :src="'https://www.youtube.com/embed/' + props.src.trim()"
     title="YouTube video player"
     frameborder="0"
     allow="encrypted-media; web-share"
