@@ -23,7 +23,7 @@ let formData: IRegister = reactive({
   email: "",
   password: "",
   avatar: "",
-  plan: "LITE",
+  plan: "BASIC",
 });
 const isLoading = ref(false);
 const isSuccess = ref(false);
@@ -94,13 +94,13 @@ async function submitForm() {
         inputType="password"
         v-model="formData.password"
       />
-      <TabSelect
+      <!-- <TabSelect
         :list="['LITE', 'BASIC', 'PRO']"
         label="Select your plan"
         :active="formData.plan"
         @click-item="(item: PlanTypes) => (formData.plan = item)"
-      />
-      
+      /> -->
+
       <BaseButton
         type="submit"
         styleType="primary"
