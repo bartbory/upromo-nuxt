@@ -415,7 +415,10 @@ label {
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
   background-size: cover;
+  top: 0;
   margin: 40px 0;
 }
 
