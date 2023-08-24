@@ -18,21 +18,22 @@ a {
   align-items: center;
   padding: 8px 16px;
   gap: 16px;
-  background: var(--gray-100);
+  background-color: var(--gray-100);
   border-radius: var(--br-2);
   height: 40px;
-  border: 1px solid var(--white-150);
+  border: 1px solid var(--purple-400);
   color: var(--purple-900);
   border-radius: var(--br-8);
   cursor: pointer;
   transition: 0.3s;
 }
 
-button:hover {
-  color: var(--blue-900);
+a:hover {
+  background-color: var(--purple-900);
+  color: var(--white-900);
 }
 
-button p {
+a p {
   font-family: "Mukta";
   font-size: 16px;
 }

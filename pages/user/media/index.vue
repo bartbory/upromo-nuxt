@@ -127,9 +127,8 @@ useHead({
     @fetchData="fetchData"
   />
   <section>
-    <article  v-if="!selectedImage">
+    <article>
       <ImageCard
-     
         v-for="image in userMedia"
         :imagePath="image.path"
         :key="image.path"
@@ -181,6 +180,7 @@ useHead({
 <style scoped>
 section {
   flex-direction: row;
+  gap: 24px;
 }
 article {
   flex: 1 1 100%;

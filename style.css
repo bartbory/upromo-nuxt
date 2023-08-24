@@ -6,9 +6,9 @@
 
   --blue-900: #4478ff;
   --blue-100: #c6d6ff;
-  --purple-900: #336ffe;
-  --purple-400: #86a9fb;
-  --purple-100: #d8e4ff;
+  --purple-900: #ba2dff;
+  --purple-400: #daa2e3;
+  --purple-100: #f3e3f6;
   --gray-900: #353535;
   --gray-400: #b9b9b9;
   --gray-300: #d9d9d9;
@@ -33,7 +33,7 @@
   --shadow-sc: 0px 8px 16px rgba(33, 70, 165, 0.5),
     0px 16px 32px rgba(181, 201, 255, 0.25);
   --shadow-file: 0px 4px 4px rgba(0, 0, 0, 0.25),
-    0px 4px 8px rgba(51, 111, 254, 0.5);
+    0px 4px 8px rgba(186, 45, 255, 0.5);
 
   --br-2: 2px;
   --br-4: 4px;

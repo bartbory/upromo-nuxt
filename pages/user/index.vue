@@ -60,7 +60,6 @@ async function getAlbumsCount() {
   const { data } = await useFetch<{ data: IAlbumList[] }>(
     `api/albums/${supabase.value?.id}`
   );
-  console.log(data);
   albumCount.value = data.value ? data.value?.data.length : 0;
 }
 

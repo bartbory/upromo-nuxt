@@ -24,6 +24,7 @@ const isDark = ref("LIGHT");
 const { data, error, pending } = await useFetch<{ data: IAlbum }>(
   `/api/secret/${albumId.toString()}`
 );
+
 const title = ref(``);
 if (!error.value && data.value && !pending.value) {
   album = data.value.data;
@@ -62,6 +63,18 @@ useHead({
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
   ],
 });
+
+// const customBackgroundColor = "#336ffe";
+const shadow = computed(() => {
+  if (album.customColor) {
+    return {
+      boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25),
+    0px 4px 8px ${album.customColor}`,
+    };
+  } else {
+    return "";
+  }
+});
 </script>
 
 <template>
@@ -87,10 +100,13 @@ useHead({
         </div>
       </div>
     </header>
-    <section
-      class="player"
-      v-if="album.playerSoundcloud || album.playerSpotify"
-    >
+    <div class="cover on-sm" v-if="album.images.cover">
+      <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
+    </div>
+    <section class="player">
+      <div class="cover on-md" v-if="album.images.cover">
+        <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
+      </div>
       <Soundcloud
         v-if="album.player === 'SOUNDCLOUD' && album.playerSoundcloud"
         :src="album.playerSoundcloud"
@@ -99,31 +115,30 @@ useHead({
         v-if="album.player === 'SPOTIFY' && album.playerSpotify"
         :src="album.playerSpotify"
       />
-      <div class="blue"></div>
+      <div
+        class="blue"
+        :style="{ backgroundColor: album.customColor ? album.customColor : '' }"
+      ></div>
     </section>
     <section class="informations container">
-      <div class="information__container__1">
-        <div class="information__container__2">
+      <div class="information__box">
+        <div class="information__details">
           <div class="information">
-            <label>Artist / band</label>
-            <h3>{{ album.artistName }}</h3>
+            <label>Artist</label>
+            <p>{{ album.artistName }}</p>
           </div>
           <div class="information">
-            <label>Album name</label>
-            <h3>{{ album.albumName }}</h3>
+            <label>Album</label>
+            <p>{{ album.albumName }}</p>
           </div>
           <div class="information">
-            <label>Realease date</label>
-            <h3>{{ album.releaseDate }}</h3>
+            <label>Release</label>
+            <p>{{ album.releaseDate }}</p>
           </div>
           <div class="information">
             <label>Label</label>
-            <h3>{{ album.label }}</h3>
+            <p>{{ album.label }}</p>
           </div>
-        </div>
-        <div class="information" v-if="album.images.cover">
-          <label>Cover</label>
-          <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
         </div>
       </div>
       <div class="information">
@@ -134,19 +149,19 @@ useHead({
     <section class="video" v-if="youtubeVideos.length > 0">
       <YouTube v-for="media in youtubeVideos" :key="media" :src="media" />
     </section>
-    <div
-      v-if="album.tour?.image"
-      class="tour__parallax"
-      :style="{ backgroundImage: `url(${album.tour.image})` }"
-    ></div>
     <section class="tour container" v-if="album.tour">
       <h1>Tour "{{ album.tour.name }}"</h1>
+      <div class="album cover" v-if="album.tour.image">
+        <img :src="album.tour.image" />
+      </div>
       <div
         v-if="album.tour.description"
         class="description__block"
         v-html="album.tour.description"
       ></div>
-      <a v-if="album.tour.link" :href="album.tour.link">Tickets</a>
+      <a v-if="album.tour.link" :href="album.tour.link">{{
+        album.tour.displayName
+      }}</a>
       <ConcertsList
         v-if="album.tour.concerts"
         :concerts="album.tour.concerts"
@@ -158,6 +173,7 @@ useHead({
           class="gallery__item"
           v-for="image in album.images.promo"
           @click="navigateTo(`${image.path}`)"
+          :style="shadow"
           :key="image.id"
         >
           <img
@@ -177,7 +193,12 @@ useHead({
           </p>
         </div>
       </div>
-      <div class="purple"></div>
+      <div
+        class="purple"
+        :style="{
+          backgroundColor: album.customColor ? album.customColor : '',
+        }"
+      ></div>
       <div class="materials container" v-if="album.files.length > 0">
         <h1>Promo materials</h1>
         <div class="materials__list">
@@ -274,6 +295,15 @@ body {
   flex-direction: column;
 }
 
+.on-sm {
+  padding: 24px;
+  display: block;
+}
+
+.on-md {
+  display: none;
+}
+
 .dark {
   color: var(--white-900);
   background-color: rgb(10, 10, 10);
@@ -347,12 +377,21 @@ label {
   padding: 24px;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   row-gap: 24px;
   position: relative;
 }
-
+.player > .cover {
+  flex-grow: 0;
+  min-height: 400px;
+  height: 400px;
+  max-height: 400px;
+  aspect-ratio: 1;
+  border-radius: var(--br-8);
+  overflow: hidden;
+  box-shadow: var(--shadow-sc);
+}
 .description__block {
   display: flex;
   gap: 24px;
@@ -380,20 +419,25 @@ label {
   row-gap: 24px;
 }
 .information {
-  margin-top: 40px;
   display: flex;
-  flex-direction: column;
-  row-gap: 8px;
+  flex-direction: row;
+  gap: 16px;
+  flex-wrap: wrap;
+  row-gap: 0px;
 }
 
-.information > img {
+.cover > img {
   width: 100%;
+  border-radius: var(--br-8);
+  overflow: hidden;
+  box-shadow: var(--shadow-sc);
 }
 
-.information__container__2 {
+.information__details {
   display: flex;
-  flex-direction: column;
-  row-gap: 24px;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .tour > a {
@@ -435,8 +479,10 @@ label {
 }
 
 .video > iframe {
-  flex: 0 0 30%;
+  flex: 1 0 30%;
+  max-width: 100%;
   aspect-ratio: 1.8;
+  object-fit: cover;
 }
 
 .tour__parallax {
@@ -445,9 +491,9 @@ label {
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
   top: 0;
   margin: 40px 0;
 }
@@ -515,7 +561,7 @@ label {
   position: absolute;
   width: 100%;
   height: 35%;
-  background-color: #336ffe;
+  background-color: var(--purple-900);
   z-index: -1;
 }
 
@@ -535,6 +581,8 @@ label {
 .booking__contact {
   padding: 24px 16px;
   background-color: var(--gray-100);
+  border: 1px solid var(--purple-900);
+  border-radius: var(--br-8);
 }
 
 .dark:deep(.booking__contact) {
@@ -559,6 +607,13 @@ footer span {
 }
 
 @media screen and (min-width: 744px) {
+  .on-sm {
+    display: none;
+  }
+
+  .on-md {
+    display: block;
+  }
   .container {
     padding: 44px;
     width: 100%;
@@ -606,18 +661,16 @@ footer span {
   }
   .player {
     padding: 44px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 24px;
+    flex-direction: row;
+    gap: 24px;
     position: relative;
   }
 
-  .information__container__1 {
+  .information__box {
     display: flex;
     column-gap: 40px;
   }
-  .information__container__1 > div {
+  .information__box > div {
     flex: 1 1 50%;
   }
   .tour__parallax {
@@ -625,7 +678,7 @@ footer span {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     margin: 40px 0;
   }
   .social__links {
@@ -701,14 +754,15 @@ footer span {
   }
 
   .video > iframe {
-    flex: 0 0 30%;
+    flex: 1 0 30%;
+    max-width: 75%;
     aspect-ratio: 1.8;
   }
-  .information__container__1 {
+  .information__box {
     display: flex;
     column-gap: 40px;
   }
-  .information__container__1 > div {
+  .information__box > div {
     flex: 1 1 50%;
   }
   .tour__parallax {
@@ -716,7 +770,7 @@ footer span {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     margin: 40px 0;
   }
   .social__links {

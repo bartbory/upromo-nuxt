@@ -33,10 +33,10 @@ onMounted(() => {
 });
 </script>
 <template>
-  <a :href="`${props.baselink}${props.link}`">
+  <NuxtLink :to="`${props.baselink}${props.link}`">
     <font-awesome-icon :icon="iconDisplay" size="xl" v-if="iconDisplay" />
     <p>{{ props.name }}</p>
-  </a>
+  </NuxtLink>
 </template>
 
 <style scoped>
@@ -46,7 +46,7 @@ a {
   align-items: center;
   padding: 8px 16px;
   gap: 16px;
-  background: var(--gray-100);
+  background-color: var(--gray-100);
   border-radius: var(--br-2);
   height: 40px;
   border: 1px solid var(--white-150);
@@ -56,11 +56,12 @@ a {
   transition: 0.3s;
 }
 
-button:hover {
+a:hover {
+  background-color: var(--white-900);
   color: var(--blue-900);
 }
 
-button p {
+a p {
   font-family: "Mukta";
   font-size: 16px;
 }

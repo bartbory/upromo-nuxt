@@ -37,13 +37,15 @@ export default defineEventHandler(async (event) => {
         result.tourName ||
         result.tourDescription ||
         result.tourImage ||
-        result.tourLink
+        result.tourLink ||
+        result.tourLinkDisplayName
       ) {
         tourData = {
           name: result.tourName,
           description: result.tourDescription,
           image: result.tourImage,
           link: result.tourLink,
+          displayName: result.tourLinkDisplayName,
           concerts: null,
         };
       } else {
@@ -85,6 +87,7 @@ export default defineEventHandler(async (event) => {
         files: result.files,
         tour: tourData,
         displayMode: displayMode(),
+        customColor: result.customColor,
       };
       return { data: albumData };
     }

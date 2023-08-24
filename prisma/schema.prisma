@@ -78,9 +78,11 @@ model Album {
   imageBackground     Media?      @relation(fields: [imageBackgroundPath], references: [path], name: "background-image", onDelete: SetNull)
   imageBackgroundPath String?
   files               File[]
+  customColor         String?
   tourName            String?
   tourDescription     String?
   tourLink            String?
+  tourLinkDisplayName String?
   tourImage           String?
   linkSpotify         String?
   linkSoundcloud      String?

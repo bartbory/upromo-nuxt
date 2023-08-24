@@ -26,7 +26,7 @@ const secretToken = computed(() => {
 
 <template>
   <iframe
-    width="80%"
+    width="auto"
     height="400"
     scrolling="no"
     frameborder="no"
@@ -44,6 +44,7 @@ const secretToken = computed(() => {
 iframe {
   width: 100%;
   box-shadow: var(--shadow-sc);
+  flex: 1 1 50%;
 }
 @media screen and (min-width: 744px) {
   iframe {

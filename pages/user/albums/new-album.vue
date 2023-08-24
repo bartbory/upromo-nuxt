@@ -92,6 +92,7 @@ const formData: IAlbum = reactive({
   files: [],
   tour: null,
   displayMode: "LIGHT",
+  customColor: null,
 });
 
 async function fetchContactData() {
@@ -112,6 +113,7 @@ const addTourHandler = () => {
     image: null,
     concerts: null,
     link: null,
+    displayName: null,
   };
 };
 
@@ -235,7 +237,7 @@ function isActive(id: string) {
         <BaseInput
           label="Youtube videos"
           inputType="text"
-          description="Coma separated youtube videos ID (ex. https://www.youtube.com/watch?v={videoID})"
+          description="Coma separated youtube videos ID (https://www.youtube.com/watch?v={videoID})"
           v-model.trim="formData.youtubeVideos"
         />
         <hr />
@@ -287,6 +289,11 @@ function isActive(id: string) {
             label="External link"
             inputType="text"
             v-model.trim="formData.tour.link"
+          ></BaseInput>
+          <BaseInput
+            label="External link display text"
+            inputType="text"
+            v-model.trim="formData.tour.displayName"
           ></BaseInput>
           <BaseImageUpload
             label="Tour image"

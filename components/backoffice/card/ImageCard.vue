@@ -32,10 +32,12 @@ const props = defineProps({
   background: var(--purple-400);
 }
 .media {
-  object-fit: contain;
   max-width: 100%;
   max-height: 100%;
-  margin: auto auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .media img {
   height: 100%;

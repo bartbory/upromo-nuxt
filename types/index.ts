@@ -42,6 +42,7 @@ export interface IAlbum {
   files: IFiles[];
   tour: ITour | null;
   displayMode: DisplayTypes;
+  customColor: string | null;
 }
 
 export interface IAlbumList {
@@ -94,6 +95,7 @@ export interface ITour {
   concerts: IConcert[] | null;
   image: string | null;
   link: string | null;
+  displayName: string | null;
 }
 export interface IConcert {
   id: string;

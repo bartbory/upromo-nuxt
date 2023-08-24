@@ -36,6 +36,7 @@ export default defineEventHandler(async (event) => {
         tourDescription: body.tour ? body.tour.description : null,
         tourImage: body.tour ? body.tour.image : null,
         tourLink: body.tour ? body.tour.link : null,
+        tourLinkDisplayName: body.tour ? body.tour.displayName : null,
         secret: createSecret(),
         youtubeVideos: body.youtubeVideos,
         imageCover: { connect: { path: body.images.cover } },
@@ -74,6 +75,7 @@ export default defineEventHandler(async (event) => {
             };
           }),
         },
+        customColor: body.customColor,
       },
     });
     return { data: sentPrompt };

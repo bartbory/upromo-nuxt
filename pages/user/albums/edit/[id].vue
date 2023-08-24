@@ -90,6 +90,7 @@ let formData = reactive<IAlbum>({
   files: [],
   tour: null,
   displayMode: "LIGHT",
+  customColor: null,
 });
 
 if (fetchData.data.value && fetchData.data.value.data) {
@@ -117,6 +118,7 @@ const addTourHandler = () => {
     concerts: null,
     image: null,
     link: null,
+    displayName: null,
   };
 };
 
@@ -162,7 +164,7 @@ async function submitFormHandler() {
     isLoading.value = false;
     return;
   }
-  console.log(formData.images.promo);
+
   const dataToSend = { ...formData, uid: user };
   const { data, pending } = await useFetch(`/api/albums/album/${formData.id}`, {
     method: "PUT",
@@ -328,6 +330,11 @@ useHead({
               label="External link"
               inputType="text"
               v-model.trim="formData.tour.link"
+            ></BaseInput>
+            <BaseInput
+              label="External link display text"
+              inputType="text"
+              v-model.trim="formData.tour.displayName"
             ></BaseInput>
             <BaseImageUpload
               label="Tour image"
