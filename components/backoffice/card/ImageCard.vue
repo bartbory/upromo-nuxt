@@ -38,8 +38,9 @@ const props = defineProps({
   margin: auto auto;
 }
 .media img {
-  max-height: 168px;
-  max-width: 168px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 .active {
   background-color: var(--purple-900);

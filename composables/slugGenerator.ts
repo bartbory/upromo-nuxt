@@ -2,7 +2,7 @@ export default function slugGenerator(name: string) {
   const slug: string = name
     .toLowerCase()
     .replaceAll(new RegExp(/[\s.]/g), "-")
-    .replaceAll(new RegExp(/[àáâãäå]/g), "a")
+    .replaceAll(new RegExp(/[àáâãäåą]/g), "a")
     .replaceAll(new RegExp(/[ḃḅḇƀɓꞗᵬᶀ]/g), "b")
     .replaceAll(new RegExp(/æ/g), "ae")
     .replaceAll(new RegExp(/[ćĉčċḉƈc̈ȼç]/g), "c")
