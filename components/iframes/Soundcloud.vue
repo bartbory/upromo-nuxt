@@ -27,7 +27,7 @@ const secretToken = computed(() => {
 <template>
   <iframe
     width="80%"
-    height="640"
+    height="400"
     scrolling="no"
     frameborder="no"
     allow="autoplay"

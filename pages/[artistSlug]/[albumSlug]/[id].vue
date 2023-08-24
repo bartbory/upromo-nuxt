@@ -141,8 +141,12 @@ useHead({
     ></div>
     <section class="tour container" v-if="album.tour">
       <h1>Tour "{{ album.tour.name }}"</h1>
-      <div class="description__block" v-html="album.tour.description"></div>
-      <a v-if="album.tour.link" :href="album.tour.link">External link</a>
+      <div
+        v-if="album.tour.description"
+        class="description__block"
+        v-html="album.tour.description"
+      ></div>
+      <a v-if="album.tour.link" :href="album.tour.link">Tickets</a>
       <ConcertsList
         v-if="album.tour.concerts"
         :concerts="album.tour.concerts"
@@ -392,6 +396,24 @@ label {
   row-gap: 24px;
 }
 
+.tour > a {
+  padding: 8px 16px;
+  background-color: var(--white-900);
+  color: var(--purple-900);
+  border: 1px solid var(--purple-900);
+  border-radius: var(--br-8);
+  cursor: pointer;
+  font-size: 1.6rem;
+  align-self: flex-start;
+  transition: all 0.3s ease-in-out;
+}
+
+.tour > a:hover {
+  background-color: var(--purple-900);
+  color: var(--white-900);
+  border: 1px solid var(--purple-900);
+}
+
 .social__links {
   display: flex;
   flex-direction: column;
@@ -413,7 +435,8 @@ label {
 }
 
 .video > iframe {
-  flex: 1 0 100%;
+  flex: 0 0 30%;
+  aspect-ratio: 1.8;
 }
 
 .tour__parallax {
@@ -450,6 +473,7 @@ label {
 .gallery__item {
   position: relative;
   flex: 1 1 29%;
+  max-width: 29%;
   aspect-ratio: 1;
   display: flex;
   justify-content: center;
@@ -490,8 +514,8 @@ label {
 .purple {
   position: absolute;
   width: 100%;
-  height: 50%;
-  background-color: var(--purple-900);
+  height: 35%;
+  background-color: #336ffe;
   z-index: -1;
 }
 
@@ -677,7 +701,8 @@ footer span {
   }
 
   .video > iframe {
-    flex: 1 0 30%;
+    flex: 0 0 30%;
+    aspect-ratio: 1.8;
   }
   .information__container__1 {
     display: flex;
