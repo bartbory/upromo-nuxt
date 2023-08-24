@@ -36,7 +36,7 @@ const handleLogin = async () => {
 
 <template>
   <section>
-    <h1 class="logo">UPROMO</h1>
+    <h1 class="logo">RELEASLAND</h1>
     <form @submit.prevent="handleLogin" v-if="!loading">
       <BaseInput label="Login" inputType="email" v-model="email" />
       <BaseInput label="Password" inputType="password" v-model="password" />

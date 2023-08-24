@@ -8,7 +8,7 @@ const emits = defineEmits(["signOut"]);
 
 <template>
   <header>
-    <NuxtLink to="/"><h1 class="logo">UPROMO</h1></NuxtLink>
+    <NuxtLink to="/"><h1 class="logo">RELEASLAND</h1></NuxtLink>
     <div class="user">
       {{ userName }}
       <BaseButton

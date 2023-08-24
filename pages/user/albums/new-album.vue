@@ -33,7 +33,7 @@ const showContactAddModal = ref(false);
 const supabase = useSupabaseUser();
 const user = supabase.value?.id;
 
-const title = ref(`Upromo - Create new album`);
+const title = ref(`RELEASLAND - Create new album`);
 
 useHead({
   title,

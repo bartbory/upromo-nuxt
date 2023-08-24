@@ -12,7 +12,7 @@ definePageMeta({
 const isLoading = ref(true);
 const user = useSupabaseUser();
 
-const title = ref(`Upromo - Album list (${user.value?.email})`);
+const title = ref(`RELEASLAND - Album list (${user.value?.email})`);
 const description = ref("Album list");
 useHead({
   title,

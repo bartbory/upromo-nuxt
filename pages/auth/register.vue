@@ -79,7 +79,7 @@ async function submitForm() {
 </script>
 <template>
   <section>
-    <h1 class="logo">UPROMO</h1>
+    <h1 class="logo">RELEASLAND</h1>
     <p v-if="isSuccess && !isLoading">Check your inbox to verify your e-mail</p>
     <LoadingScreen v-if="isLoading" />
     <form @submit.prevent="submitForm" v-if="!isLoading && !isSuccess">

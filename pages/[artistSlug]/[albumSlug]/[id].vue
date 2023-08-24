@@ -76,7 +76,7 @@ useHead({
         backgroundImage: `url(${album.images.hero}?width=1920&height=500)`,
       }"
     >
-      <p class="logo">UPROMO</p>
+      <p class="logo">RELEASLAND</p>
       <div class="header__album">
         <div class="header__album__image" v-if="album.images?.cover">
           <img :src="album.images.cover" />
@@ -164,6 +164,13 @@ useHead({
             "
             @click="navigateTo(image.path, { external: true })"
           />
+          <p
+            class="image__description"
+            v-if="image.description || image.author"
+          >
+            {{ image.description ? image.description : "" }}
+            {{ image.author ? `/ Author: ${image.author}` : "" }}
+          </p>
         </div>
       </div>
       <div class="purple"></div>
@@ -247,7 +254,7 @@ useHead({
       />
     </section>
 
-    <p>powered by <span class="logo--footer">UPROMO</span></p>
+    <p>powered by <span class="logo--footer">RELEASLAND</span></p>
   </footer>
 </template>
 
@@ -441,21 +448,44 @@ label {
 }
 
 .gallery__item {
+  position: relative;
   flex: 1 1 29%;
-  max-width: 30%;
   aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   border-radius: 8px;
   cursor: pointer;
   box-shadow: var(--shadow-file);
 }
 .gallery__item img {
+  flex-shrink: 0;
+  height: 100%;
   width: 100%;
+  object-fit: cover;
   position: relative;
-  transition: width 0.5s ease-in-out;
+  transform: scale(1);
+  transition: transform 0.5s ease-in-out;
+}
+
+.image__description {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  bottom: 0px;
+  padding: 8px;
+  opacity: 0;
+  text-align: center;
+  transition: all 0.5s ease-in-out;
 }
 .gallery__item:hover img {
-  width: 105%;
+  transform: scale(1.2);
+}
+
+.gallery__item:hover .image__description {
+  opacity: 1;
+  bottom: 8px;
 }
 .purple {
   position: absolute;

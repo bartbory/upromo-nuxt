@@ -5,7 +5,7 @@ import { useRouter } from "nuxt/app";
 definePageMeta({
   layout: "default",
 });
-const title = ref("Upromo");
+const title = ref("RELEASLAND");
 const description = ref(
   "Promote Your Album, Reach Your Audience, Boost Your Book Sales"
 );
@@ -57,7 +57,7 @@ function stepHandler(step: number) {
   <NuxtLayout>
     <nav>
       <div class="nav__container">
-        <div class="logo">UPROMO</div>
+        <div class="logo">RELEASLAND</div>
       </div>
     </nav>
     <header>
@@ -161,7 +161,7 @@ function stepHandler(step: number) {
       </div>
     </section>
     <footer>
-      <h1 class="logo">UPROMO</h1>
+      <h1 class="logo">RELEASLAND</h1>
     </footer>
   </NuxtLayout>
 </template>

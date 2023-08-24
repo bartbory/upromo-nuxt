@@ -18,9 +18,9 @@ const props = defineProps({
   align-items: center;
   column-gap: 8px;
   position: relative;
-  flex: 1 1 30%;
-  max-width: 200px;
+  flex: 1 1 24%;
   max-height: 200px;
+  max-width: 200px;
   padding: 16px;
   background-color: var(--gray-100);
   border-radius: var(--br-4);

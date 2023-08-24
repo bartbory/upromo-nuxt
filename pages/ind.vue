@@ -48,7 +48,7 @@ if (user) {
   <NuxtLayout>
     <nav>
       <div class="nav__container">
-        <div class="logo">UPROMO</div>
+        <div class="logo">RELEASLAND</div>
         <div v-if="!isLoggedIn" class="nav--actions">
           <BaseButton
             msg="Login"
@@ -189,7 +189,7 @@ if (user) {
       <p>Contact with us, and we will try yo customize plan special for you!</p>
     </section>
     <footer>
-      <h1 class="logo">UPROMO</h1>
+      <h1 class="logo">RELEASLAND</h1>
     </footer>
   </NuxtLayout>
 </template>
