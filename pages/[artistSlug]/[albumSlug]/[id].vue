@@ -217,7 +217,9 @@ const shadow = computed(() => {
       <div class="booking__contact" v-for="contact in album.contact">
         <h2>{{ contact.name }}</h2>
         <label>{{ contact.role }}</label>
-        <p>{{ contact.phone }}</p>
+        <a :href="`tel:${contact.phone?.replaceAll(' ', '')}`">{{
+          contact.phone
+        }}</a>
         <a :href="`mailto:${contact.email}`">{{ contact.email }}</a>
       </div>
     </section>
@@ -387,6 +389,7 @@ label {
   min-height: 400px;
   height: 400px;
   max-height: 400px;
+  min-width: 400px;
   aspect-ratio: 1;
   border-radius: var(--br-8);
   overflow: hidden;
@@ -474,8 +477,10 @@ label {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  max-width: 1136px;
   gap: 24px;
   padding: 40px;
+  margin: 0 auto;
 }
 
 .video > iframe {
@@ -583,6 +588,12 @@ label {
   background-color: var(--gray-100);
   border: 1px solid var(--purple-900);
   border-radius: var(--br-8);
+  transition: 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+.booking__contact:hover {
+  background-color: var(--white-900);
 }
 
 .dark:deep(.booking__contact) {

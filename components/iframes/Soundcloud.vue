@@ -5,6 +5,7 @@ import getPlaylistSecretToken from "../../composables/getPlaylistSecretToken";
 
 const props = defineProps({
   src: { type: String, required: true },
+  color: { type: String, required: false },
 });
 
 const playlistId = computed(() => {
@@ -22,6 +23,14 @@ const secretToken = computed(() => {
     return secret;
   } else return null;
 });
+
+const color = computed(() => {
+  if (props.color) {
+    return props.color.replace("#", "%23");
+  } else {
+    return "ba2dff";
+  }
+});
 </script>
 
 <template>
@@ -35,7 +44,7 @@ const secretToken = computed(() => {
       'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' +
       playlistId +
       secretToken +
-      '&color=%23ba2dff&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false'
+      `&color=${color}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false`
     "
   ></iframe>
 </template>
@@ -44,7 +53,8 @@ const secretToken = computed(() => {
 iframe {
   width: 100%;
   box-shadow: var(--shadow-sc);
-  flex: 1 1 50%;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 @media screen and (min-width: 744px) {
   iframe {
