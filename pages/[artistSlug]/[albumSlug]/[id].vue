@@ -103,22 +103,26 @@ const shadow = computed(() => {
     <div class="cover on-sm" v-if="album.images.cover">
       <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
     </div>
-    <section class="player">
-      <div class="cover on-md" v-if="album.images.cover">
-        <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
+    <section class="player__container">
+      <div class="player">
+        <div class="cover on-md" v-if="album.images.cover">
+          <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
+        </div>
+        <Soundcloud
+          v-if="album.player === 'SOUNDCLOUD' && album.playerSoundcloud"
+          :src="album.playerSoundcloud"
+        />
+        <SpotifyPlayer
+          v-if="album.player === 'SPOTIFY' && album.playerSpotify"
+          :src="album.playerSpotify"
+        />
+        <div
+          class="blue"
+          :style="{
+            backgroundColor: album.customColor ? album.customColor : '',
+          }"
+        ></div>
       </div>
-      <Soundcloud
-        v-if="album.player === 'SOUNDCLOUD' && album.playerSoundcloud"
-        :src="album.playerSoundcloud"
-      />
-      <SpotifyPlayer
-        v-if="album.player === 'SPOTIFY' && album.playerSpotify"
-        :src="album.playerSpotify"
-      />
-      <div
-        class="blue"
-        :style="{ backgroundColor: album.customColor ? album.customColor : '' }"
-      ></div>
     </section>
     <section class="informations container">
       <div class="information__box">
@@ -375,15 +379,20 @@ label {
   left: 24px;
 }
 
-.player {
+.player__container {
   padding: 24px;
+  position: relative;
+}
+
+.player {
+  margin: 0 auto;
   width: 100%;
+  max-width: 1136px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  row-gap: 24px;
-  position: relative;
+  gap: 24px;
 }
 .player > .cover {
   flex-grow: 0;
@@ -400,6 +409,17 @@ label {
   display: flex;
   gap: 24px;
   flex-direction: column;
+}
+
+.description__block:deep(li) {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.description__block:deep(li > span) {
+  font-size: 0.7rem;
+  font-style: italic;
 }
 .blue {
   position: absolute;
@@ -671,7 +691,7 @@ footer span {
     max-height: 100%;
     width: 100%;
   }
-  .player {
+  .player__container {
     padding: 44px;
     flex-direction: row;
     gap: 24px;

@@ -84,6 +84,7 @@ export interface ILinks {
   facebook: string | null;
   instagram: string | null;
   spotify: string | null;
+  tidal: string | null;
   youtube: string | null;
   soundcloud: string | null;
   tiktok: string | null;
@@ -130,6 +131,7 @@ export type SocialTypes =
   | "spotify"
   | "soundcloud"
   | "twitter"
+  | "tidal"
   | "file";
 export type PlayerTypes = "SPOTIFY" | "SOUNDCLOUD";
 export type DisplayTypes = "LIGHT" | "DARK";

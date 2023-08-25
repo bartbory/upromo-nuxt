@@ -67,6 +67,7 @@ export default defineEventHandler(async (event) => {
         linkTiktok: body.links.tiktok ? body.links.tiktok : undefined,
         linkTwitter: body.links.twitter ? body.links.twitter : undefined,
         linkYoutube: body.links.youtube ? body.links.youtube : undefined,
+        linkTidal: body.links.tidal ? body.links.tidal : undefined,
         files: {
           set: body.files.flatMap((f) => {
             return {

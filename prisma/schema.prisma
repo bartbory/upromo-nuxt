@@ -91,6 +91,7 @@ model Album {
   linkInstagram       String?
   linkTiktok          String?
   linkTwitter         String?
+  linkTidal           String?
   displayMode         DisplayMode
   createdBy           User        @relation(fields: [createdById], references: [id])
   createdById         String

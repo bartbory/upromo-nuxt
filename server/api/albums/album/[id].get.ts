@@ -76,6 +76,7 @@ export default defineEventHandler(async (event) => {
           instagram: result.linkInstagram,
           tiktok: result.linkTiktok,
           twitter: result.linkTwitter,
+          tidal: result.linkTidal
         },
         images: {
           hero: result.imageHeroPath,

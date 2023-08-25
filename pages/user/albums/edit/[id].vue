@@ -79,6 +79,7 @@ let formData = reactive<IAlbum>({
     instagram: null,
     tiktok: null,
     twitter: null,
+    tidal: null,
   },
   images: {
     hero: "",
@@ -378,6 +379,12 @@ useHead({
               inputType="text"
               v-model.trim="formData.links.spotify"
               description="Just give us your spotify ID"
+            ></BaseInput>
+            <BaseInput
+              label="Tidal"
+              inputType="text"
+              v-model.trim="formData.links.tidal"
+              description="Just give us your tidal ID"
             ></BaseInput>
             <BaseInput
               label="Soundcloud"
