@@ -36,7 +36,7 @@ const color = computed(() => {
 <template>
   <iframe
     width="auto"
-    height="400"
+    height="auto"
     scrolling="no"
     frameborder="no"
     allow="autoplay"
@@ -55,10 +55,17 @@ iframe {
   box-shadow: var(--shadow-sc);
   flex-grow: 1;
   flex-shrink: 1;
+  border-radius: var(--br-8);
+  height: 360px;
 }
 @media screen and (min-width: 744px) {
   iframe {
-    max-width: 1136px;
+    height: 360px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  iframe {
+    height: 400px;
   }
 }
 </style>

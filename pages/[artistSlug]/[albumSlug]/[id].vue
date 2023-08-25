@@ -381,18 +381,19 @@ label {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   row-gap: 24px;
   position: relative;
 }
 .player > .cover {
   flex-grow: 0;
-  min-height: 400px;
-  height: 400px;
-  max-height: 400px;
-  min-width: 400px;
-  aspect-ratio: 1;
   border-radius: var(--br-8);
   overflow: hidden;
+  min-height: 300px;
+  height: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  aspect-ratio: 1;
   box-shadow: var(--shadow-sc);
 }
 .description__block {
@@ -677,6 +678,13 @@ footer span {
     position: relative;
   }
 
+  .player > .cover {
+    min-height: 360px;
+    height: 360px;
+    max-height: 360px;
+    min-width: 360px;
+  }
+
   .information__box {
     display: flex;
     column-gap: 40px;
@@ -722,7 +730,7 @@ footer span {
   }
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1200px) {
   .container {
     padding: 0px;
     width: 100%;
@@ -762,6 +770,13 @@ footer span {
     object-fit: cover;
     max-height: 100%;
     width: 100%;
+  }
+
+  .player > .cover {
+    min-height: 400px;
+    height: 400px;
+    max-height: 400px;
+    min-width: 400px;
   }
 
   .video > iframe {
