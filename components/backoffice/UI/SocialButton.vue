@@ -23,6 +23,8 @@ onMounted(() => {
       return (iconDisplay.value = "fa-brands fa-tiktok");
     case "spotify":
       return (iconDisplay.value = "fa-brands fa-spotify");
+    case "tidal":
+      return (iconDisplay.value = "fa-regular fa-circle-play");
     case "soundcloud":
       return (iconDisplay.value = "fa-brands fa-soundcloud");
     case "youtube":

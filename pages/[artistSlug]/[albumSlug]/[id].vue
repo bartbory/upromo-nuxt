@@ -236,6 +236,7 @@ const shadow = computed(() => {
         album.links.instagram ||
         album.links.soundcloud ||
         album.links.spotify ||
+        album.links.tidal ||
         album.links.tiktok ||
         album.links.twitter ||
         album.links.youtube
@@ -261,6 +262,13 @@ const shadow = computed(() => {
         baselink="https://open.spotify.com/artist/"
         name="Spotify"
         v-if="album.links.spotify"
+      />
+      <SocialButton
+        icon="file"
+        :link="album.links.tidal"
+        baselink="https://tidal.com/browse/artist/"
+        name="Tidal"
+        v-if="album.links.tidal"
       />
       <SocialButton
         icon="soundcloud"
