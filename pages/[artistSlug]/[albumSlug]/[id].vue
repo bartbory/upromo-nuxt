@@ -124,7 +124,7 @@ const shadow = computed(() => {
       <div class="information__box">
         <div class="information__details">
           <div class="information">
-            <label>Artist</label>
+            <label>Artysta</label>
             <p>{{ album.artistName }}</p>
           </div>
           <div class="information">
@@ -132,17 +132,17 @@ const shadow = computed(() => {
             <p>{{ album.albumName }}</p>
           </div>
           <div class="information">
-            <label>Release</label>
+            <label>Premiera</label>
             <p>{{ album.releaseDate }}</p>
           </div>
           <div class="information">
-            <label>Label</label>
+            <label>Wydawnictwo</label>
             <p>{{ album.label }}</p>
           </div>
         </div>
       </div>
       <div class="information">
-        <label>Description</label>
+        <label>Informacja prasowa</label>
         <div class="description__block" v-html="album.description"></div>
       </div>
     </section>
@@ -150,7 +150,7 @@ const shadow = computed(() => {
       <YouTube v-for="media in youtubeVideos" :key="media" :src="media" />
     </section>
     <section class="tour container" v-if="album.tour">
-      <h1>Tour "{{ album.tour.name }}"</h1>
+      <h1>Trasa koncertowa "{{ album.tour.name }}"</h1>
       <div class="album cover" v-if="album.tour.image">
         <img :src="album.tour.image" />
       </div>
@@ -200,7 +200,7 @@ const shadow = computed(() => {
         }"
       ></div>
       <div class="materials container" v-if="album.files.length > 0">
-        <h1>Promo materials</h1>
+        <h1>Materiały promocyjne</h1>
         <div class="materials__list">
           <FileButton
             v-for="file in album.files"
@@ -213,7 +213,7 @@ const shadow = computed(() => {
     </section>
 
     <section class="booking container" v-if="album.contact.length > 0">
-      <h1>Booking contact</h1>
+      <h1>Opieka nad artystą</h1>
       <div class="booking__contact" v-for="contact in album.contact">
         <h2>{{ contact.name }}</h2>
         <label>{{ contact.role }}</label>
