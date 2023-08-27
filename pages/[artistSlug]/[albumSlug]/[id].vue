@@ -203,7 +203,10 @@ const shadow = computed(() => {
           backgroundColor: album.customColor ? album.customColor : '',
         }"
       ></div>
-      <div class="materials container" v-if="album.files.length > 0">
+      <div
+        class="materials container"
+        v-if="album.files.length > 0 || album.additionalLink"
+      >
         <h1>Materiały promocyjne</h1>
         <div class="materials__list">
           <FileButton
