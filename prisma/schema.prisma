@@ -78,6 +78,8 @@ model Album {
   imageBackground     Media?      @relation(fields: [imageBackgroundPath], references: [path], name: "background-image", onDelete: SetNull)
   imageBackgroundPath String?
   files               File[]
+  additionalLink      String?
+  additionalLinkName  String?
   customColor         String?
   tourName            String?
   tourDescription     String?
@@ -93,6 +95,7 @@ model Album {
   linkTwitter         String?
   linkTidal           String?
   displayMode         DisplayMode
+  language            Languages   @default(PL)
   createdBy           User        @relation(fields: [createdById], references: [id])
   createdById         String
   createdDate         DateTime    @default(now())
@@ -114,6 +117,13 @@ model Contact {
   createdById String
 }
 
+model Translations {
+  id Int    @id @unique @default(autoincrement())
+  en String
+  pl String
+  de String
+}
+
 enum Player {
   SPOTIFY
   SOUNDCLOUD
@@ -128,4 +138,10 @@ enum Plans {
   LITE
   BASIC
   PRO
+}
+
+enum Languages {
+  PL
+  EN
+  DE
 }

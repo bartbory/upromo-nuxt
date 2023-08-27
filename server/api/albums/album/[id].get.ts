@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
           instagram: result.linkInstagram,
           tiktok: result.linkTiktok,
           twitter: result.linkTwitter,
-          tidal: result.linkTidal
+          tidal: result.linkTidal,
         },
         images: {
           hero: result.imageHeroPath,
@@ -89,6 +89,9 @@ export default defineEventHandler(async (event) => {
         tour: tourData,
         displayMode: displayMode(),
         customColor: result.customColor,
+        language: "PL",
+        additionalLink: result.additionalLink,
+        additionalLinkName: result.additionalLinkName,
       };
       return { data: albumData };
     }

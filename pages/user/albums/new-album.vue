@@ -94,6 +94,9 @@ const formData: IAlbum = reactive({
   tour: null,
   displayMode: "LIGHT",
   customColor: null,
+  language: "PL",
+  additionalLink: null,
+  additionalLinkName: null,
 });
 
 async function fetchContactData() {
@@ -422,6 +425,17 @@ function isActive(id: string) {
           @selectionHandler="(files: IFiles[]) => (formData.files = files)"
           @deleteSelectedFile="(file: IFiles) => (deleteSelectedFileHandler(file))"
         />
+        <hr />
+        <BaseInput
+          label="Additional link"
+          inputType="url"
+          v-model.trim="formData.additionalLink"
+        ></BaseInput>
+        <BaseInput
+          label="Link display name"
+          inputType="text"
+          v-model.trim="formData.additionalLinkName"
+        ></BaseInput>
         <hr />
         <BaseImageUpload
           label="Custom background image"

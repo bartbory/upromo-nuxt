@@ -76,6 +76,9 @@ export default defineEventHandler(async (event) => {
           }),
         },
         customColor: body.customColor,
+        language: "PL",
+        additionalLink: body.additionalLink,
+        additionalLinkName: body.additionalLinkName,
       },
     });
     return { data: sentPrompt };

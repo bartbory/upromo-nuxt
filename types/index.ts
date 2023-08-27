@@ -40,9 +40,12 @@ export interface IAlbum {
   links: ILinks;
   images: IImages;
   files: IFiles[];
+  additionalLink: string | null;
+  additionalLinkName: string | null;
   tour: ITour | null;
   displayMode: DisplayTypes;
   customColor: string | null;
+  language: LanguageTypes;
 }
 
 export interface IAlbumList {
@@ -136,3 +139,4 @@ export type SocialTypes =
 export type PlayerTypes = "SPOTIFY" | "SOUNDCLOUD";
 export type DisplayTypes = "LIGHT" | "DARK";
 export type PlanTypes = "LITE" | "BASIC" | "PRO";
+export type LanguageTypes = "PL" | "EN" | "DE";

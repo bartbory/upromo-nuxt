@@ -89,6 +89,9 @@ export default defineEventHandler(async (event) => {
         tour: tourData,
         displayMode: displayMode(),
         customColor: result.customColor,
+        additionalLink: result.additionalLink,
+        additionalLinkName: result.additionalLinkName,
+        language: result.language,
       };
       return { data: albumData };
     }

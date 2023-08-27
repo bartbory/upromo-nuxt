@@ -212,6 +212,11 @@ const shadow = computed(() => {
             :name="file.name"
             :link="file.path"
           />
+          <FileButton
+            v-if="album.additionalLink && album.additionalLinkName"
+            :link="album.additionalLink"
+            :name="album.additionalLinkName"
+          />
         </div>
       </div>
     </section>
