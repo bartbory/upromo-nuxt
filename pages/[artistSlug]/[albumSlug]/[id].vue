@@ -25,10 +25,14 @@ const { data, error, pending } = await useFetch<{ data: IAlbum }>(
   `/api/secret/${albumId.toString()}`
 );
 
-const title = ref(``);
+let title = ref(``);
+let ogDescription = ref(``);
+let ogGraphic = ref(``);
 if (!error.value && data.value && !pending.value) {
   album = data.value.data;
   title.value = `${album.artistName} / ${album.albumName}`;
+  ogDescription.value = `Releasland presents media page of upcoming release - ${album.albumName}`;
+  ogGraphic.value = album.images.cover;
   if (
     route.params.artistSlug !== data.value.data.artistSlug ||
     route.params.albumSlug !== data.value.data.albumSlug ||
@@ -62,6 +66,13 @@ useHead({
     { name: "author", content: "Bartosz Borycki" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
   ],
+});
+
+useSeoMeta({
+  ogTitle: title,
+  description: ogDescription,
+  ogDescription: ogDescription,
+  ogImage: ogGraphic,
 });
 
 // const customBackgroundColor = "#336ffe";
