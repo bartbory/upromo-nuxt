@@ -8,6 +8,7 @@ const isLoading = ref(true);
 const router = useRouter();
 const user = useSupabaseUser();
 const userName = user.value?.user_metadata.name;
+const plan = user.value?.user_metadata.plan;
 
 if (!user.value) {
   router.push("/auth/login");
@@ -24,7 +25,7 @@ const signOutHandle = () => {
 <template>
   <LoadingScreen v-if="isLoading" />
   <div v-else>
-    <TopBar @sign-out="signOutHandle" :userName="userName" />
+    <TopBar @sign-out="signOutHandle" :userName="userName" :plan="plan" />
     <main>
       <SideNav />
       <section>

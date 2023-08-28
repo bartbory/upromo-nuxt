@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PropType, computed } from "vue";
 import { SocialTypes } from "../../../types";
+import Icon from "~/components/global/Icon.vue";
 
 const props = defineProps({
   link: { type: String, required: true },
@@ -9,34 +10,33 @@ const props = defineProps({
   icon: { type: String as PropType<SocialTypes>, required: true },
 });
 
-const iconDisplay: Ref<string | null> = ref(null);
-
-onMounted(() => {
+const iconDisplay = computed(() => {
   switch (props.icon) {
     case "facebook":
-      return (iconDisplay.value = "fa-brands fa-facebook");
+      return "facebook";
     case "instagram":
-      return (iconDisplay.value = "fa-brands fa-instagram");
+      return "instagram";
     case "twitter":
-      return (iconDisplay.value = "fa-brands fa-twitter");
+      return "twitter";
     case "tiktok":
-      return (iconDisplay.value = "fa-brands fa-tiktok");
+      return "tiktok";
     case "spotify":
-      return (iconDisplay.value = "fa-brands fa-spotify");
+      return "spotify";
     case "tidal":
-      return (iconDisplay.value = "fa-regular fa-circle-play");
+      return "tidal";
     case "soundcloud":
-      return (iconDisplay.value = "fa-brands fa-soundcloud");
+      return "soundcloud";
     case "youtube":
-      return (iconDisplay.value = "fa-brands fa-youtube");
+      return "youtube";
     default:
-      return (iconDisplay.value = "fa-regular fa-file");
+      return "tidal";
   }
 });
 </script>
 <template>
   <NuxtLink :to="`${props.baselink}${props.link}`">
-    <font-awesome-icon :icon="iconDisplay" size="xl" v-if="iconDisplay" />
+    <!-- <font-awesome-icon :icon="iconDisplay" size="xl" v-if="iconDisplay" /> -->
+    <Icon :name="iconDisplay" :size="16" />
     <p>{{ props.name }}</p>
   </NuxtLink>
 </template>

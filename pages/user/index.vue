@@ -88,7 +88,6 @@ await getAlbumsCount();
       :value="getMbFromFile(filesStorageCapacity).toString()"
       :max-value="filesMaxStorageCapacity + ' mb'"
     />
-    <BaseCard title="Plan" :value="user?.user_metadata.plan" :max-value="''" />
   </section>
 </template>
 
@@ -96,6 +95,7 @@ await getAlbumsCount();
 .capacity__container {
   display: flex;
   flex-direction: row;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 </style>

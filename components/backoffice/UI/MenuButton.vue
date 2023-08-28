@@ -1,34 +1,54 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
+import Icon from "../../global/Icon.vue";
 
 const props = defineProps({
   name: { type: String, required: true },
   to: { type: String, required: true },
 });
 
-const iconDisplay: Ref<string | null> = ref(null);
-
-onMounted(() => {
+// const iconDisplay: Ref<string> = ref('');
+const iconDisplay = computed(() => {
   switch (props.name) {
     case "Dashboard":
-      return (iconDisplay.value = "fa-regular fa-heart");
+      return "dashboard";
     case "Albums":
-      return (iconDisplay.value = "fa-regular fa-circle-play");
+      return "albums";
     case "Files":
-      return (iconDisplay.value = "fa-regular fa-file");
+      return "files";
     case "Media":
-      return (iconDisplay.value = "fa-regular fa-image");
+      return "media";
+    case "Contacts":
+      return "contacts";
     case "Profile":
-      return (iconDisplay.value = "fa-regular fa-user");
+      return "profile";
     default:
-      return (iconDisplay.value = "fa-regular fa-file");
+      return "dashboard";
   }
 });
+
+// onMounted(() => {
+//   switch (props.name) {
+//     case "Dashboard":
+//       return (iconDisplay.value = "fa-regular fa-heart");
+//     case "Albums":
+//       return (iconDisplay.value = "fa-regular fa-circle-play");
+//     case "Files":
+//       return (iconDisplay.value = "fa-regular fa-file");
+//     case "Media":
+//       return (iconDisplay.value = "fa-regular fa-image");
+//     case "Profile":
+//       return (iconDisplay.value = "fa-regular fa-user");
+//     default:
+//       return (iconDisplay.value = "fa-regular fa-file");
+//   }
+// });
 </script>
 
 <template>
   <NuxtLink :to="to">
-    <font-awesome-icon :icon="iconDisplay" size="sm" v-if="iconDisplay" />
+    <!-- <font-awesome-icon :icon="iconDisplay" size="sm" v-if="iconDisplay" /> -->
+    <Icon :name="iconDisplay" :size="16" color="#fff" />
     <p>{{ props.name }}</p>
   </NuxtLink>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Icon from "~/components/global/Icon.vue";
 const props = defineProps({
   link: { type: String, required: true },
   name: { type: String, required: true },
@@ -7,6 +8,7 @@ const props = defineProps({
 
 <template>
   <NuxtLink :to="props.link">
+    <Icon name="download" :size="16" />
     <p>{{ props.name }}</p></NuxtLink
   >
 </template>

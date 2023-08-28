@@ -4,5 +4,4 @@ export default defineNuxtConfig({
   gtag: {
     id: "G-9X809BG7PK",
   },
-  css: ["@fortawesome/fontawesome-svg-core/styles.css"],
 });

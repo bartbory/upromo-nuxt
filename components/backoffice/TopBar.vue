@@ -2,6 +2,7 @@
 import BaseButton from "./UI/BaseButton.vue";
 const props = defineProps({
   userName: { type: String, required: true },
+  plan: { type: String, required: true },
 });
 const emits = defineEmits(["signOut"]);
 </script>
@@ -10,7 +11,7 @@ const emits = defineEmits(["signOut"]);
   <header>
     <NuxtLink to="/"><h1 class="logo">RELEASLAND</h1></NuxtLink>
     <div class="user">
-      {{ userName }}
+      {{ userName }} ({{ plan }})
       <BaseButton
         msg="Logout"
         styleType="secondary"
