@@ -197,7 +197,7 @@ function imageClickHandler(image: IImage) {
         class="description__block"
         v-html="album.tour.description"
       ></div>
-      <a v-if="album.tour.link" :href="album.tour.link">{{
+      <a v-if="album.tour.link" :href="album.tour.link" target="_blank">{{
         album.tour.displayName
       }}</a>
       <ConcertsList
