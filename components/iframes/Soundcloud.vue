@@ -35,6 +35,7 @@ const color = computed(() => {
 
 <template>
   <iframe
+  title="SoundCloud player"
     width="auto"
     height="auto"
     scrolling="no"

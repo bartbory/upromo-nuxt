@@ -6,6 +6,7 @@ const props = defineProps({
 
 <template>
   <iframe
+    title="Spotify player"
     style="border-radius: 12px"
     :src="
       'https://open.spotify.com/embed/' +

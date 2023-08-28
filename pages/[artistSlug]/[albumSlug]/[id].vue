@@ -77,6 +77,9 @@ useHead({
     { name: "author", content: "Bartosz Borycki" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
   ],
+  htmlAttrs: {
+    lang: "pl",
+  },
 });
 
 useSeoMeta({
@@ -126,7 +129,11 @@ function imageClickHandler(image: IImage) {
       <p class="logo">RELEASLAND</p>
       <div class="header__album">
         <div class="header__album__image" v-if="album.images?.cover">
-          <img :src="album.images.cover" />
+          <img
+            :src="album.images.cover"
+            :alt="`${album.albumName} - Cover`"
+            loading="lazy"
+          />
         </div>
         <div class="header__album__details">
           <h1>{{ album.artistName }}</h1>
@@ -135,12 +142,20 @@ function imageClickHandler(image: IImage) {
       </div>
     </header>
     <div class="cover on-sm" v-if="album.images.cover">
-      <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
+      <img
+        :src="album.images.cover"
+        :alt="`${album.albumName} - Cover`"
+        loading="lazy"
+      />
     </div>
     <section class="player__container">
       <div class="player">
         <div class="cover on-md" v-if="album.images.cover">
-          <img :src="album.images.cover" :alt="`${album.albumName} - Cover`" />
+          <img
+            :src="album.images.cover"
+            :alt="`${album.albumName} - Cover`"
+            loading="lazy"
+          />
         </div>
         <Soundcloud
           v-if="album.player === 'SOUNDCLOUD' && album.playerSoundcloud"
@@ -190,7 +205,11 @@ function imageClickHandler(image: IImage) {
     <section class="tour container" v-if="album.tour">
       <h1>Trasa koncertowa "{{ album.tour.name }}"</h1>
       <div class="album cover" v-if="album.tour.image">
-        <img :src="album.tour.image" />
+        <img
+          :src="album.tour.image"
+          :alt="`${album.tour.name} - Promotional image`"
+          loading="lazy"
+        />
       </div>
       <div
         v-if="album.tour.description"
@@ -219,6 +238,7 @@ function imageClickHandler(image: IImage) {
               (image.description ? image.description : '') +
               (image.author ? ' / Created by: ' + image.author : '')
             "
+            loading="lazy"
             @click="imageClickHandler(image)"
           />
           <p
