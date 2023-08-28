@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import SocialButton from "~/components/backoffice/UI/SocialButton.vue";
 import YouTube from "~/components/iframes/YouTube.vue";
-import { IAlbum } from "~/types";
+import { IAlbum, IImage } from "~/types";
 import ConcertsList from "~/components/frontend/ConcertsList.vue";
 import Soundcloud from "~/components/iframes/Soundcloud.vue";
 import SpotifyPlayer from "~/components/iframes/SpotifyPlayer.vue";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import FileButton from "~/components/backoffice/UI/FileButton.vue";
+import ModalImagePreview from "~/components/backoffice/modal/ModalImagePreview.vue";
 
 const route = useRoute();
 const albumId = route.params.id;
@@ -19,6 +20,16 @@ const isError = reactive({
   status: false,
   msg: "",
 });
+const showModal = ref(false);
+const selectedImage = ref<IImage>({
+  id: "",
+  name: "",
+  path: "",
+  size: 0,
+  author: null,
+  description: null,
+});
+
 const isDark = ref("LIGHT");
 
 const { data, error, pending } = await useFetch<{ data: IAlbum }>(
@@ -86,6 +97,11 @@ const shadow = computed(() => {
     return "";
   }
 });
+
+function imageClickHandler(image: IImage) {
+  showModal.value = true;
+  selectedImage.value = image;
+}
 </script>
 
 <template>
@@ -95,6 +111,13 @@ const shadow = computed(() => {
     :style="{ backgroundImage: background }"
     :class="{ dark: isDark === 'LIGHT' ? false : true }"
   >
+    <Teleport to="body">
+      <ModalImagePreview
+        :show="showModal"
+        @close="showModal = false"
+        :image="selectedImage"
+      />
+    </Teleport>
     <header
       :style="{
         backgroundImage: `url(${album.images.hero}?width=1920&height=500)`,
@@ -187,7 +210,6 @@ const shadow = computed(() => {
         <div
           class="gallery__item"
           v-for="image in album.images.promo"
-          @click="navigateTo(`${image.path}`)"
           :style="shadow"
           :key="image.id"
         >
@@ -197,14 +219,14 @@ const shadow = computed(() => {
               (image.description ? image.description : '') +
               (image.author ? ' / Created by: ' + image.author : '')
             "
-            @click="navigateTo(image.path, { external: true })"
+            @click="imageClickHandler(image)"
           />
           <p
             class="image__description"
             v-if="image.description || image.author"
           >
             {{ image.description ? image.description : "" }}
-            {{ image.author ? `/ Author: ${image.author}` : "" }}
+            {{ image.author ? `Autor: ${image.author}` : "" }}
           </p>
         </div>
       </div>
@@ -597,10 +619,11 @@ label {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.6);
   bottom: 0px;
-  padding: 8px;
+  padding: 4px;
   opacity: 0;
   text-align: center;
   transition: all 0.5s ease-in-out;
+  font-size: 10px;
 }
 .gallery__item:hover img {
   transform: scale(1.2);
