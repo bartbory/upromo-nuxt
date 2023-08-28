@@ -26,10 +26,16 @@ const props = defineProps({
 iframe {
   width: 100%;
   box-shadow: var(--shadow-sc);
+  height: 360px;
 }
 @media screen and (min-width: 744px) {
   iframe {
-    max-width: 1136px;
+    height: 360px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  iframe {
+    height: 400px;
   }
 }
 </style>

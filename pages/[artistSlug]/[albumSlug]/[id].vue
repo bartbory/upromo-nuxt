@@ -9,6 +9,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import FileButton from "~/components/backoffice/UI/FileButton.vue";
 import ModalImagePreview from "~/components/backoffice/modal/ModalImagePreview.vue";
+import getTranslations from "~/composables/getTranslations";
 
 const route = useRoute();
 const albumId = route.params.id;
@@ -177,25 +178,25 @@ function imageClickHandler(image: IImage) {
       <div class="information__box">
         <div class="information__details">
           <div class="information">
-            <label>Artysta</label>
+            <label>{{ getTranslations(1, album.language) }}</label>
             <p>{{ album.artistName }}</p>
           </div>
           <div class="information">
-            <label>Album</label>
+            <label>{{ getTranslations(2, album.language) }}</label>
             <p>{{ album.albumName }}</p>
           </div>
           <div class="information">
-            <label>Premiera</label>
+            <label>{{ getTranslations(3, album.language) }}</label>
             <p>{{ album.releaseDate }}</p>
           </div>
           <div class="information">
-            <label>Wydawnictwo</label>
+            <label>{{ getTranslations(4, album.language) }}</label>
             <p>{{ album.label }}</p>
           </div>
         </div>
       </div>
       <div class="information">
-        <label>Informacja prasowa</label>
+        <label>{{ getTranslations(5, album.language) }}</label>
         <div class="description__block" v-html="album.description"></div>
       </div>
     </section>
@@ -203,7 +204,7 @@ function imageClickHandler(image: IImage) {
       <YouTube v-for="media in youtubeVideos" :key="media" :src="media" />
     </section>
     <section class="tour container" v-if="album.tour">
-      <h1>Trasa koncertowa "{{ album.tour.name }}"</h1>
+      <h1>{{ getTranslations(6, album.language) }} "{{ album.tour.name }}"</h1>
       <div class="album cover" v-if="album.tour.image">
         <img
           :src="album.tour.image"
@@ -260,7 +261,7 @@ function imageClickHandler(image: IImage) {
         class="materials container"
         v-if="album.files.length > 0 || album.additionalLink"
       >
-        <h1>Materiały promocyjne</h1>
+        <h1>{{ getTranslations(7, album.language) }}</h1>
         <div class="materials__list">
           <FileButton
             v-for="file in album.files"
@@ -278,7 +279,7 @@ function imageClickHandler(image: IImage) {
     </section>
 
     <section class="booking container" v-if="album.contact.length > 0">
-      <h1>Opieka nad artystą</h1>
+      <h1>{{ getTranslations(8, album.language) }}</h1>
       <div class="booking__contact" v-for="contact in album.contact">
         <h2>{{ contact.name }}</h2>
         <label>{{ contact.role }}</label>
@@ -644,6 +645,11 @@ label {
   text-align: center;
   transition: all 0.5s ease-in-out;
   font-size: 10px;
+}
+
+.dark:deep(.image__description) {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--white-900);
 }
 .gallery__item:hover img {
   transform: scale(1.2);
