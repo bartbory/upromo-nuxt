@@ -2,9 +2,17 @@
 import { PropType } from "vue";
 
 const props = defineProps({
-  list: { type: Array as PropType<string[]>, required: true },
+  list: {
+    type: Array as PropType<{ text: string; value: string }[]>,
+    required: true,
+  },
   label: { type: String, required: true },
   active: { type: String, required: true },
+  display: {
+    type: String as PropType<"column" | "row">,
+    required: false,
+    default: "row",
+  },
 });
 const emits = defineEmits(["clickItem"]);
 </script>
@@ -12,15 +20,15 @@ const emits = defineEmits(["clickItem"]);
 <template>
   <div>
     <label>{{ props.label }}</label>
-    <div class="tab__container">
+    <div class="tab__container" :style="{flexDirection: props.display}">
       <div
         class="tab"
-        :class="item.toLowerCase() === props.active.toLowerCase() ? 'active' : ''"
+        :class="item.value === props.active ? 'active' : ''"
         v-for="item in list"
-        :key="item"
-        @click="emits('clickItem', item.toUpperCase())"
+        :key="item.value"
+        @click="emits('clickItem', item.value)"
       >
-        {{ item }}
+        {{ item.text }}
       </div>
     </div>
   </div>
@@ -29,7 +37,6 @@ const emits = defineEmits(["clickItem"]);
 <style scoped>
 .tab__container {
   display: flex;
-  flex-direction: row;
   padding: 2px;
   width: 100%;
   background: var(--gray-300);

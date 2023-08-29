@@ -89,7 +89,7 @@ export default defineEventHandler(async (event) => {
         tour: tourData,
         displayMode: displayMode(),
         customColor: result.customColor,
-        language: "PL",
+        language: result.language,
         additionalLink: result.additionalLink,
         additionalLinkName: result.additionalLinkName,
       };

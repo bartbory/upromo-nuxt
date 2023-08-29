@@ -144,4 +144,5 @@ enum Languages {
   PL
   EN
   DE
+  ES
 }

@@ -75,13 +75,15 @@ img {
   object-fit: contain;
 }
 .modal-footer {
+  color: var(--gray-900);
   position: absolute;
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--white-150);
+  background-color: var(--gray-400);
   padding: 4px 16px;
   border-radius: var(--br-4);
+  text-align: center;
   font-size: 10px;
 }
 </style>

@@ -7,6 +7,7 @@ import {
   PlayerTypes,
   IFiles,
   IPerson,
+  LanguageTypes,
 } from "~/types";
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 import BaseInput from "~/components/backoffice/form/BaseInput.vue";
@@ -19,6 +20,8 @@ import TabSelect from "~/components/backoffice/UI/TabSelect.vue";
 import Notification from "~/components/backoffice/UI/Notification.vue";
 import ContactCardSelection from "~/components/backoffice/card/ContactCardSelection.vue";
 import ModalContact from "~/components/backoffice/modal/ModalContact.vue";
+import { languageArray, playerArray, displayArray } from "~/assets/objects";
+
 definePageMeta({
   layout: "backoffice-layout",
   middleware: ["auth"],
@@ -290,7 +293,7 @@ useHead({
           <h1>Player</h1>
           <TabSelect
             label="Select player"
-            :list="['Soundcloud', 'Spotify']"
+            :list="playerArray"
             :active="formData.player"
             @clickItem="(item: PlayerTypes) => (formData.player = item)"
           />
@@ -491,10 +494,20 @@ useHead({
           <hr />
           <TabSelect
             label="Light / Dark mode"
-            :list="['Light', 'Dark']"
+            :list="displayArray"
             :active="formData.displayMode"
             @clickItem="(item: DisplayTypes) => (formData.displayMode = item)"
           />
+          <hr />
+          <TabSelect
+            label="Language of page"
+            :list="languageArray"
+            :active="formData.language"
+            @clickItem="(item: LanguageTypes) => (formData.language = item)"
+            display="column"
+          />
+          <label>*affects only label and headings</label>
+
           <hr />
           <BaseButton size="big" styleType="success" msg="Save" type="submit" />
         </div>

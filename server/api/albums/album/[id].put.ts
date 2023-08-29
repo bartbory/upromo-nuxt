@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
           }),
         },
         customColor: body.customColor,
-        language: "PL",
+        language: body.language,
         additionalLink: body.additionalLink,
         additionalLinkName: body.additionalLinkName,
       },

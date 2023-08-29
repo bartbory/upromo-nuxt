@@ -4,6 +4,7 @@ import { useRouter } from "nuxt/app";
 import { IPerson } from "~/types";
 import ContactCard from "~/components/backoffice/card/ContactCard.vue";
 import FormContact from "~/components/backoffice/form/FormContact.vue";
+import Notification from "~/components/backoffice/UI/Notification.vue";
 
 definePageMeta({
   layout: "backoffice-layout",
@@ -12,6 +13,7 @@ definePageMeta({
 
 let contacts: Ref<IPerson[]> = ref([]);
 const isLoading = ref(true);
+const isSuccess = ref(false);
 const showForm = ref(false);
 const supabase = useSupabaseUser();
 const user = supabase.value;
@@ -28,12 +30,14 @@ if (data.value) {
 
 async function fetchData() {
   isLoading.value = true;
-  const { data, pending } = await useFetch<{ data: IPerson[] }>(
+  const { data } = await $fetch<{ data: IPerson[] }>(
     `/api/contacts/${user?.id}`
   );
-  if (data.value) {
-    contacts.value = data.value.data;
-    isLoading.value = pending.value;
+  if (data) {
+    console.log(data);
+    contacts.value = data;
+    isSuccess.value = true;
+    isLoading.value = false;
   }
 }
 
@@ -63,6 +67,10 @@ useHead({
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
   ],
 });
+
+function hideNotification() {
+  isSuccess.value = false;
+}
 </script>
 
 <template>
@@ -76,6 +84,12 @@ useHead({
       @click="showNewContactForm"
     />
   </div>
+  <Notification
+    v-if="isSuccess && !isLoading"
+    type="success"
+    @close="hideNotification"
+    >Data updated</Notification
+  >
   <LoadingScreen v-if="isLoading" />
   <div v-else>
     <FormContact
@@ -106,5 +120,10 @@ article {
   flex-direction: column;
   row-gap: 8px;
   margin-bottom: 40px;
+}
+
+p,
+article {
+  margin-top: 24px;
 }
 </style>

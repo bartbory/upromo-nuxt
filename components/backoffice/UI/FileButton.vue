@@ -23,7 +23,7 @@ a {
   background-color: var(--gray-100);
   border-radius: var(--br-2);
   height: 40px;
-  border: 1px solid var(--purple-400);
+  border: 1px solid var(--purple-900);
   color: var(--purple-900);
   border-radius: var(--br-8);
   cursor: pointer;

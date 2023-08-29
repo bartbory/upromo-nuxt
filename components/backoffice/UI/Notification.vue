@@ -8,10 +8,19 @@ const props = defineProps({
     default: "neutral",
   },
 });
+const emits = defineEmits(["close"]);
+
+function timer() {
+  setTimeout(() => emits("close"), 3000);
+}
+
+onMounted(() => {
+  timer();
+});
 </script>
 <template>
   <div class="notification" :class="props.type">
-    <slot />
+    <slot></slot>
   </div>
 </template>
 

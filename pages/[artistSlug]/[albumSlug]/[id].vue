@@ -90,7 +90,6 @@ useSeoMeta({
   ogImage: ogGraphic,
 });
 
-// const customBackgroundColor = "#336ffe";
 const shadow = computed(() => {
   if (album.customColor) {
     return {
@@ -534,6 +533,9 @@ label {
   gap: 16px;
 }
 
+.dark:deep(.tour > a) {
+  background-color: var(--gray-900);
+}
 .tour > a {
   padding: 8px 16px;
   background-color: var(--white-900);
@@ -541,7 +543,7 @@ label {
   border: 1px solid var(--purple-900);
   border-radius: var(--br-8);
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 20px;
   align-self: flex-start;
   transition: all 0.3s ease-in-out;
 }
@@ -579,19 +581,6 @@ label {
   max-width: 100%;
   aspect-ratio: 1.8;
   object-fit: cover;
-}
-
-.tour__parallax {
-  position: relative;
-  height: 500px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  top: 0;
-  margin: 40px 0;
 }
 
 .promo {
@@ -677,20 +666,29 @@ label {
   row-gap: 16px;
   width: 100%;
 }
+
+.dark:deep(.materials__list > a) {
+  background-color: var(--gray-900);
+}
+.dark:deep(.materials__list > a:hover) {
+  background-color: var(--purple-900);
+}
 .booking {
   margin-bottom: 40px;
 }
 .booking__contact {
   padding: 24px 16px;
   background-color: var(--gray-100);
-  border: 1px solid var(--purple-900);
   border-radius: var(--br-8);
   transition: 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
+  box-shadow: 0;
+  transition: 0.5s;
 }
 .booking__contact:hover {
   background-color: var(--white-900);
+  box-shadow: var(--shadow-sc);
 }
 
 .dark:deep(.booking__contact) {

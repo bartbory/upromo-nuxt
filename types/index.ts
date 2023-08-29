@@ -139,4 +139,4 @@ export type SocialTypes =
 export type PlayerTypes = "SPOTIFY" | "SOUNDCLOUD";
 export type DisplayTypes = "LIGHT" | "DARK";
 export type PlanTypes = "LITE" | "BASIC" | "PRO";
-export type LanguageTypes = "PL" | "EN" | "DE";
+export type LanguageTypes = "PL" | "EN" | "DE" | "ES";
