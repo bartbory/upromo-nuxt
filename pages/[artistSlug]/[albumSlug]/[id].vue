@@ -128,7 +128,7 @@ function imageClickHandler(image: IImage) {
         backgroundImage: `url(${album.images.hero}?width=1920&height=500)`,
       }"
     >
-      <p class="logo">RELEASLAND</p>
+      <a class="logo" href="https://releasland.com">RELEASLAND</a>
       <div class="header__album">
         <div class="header__album__image" v-if="album.images?.cover">
           <img
@@ -356,7 +356,7 @@ function imageClickHandler(image: IImage) {
       />
     </section>
 
-    <p>powered by <span class="logo--footer">RELEASLAND</span></p>
+    <p>powered by <a class="logo--footer">RELEASLAND</a></p>
   </footer>
 </template>
 
@@ -444,10 +444,24 @@ label {
 .header__album__details {
   padding: 16px 24px;
 }
+
 .logo {
   position: absolute;
   top: 24px;
   left: 24px;
+  cursor: pointer;
+}
+
+.logo--footer,
+header > a {
+  color: var(--white-900);
+  text-shadow: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.logo--footer:hover,
+header > a:hover {
+  text-shadow: var(--shadow-file);
 }
 
 .player__container {
@@ -710,8 +724,9 @@ footer {
   font-size: 12px;
 }
 
-footer span {
+footer a {
   font-size: 24px;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 744px) {

@@ -76,7 +76,7 @@ function stepHandler(step: number) {
       </div>
       <div>
         <a
-          href="https://upromo.vercel.app/hudson/brigth-river/d53fc6f4-7287-41e6-8ec0-2d1bb2164a3b?secret=YjQJC5IMOmT7F5Se"
+          href="https://releasland.com/hudson/brigth-river/d53fc6f4-7287-41e6-8ec0-2d1bb2164a3b?secret=YjQJC5IMOmT7F5Se"
           >Demo page</a
         >
       </div>
