@@ -4,7 +4,7 @@
 
 <script>
 import { Icomoon } from "vue-icomoon";
-import iconSet from "../../assets/selection.json";
+import iconSet from "~/assets/selection.json";
 
 export default {
   name: "Icon",
@@ -23,3 +23,4 @@ export default {
   },
 };
 </script>
+../../static/selection.json

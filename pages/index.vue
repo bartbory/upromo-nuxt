@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import MailChimp from "~/components/frontend/MailChimp.vue";
-
-import { useRouter } from "nuxt/app";
 definePageMeta({
   layout: "default",
 });
 const title = ref("RELEASLAND");
 const description = ref(
-  "Promote Your Album, Reach Your Audience, Boost Your Book Sales"
+  "RELEASLAND is your secret weapon for creating captivating pages dedicated to your upcoming music album releases. Whether you're a solo artist, a band, or a music label - now you have the power to captivate your audience right from the start."
 );
 
 useHead({
@@ -17,6 +14,17 @@ useHead({
     { name: "author", content: "Bartosz Borycki" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
   ],
+  htmlAttrs: {
+    lang: "en",
+  },
+});
+
+useSeoMeta({
+  ogTitle: title,
+  description: description,
+  ogDescription: description,
+  ogImage: "assets/image/releasland_og.png",
+  ogSiteName: "RELEASLAND",
 });
 
 const steps = reactive({
