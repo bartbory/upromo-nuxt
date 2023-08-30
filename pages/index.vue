@@ -23,7 +23,7 @@ useSeoMeta({
   ogTitle: title,
   description: description,
   ogDescription: description,
-  ogImage: "assets/image/releasland_og.png",
+  ogImage: "image/releasland_og.png",
   ogSiteName: "RELEASLAND",
 });
 
@@ -100,87 +100,137 @@ function stepHandler(step: number) {
       "
     ></iframe>
     <section class="benefits">
-      <h1>What you get?</h1>
+      <h1>🎶 Why RELEASLAND Is Your Must-Have?</h1>
       <div class="benefits__container">
-        <div class="benefits__block">
-          <img
-            src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
-            alt="Benefit image - responsive"
-          />
-          <p>Responsive design</p>
+        <div class="benefit__block">
+          <div class="benefit__img">
+            <img
+              src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
+              alt="Benefit image - responsive"
+            />
+          </div>
+          <div class="benefit__desc">
+            <h2>Responsiveness and Aesthetics:</h2>
+            <p>
+              Create pages that look impeccable on every device. Your album
+              deserves a presentation of the highest caliber!
+            </p>
+          </div>
         </div>
-        <div class="benefits__block">
-          <img
-            src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/integration.png"
-            alt="Benefit image - integration"
-          />
-          <p>Soundcloud/Spotify integration</p>
+
+        <div class="benefit__block">
+          <div class="benefit__img">
+            <img
+              src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
+              alt="Benefit image - responsive"
+            />
+          </div>
+          <div class="benefit__desc">
+            <h2>Popular audio players:</h2>
+            <p>
+              Built-in playback options allow your audience to dive into your
+              music instantly.
+            </p>
+          </div>
         </div>
-        <div class="benefits__block">
-          <img
-            src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/protected.png"
-            alt="Benefit image - protected"
-          />
-          <p>Protected page link</p>
+
+        <div class="benefit__block">
+          <div class="benefit__img">
+            <img
+              src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
+              alt="Benefit image - responsive"
+            />
+          </div>
+          <div class="benefit__desc">
+            <h2>Media support:</h2>
+            <p>
+              Share your releases with journalists and music platforms in a
+              professional manner. Gain even more visibility!
+            </p>
+          </div>
         </div>
-        <div class="benefits__block">
-          <img
-            src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/creator.png"
-            alt="Benefit image - intuitive"
-          />
-          <p>Intuitive page creator</p>
+
+        <div class="benefit__block">
+          <div class="benefit__img">
+            <img
+              src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
+              alt="Benefit image - responsive"
+            />
+          </div>
+          <div class="benefit__desc">
+            <h2>Comprehensive Album Information:</h2>
+            <p>
+              Present all crucial album details, including descriptions, release
+              dates, and cover art.
+            </p>
+          </div>
+        </div>
+
+        <div class="benefit__block">
+          <div class="benefit__img">
+            <img
+              src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
+              alt="Benefit image - responsive"
+            />
+          </div>
+          <div class="benefit__desc">
+            <h2>Concert Tour:</h2>
+            <p>
+              Planning a concert tour? Share it with fans on a dedicated page!
+            </p>
+          </div>
+        </div>
+
+        <div class="benefit__block">
+          <div class="benefit__img">
+            <img
+              src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
+              alt="Benefit image - responsive"
+            />
+          </div>
+          <div class="benefit__desc">
+            <h2>Rich Promotional Materials:</h2>
+            <p>
+              Share photos, posters, and other materials that assist in
+              promoting your album.
+            </p>
+          </div>
+        </div>
+
+        <div class="benefit__block">
+          <div class="benefit__img">
+            <img
+              src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
+              alt="Benefit image - responsive"
+            />
+          </div>
+          <div class="benefit__desc">
+            <h2>High-Level Security:</h2>
+            <p>
+              A special token ensures that only selected individuals have access
+              to your page. You can change the token anytime to maintain full
+              control.
+            </p>
+          </div>
         </div>
       </div>
     </section>
-    <div class="blue"></div>
-    <section class="how__it__works">
-      <h1>How it works?</h1>
-      <div>
-        <div
-          class="step"
-          :class="{ active: steps.step === 1 }"
-          @click="stepHandler(1)"
-        >
-          <h2>1. Create account</h2>
-          <p v-if="steps.step === 1">
-            {{ steps.stepText }}
-          </p>
-        </div>
-        <div
-          class="step"
-          :class="{ active: steps.step === 2 }"
-          @click="stepHandler(2)"
-        >
-          <h2>2. Upload materials</h2>
-          <p v-if="steps.step === 2">
-            {{ steps.stepText }}
-          </p>
-        </div>
-        <div
-          class="step"
-          :class="{ active: steps.step === 3 }"
-          @click="stepHandler(3)"
-        >
-          <h2>3. Create your promo site</h2>
-          <p v-if="steps.step === 3">
-            {{ steps.stepText }}
-          </p>
-        </div>
-        <div
-          class="step"
-          :class="{ active: steps.step === 4 }"
-          @click="stepHandler(4)"
-        >
-          <h2>4. Promote your release with just one link</h2>
-          <p v-if="steps.step === 4">{{ steps.stepText }}</p>
-        </div>
+    <div class="how__it__works">
+      <div class="how__it--text">
+        <h1>
+          Don't waste any more time struggling to create your own pages.
+          RELEASLAND is a leap into the future of music presentations. Open a
+          new chapter in your music career today!
+        </h1>
       </div>
-    </section>
+    </div>
     <footer>
       <h1 class="logo">RELEASLAND</h1>
     </footer>
     <p class="copyright">
-      Copyright © 2023, Bartosz Borycki, All rights reserved
+      Copyright © 2023, Bartosz Borycki,
+      <a href="mailto:contact@releasland.com">contact@releasland.com</a>, All
+      rights reserved
     </p>
   </NuxtLayout>
 </template>
@@ -257,7 +307,7 @@ header {
     #c624ff 154.514723deg,
     #4378ff 430deg
   );
-  background-image: url("https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/top.png");
+  background-image: url("/top.png");
   background-size: cover;
   background-position: center;
   padding: 24px;
@@ -298,51 +348,55 @@ header:deep(form) {
 
 .benefits__container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 24px;
 }
 
-.benefits__block {
+.benefit__block {
   position: relative;
-  flex: 1 0 50%;
-  aspect-ratio: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: var(--gray-100);
   color: var(--white-900);
   border-radius: var(--br-16);
-  overflow: hidden;
 }
-.benefits__block img {
-  position: absolute;
+.benefit__img {
+  flex: 0 1 30%;
+  padding: 16px;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.benefit__img img {
   width: 100%;
-  z-index: 0;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
 }
-
-.benefits__block p {
-  z-index: 10;
-}
-
-.step {
-  cursor: pointer;
-}
-
-.blue {
-  position: absolute;
-  width: 100%;
-  height: 400px;
-  background-color: var(--blue-900);
+.benefit__desc {
+  flex: 1 0 70%;
+  padding: 24px;
+  color: var(--gray-900);
 }
 
 .how__it__works {
-  color: white;
+  width: 100%;
+  background-color: var(--blue-900);
 }
 
-.how__it__works h1 {
+.how__it--text {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1136px;
+  padding: 24px;
+}
+
+.how__it--text h1 {
   color: var(--white-900);
 }
 
@@ -371,18 +425,27 @@ footer .logo {
   text-align: center;
   color: var(--gray-900);
   font-size: 12px;
+  background-color: var(--white-900);
+}
+
+.copyright a {
+  font-size: 12px;
+  padding: 0;
+  border: 0;
+}
+
+.copyright a:hover {
+  background-color: #fff;
+  color: var(--blue-900);
 }
 
 @media screen and (min-width: 744px) {
   iframe {
-  height: 560px;
-}
-  .benefits__block {
+    height: 560px;
+  }
+  .benefit__block {
     position: relative;
-    flex: 1 0 45%;
-    aspect-ratio: 1;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--gray-100);
@@ -397,8 +460,8 @@ footer .logo {
 
 @media screen and (min-width: 1440px) {
   iframe {
-  height: 560px;
-}
+    height: 560px;
+  }
   a {
     font-size: 16px;
     padding: 16px;
@@ -463,19 +526,14 @@ footer .logo {
     align-items: center;
     gap: 24px;
   }
-  .benefits__block {
+  .benefit__block {
     position: relative;
-    flex: 1 0 22%;
-    aspect-ratio: 1;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--gray-100);
     color: var(--white-900);
     border-radius: var(--br-16);
-    overflow: hidden;
   }
-  
 }
 </style>
