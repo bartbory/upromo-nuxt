@@ -88,7 +88,6 @@ function stepHandler(step: number) {
     <iframe
       title="Early access form"
       width="100%"
-      height="560px"
       src="https://59b5b9a5.sibforms.com/serve/MUIFAKs_Atu0OwCcfbqk1cLk0S8iLbcYDGfoqknXHr9S5MQnzZ-JHNUMXfD4wMx2pijxL6APpOkpTC9saKN9_dEFA7_dNYKL_U0FzkWddFOoUWLixKGlnOnZzIvTqmSupfQgv54jVXUi6Mhnv3n7mFB_sH-mOZv64zHG9zdpa0VuvrID-yaK6Dm7jl3hP6ZO6JYJsw4t1JFFeRvf"
       frameborder="0"
       scrolling="no"
@@ -187,6 +186,9 @@ function stepHandler(step: number) {
 </template>
 
 <style scoped>
+iframe {
+  height: 860px;
+}
 a {
   background-color: var(--white-900);
   border: 2px solid var(--purple-900);
@@ -271,9 +273,10 @@ header {
 header div {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
   flex-direction: column;
+  gap: 24px;
 }
 
 header h1,
@@ -371,6 +374,9 @@ footer .logo {
 }
 
 @media screen and (min-width: 744px) {
+  iframe {
+  height: 560px;
+}
   .benefits__block {
     position: relative;
     flex: 1 0 45%;
@@ -390,6 +396,9 @@ footer .logo {
 }
 
 @media screen and (min-width: 1440px) {
+  iframe {
+  height: 560px;
+}
   a {
     font-size: 16px;
     padding: 16px;
