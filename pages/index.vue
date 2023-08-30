@@ -74,7 +74,7 @@ function stepHandler(step: number) {
         <h1>Reach Your Audience</h1>
         <h1>Boost Your Book Sales</h1>
       </div>
-      <div>
+      <div class="cta">
         <a
           href="https://www.releasland.com/hudson/bright-river/d53fc6f4-7287-41e6-8ec0-2d1bb2164a3b?secret=YjQJC5IMOmT7F5Se"
           >Demo page 1</a
@@ -279,6 +279,12 @@ header h2 {
   width: 100%;
   color: var(--white-900);
   text-align: left;
+}
+
+.cta {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
 }
 
 header:deep(form) {
