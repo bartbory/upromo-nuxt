@@ -76,8 +76,12 @@ function stepHandler(step: number) {
       </div>
       <div>
         <a
-          href="https://releasland.com/hudson/bright-river/d53fc6f4-7287-41e6-8ec0-2d1bb2164a3b?secret=YjQJC5IMOmT7F5Se"
-          >Demo page</a
+          href="https://www.releasland.com/hudson/bright-river/d53fc6f4-7287-41e6-8ec0-2d1bb2164a3b?secret=YjQJC5IMOmT7F5Se"
+          >Demo page 1</a
+        >
+        <a
+          href="https://www.releasland.com/monic/vestido-suelto/2685eec9-a525-4262-b117-eff9da04a586?secret=lKItSLDku3lGN9U4"
+          >Demo page 2</a
         >
       </div>
     </header>
@@ -102,25 +106,29 @@ function stepHandler(step: number) {
         <div class="benefits__block">
           <img
             src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/responsive.png"
-          alt="Benefit image - responsive"/>
+            alt="Benefit image - responsive"
+          />
           <p>Responsive design</p>
         </div>
         <div class="benefits__block">
           <img
             src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/integration.png"
-         alt="Benefit image - integration" />
+            alt="Benefit image - integration"
+          />
           <p>Soundcloud/Spotify integration</p>
         </div>
         <div class="benefits__block">
           <img
             src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/protected.png"
-          alt="Benefit image - protected"/>
+            alt="Benefit image - protected"
+          />
           <p>Protected page link</p>
         </div>
         <div class="benefits__block">
           <img
             src="https://dfkoxxzioobmrfcznrnc.supabase.co/storage/v1/object/public/public/default/creator.png"
-         alt="Benefit image - intuitive" />
+            alt="Benefit image - intuitive"
+          />
           <p>Intuitive page creator</p>
         </div>
       </div>
