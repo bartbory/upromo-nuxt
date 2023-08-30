@@ -70,19 +70,19 @@ function stepHandler(step: number) {
     </nav>
     <header>
       <div>
-        <h1>Promote Your Album</h1>
-        <h1>Reach Your Audience</h1>
-        <h1>Boost Your Book Sales</h1>
-      </div>
-      <div class="cta">
-        <a
-          href="https://www.releasland.com/hudson/bright-river/d53fc6f4-7287-41e6-8ec0-2d1bb2164a3b?secret=YjQJC5IMOmT7F5Se"
-          >Demo page 1</a
-        >
-        <a
-          href="https://www.releasland.com/monic/vestido-suelto/2685eec9-a525-4262-b117-eff9da04a586?secret=lKItSLDku3lGN9U4"
-          >Demo page 2</a
-        >
+        <h1>Your Music. Your World. Your RELEASLAND.</h1>
+        <h2>Your Ultimate SaaS Tool for Artists and Music Labels!</h2>
+        <h2>See RELEASLAND in Action</h2>
+        <div class="cta">
+          <a
+            href="https://www.releasland.com/hudson/bright-river/d53fc6f4-7287-41e6-8ec0-2d1bb2164a3b?secret=YjQJC5IMOmT7F5Se"
+            >Sample 1</a
+          >
+          <a
+            href="https://www.releasland.com/monic/vestido-suelto/2685eec9-a525-4262-b117-eff9da04a586?secret=lKItSLDku3lGN9U4"
+            >Sample 2</a
+          >
+        </div>
       </div>
     </header>
     <iframe
@@ -180,14 +180,17 @@ function stepHandler(step: number) {
     <footer>
       <h1 class="logo">RELEASLAND</h1>
     </footer>
+    <p class="copyright">
+      Copyright © 2023, Bartosz Borycki, All rights reserved
+    </p>
   </NuxtLayout>
 </template>
 
 <style scoped>
 a {
-  background-color: var(--green-900);
-  border: 2px solid var(--green-900);
-  color: var(--white-900);
+  background-color: var(--white-900);
+  border: 2px solid var(--purple-900);
+  color: var(--purple-900);
   font-size: 16px;
   padding: 16px;
   border-radius: var(--br-8);
@@ -197,10 +200,9 @@ a {
 }
 
 a:hover {
-  background-color: var(--green-100);
-  border: 2px solid var(--green-900);
-  border-radius: var(--br-16);
-  color: var(--green-900);
+  background-color: var(--purple-900);
+  border: 2px solid var(--purple-900);
+  color: var(--white-900);
 }
 
 section {
@@ -348,19 +350,24 @@ header:deep(form) {
   font-size: 24px;
 }
 footer {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  aspect-ratio: 2.6;
-  background: conic-gradient(
-    from -70deg at 50% 50%,
-    #c624ff 4.514723deg,
-    #4378ff 495.520721deg
-  );
+  aspect-ratio: 3.6;
+  background: var(--white-900);
 }
 footer .logo {
-  color: var(--white-900);
+  color: var(--purple-900);
+}
+
+.copyright {
+  width: 100%;
+  padding: 2px 24px;
+  text-align: center;
+  color: var(--gray-900);
+  font-size: 12px;
 }
 
 @media screen and (min-width: 744px) {
@@ -377,20 +384,15 @@ footer .logo {
     border-radius: var(--br-16);
     overflow: hidden;
   }
+  footer {
+    aspect-ratio: 6.6;
+  }
 }
 
 @media screen and (min-width: 1440px) {
   a {
-    background-color: var(--green-900);
-    color: var(--white-900);
-    border: 1px solid var(--green-900);
     font-size: 16px;
     padding: 16px;
-    border-radius: var(--br-8);
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-    cursor: pointer;
   }
 
   section {
@@ -439,18 +441,18 @@ footer .logo {
     min-height: 60vh;
     /* background: var(--gradient-purple); */
     padding: 40px;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 24px;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
   }
   header div {
-    width: 45%;
+    max-width: 1136px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
   }
   .benefits__block {
     position: relative;
@@ -465,5 +467,6 @@ footer .logo {
     border-radius: var(--br-16);
     overflow: hidden;
   }
+  
 }
 </style>
