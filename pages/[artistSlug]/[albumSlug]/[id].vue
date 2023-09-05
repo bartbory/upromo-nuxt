@@ -358,6 +358,11 @@ function imageClickHandler(image: IImage) {
 
     <p>powered by <a class="logo--footer">RELEASLAND</a></p>
   </footer>
+  <p class="copyright">
+    Copyright © 2023, Bartosz Borycki,
+    <a href="mailto:contact@releasland.com">contact@releasland.com</a>, All
+    rights reserved
+  </p>
 </template>
 
 <style scoped>
@@ -370,6 +375,26 @@ body {
   font-family: "Mukta";
   line-height: 28px;
   flex-direction: column;
+}
+
+.copyright {
+  width: 100%;
+  padding: 2px 24px;
+  text-align: center;
+  color: var(--gray-900);
+  font-size: 12px;
+  background-color: var(--white-900);
+}
+
+.copyright a {
+  font-size: 12px;
+  padding: 0;
+  border: 0;
+}
+
+.copyright a:hover {
+  background-color: #fff;
+  color: var(--blue-900);
 }
 
 .on-sm {
