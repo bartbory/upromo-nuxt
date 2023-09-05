@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import BaseButton from "~/components/backoffice/UI/BaseButton.vue";
 
+useHead({
+  title: "UPS, Wrong way...",
+  meta: [
+    { name: "author", content: "Bartosz Borycki" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+  ],
+  htmlAttrs: {
+    lang: "EN",
+  },
+});
+
 const router = useRouter();
 </script>
 <template>
