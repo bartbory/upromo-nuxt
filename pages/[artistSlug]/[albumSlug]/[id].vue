@@ -44,7 +44,7 @@ let metaLanguage = ref(``);
 if (!error.value && data.value && !pending.value) {
   album = data.value.data;
   title.value = `${album.artistName} / ${album.albumName}`;
-  ogDescription.value = `Releasland presents media page of upcoming release - ${album.albumName}`;
+  ogDescription.value = `${album.albumName} by ${album.artistName} @ releasland.com`;
   ogGraphic.value = album.images.cover;
   metaLanguage.value = album.language.toLowerCase();
   if (
